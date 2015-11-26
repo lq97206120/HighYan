@@ -1,0 +1,20 @@
+span{
+background-color:#434444
+position:relative;
+text-align:center;
+padding: 0px 45px 0px 45px;
+
+}
+font {color:#DADADA; text-align:center;  font-size:14px;font-family:"Microsoft YaHei",Î¢ÈíÑÅºÚ;}/*****/
+/**ÏÂ»®Ïß**/
+a:link{ text-decoration: none;}
+a:visited {text-decoration: none;}
+a:hover {text-decoration: none;}
+a:active {text-decoration: none;}
+
+#test1{
+ margin:10px 0px 10px 100px;
+}
+#test1 font{
+color:#DADADA; text-align:center
+}
