@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+*{padding:0px;margin: 0px;font-size:14px;}
+body{background:#fff;}
+table{width:100%;}
+table,th,td{ border-collapse: collapse;background:#fff;}
+th{ text-align: right;}
+th,td{padding:8px 8px;}
+input{ border:solid 1px #dcdcdc;height:30px;padding:3px 6px;color:#999;background:#fff; line-height:30px;font-size:15px;vertical-align: middle;}
+.len100{width:100px;}
+.len150{width:159px;}
+.len200{width:200px;}
+.len250{width:250px;}
+.len300{width:300px;}
+.len350{width:350px;}
+.len400{width:400px;}
+.submit{background:#255E9C;height:40px;width:60px;line-height:1.8em;color:#fff;font-size:16px; cursor: pointer;}
