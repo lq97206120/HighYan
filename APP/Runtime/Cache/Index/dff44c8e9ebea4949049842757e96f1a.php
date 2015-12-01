@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,22 +33,22 @@
 			<a href="#" id="menuIcon">Ξ</a><!#表示浏览器不会跳转，仍然停留在该页面>
 			<ul>
 				<li>
-					<a href="{:U(GROUP_NAME.'/Index/index')}">首页</a>
+					<a href="<?php echo U(GROUP_NAME.'/Index/index');?>">首页</a>
 				</li>
 				<li>
-				    <a href="{:U(GROUP_NAME.'/Index/jiehunji')}">结婚季</a>
+				    <a href="<?php echo U(GROUP_NAME.'/Index/jiehunji');?>">结婚季</a>
 				</li>
 				<li>
-					<a href="{:U(GROUP_NAME.'/Index/youxiuanli')}">优秀案例</a>
+					<a href="<?php echo U(GROUP_NAME.'/Index/youxiuanli');?>">优秀案例</a>
 				</li>
 				<li>
-					<a href="{:U(GROUP_NAME.'/Index/chanpinxilie')}">产品系列</a>
+					<a href="<?php echo U(GROUP_NAME.'/Index/chanpinxilie');?>">产品系列</a>
 				</li>
 				<li>
-					<a href="{:U(GROUP_NAME.'/Index/gongyizhanshi')}">工艺展示</a>
+					<a href="<?php echo U(GROUP_NAME.'/Index/gongyizhanshi');?>">工艺展示</a>
 				</li>
 				<li>
-					<a href="{:U(GROUP_NAME.'/Index/contactUs')}">联系我们</a>
+					<a href="<?php echo U(GROUP_NAME.'/Index/contactUs');?>">联系我们</a>
 				</li>
 			</ul>
 		</nav>

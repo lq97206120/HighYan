@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+*{margin:0 auto;padding:0;}/*很重要，不然会出现offset等奇怪问题*/
+html{ font-family:"microsoft yahei",arial;
+	font-size:100%;}
+body{margin:0;}
+img{max-width:100%;}
+li{list-display:none;}
+/*title*/
+.title{height:15%;
+		margin:0;}
+/*nav*/
+nav{height:5%;
+	margin:0;
+	background-color:#333;
+	}
+nav ul{text-align:center;}
+nav li{ display:inline-block;
+		padding-right:4%;
+		padding-top:0.3%;
+		padding-bottom:0.3%;
+		/*line-heigh:2em;*/
+		
+		}
+nav li a{text-decoration:none;
+		color:#eeeeee;
+		font-size:1.0em;}
+nav li a:hover,#menuIcon:hover{color:#DDD;}
+#menuIcon{display:none;
+		color:white;
+		font-size:2em;
+		text-decoration:none;
+		font-size:arial;
+			}
+/*content*/
+.content{width:100%;
+		margin:0 auto;
+		}	
+/*footer*/
+footer{ height:15%;
+		width:100%;
+		text-align:center;
+		/*background:url(../Images/bottomNew.gif) no-repeat;*/
+	}
+	
+
+@media screen and (max-width: 500px) {
+
+    nav ul {
+        display:none;
+        width:20%;
+        padding:0;
+        float:right;
+        text-align:left;
+        
+    }
+
+    #menuIcon {
+        display:block;
+        text-align:right;
+        padding:0 5px;
+        border-bottom:1px #9c9c9c solid;
+    }
+	 nav ul li {
+        width:100%;
+    }
+    nav li a{text-decoration:none;
+	color:#000000;
+	font-size:1.0em;}
+
+    nav ul li:hover {
+        background-color:#333333;
+    }
+
+
+}					
