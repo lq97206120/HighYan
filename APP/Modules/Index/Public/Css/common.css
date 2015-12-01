@@ -49,8 +49,11 @@ footer{ height:15%;
         display:none;
         width:20%;
         padding:0;
-        float:right;
+        position:absolute;
+        right:0;
         text-align:left;
+        border-left:1px groove #333;
+        background-color:#333;
         
     }
 
@@ -58,17 +61,20 @@ footer{ height:15%;
         display:block;
         text-align:right;
         padding:0 5px;
-        border-bottom:1px #9c9c9c solid;
+        
     }
 	 nav ul li {
         width:100%;
+        padding:1px 0;
+        border-bottom:1px dashed #000;
+        
     }
     nav li a{text-decoration:none;
-	color:#000000;
+	color:#eee;
 	font-size:1.0em;}
 
     nav ul li:hover {
-        background-color:#333333;
+        background-color:#ddd;
     }
 
 
