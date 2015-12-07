@@ -3,39 +3,43 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>后台登陆界面</title>
-	<link rel="stylesheet" href="__PUBLIC__/Css/login.css">
-	<script type="text/javascript" src="__PUBLIC__/Js/login.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Js/jquery-1.7.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/style.css"/>
+	<script type="text/javascript" src="__PUBLIC__/Js/js.js"></script>
 	<script>
 		var verifyURL='<?php echo U(GROUP_NAME.'/Login/verify');?>';//GROUP_NAME是系统常量
 	</script>
+	
 </head>
 <body>
-	<div class="login">
-		<form action="<?php echo U(GROUP_NAME.'/Login/login');?>" methods="post" id="login">
-			<div class="title">
-				后台登陆
-			</div>
-			<table border="1" width="100%">
-				<tr>
-					<th>帐号:</th>
-					<td>
-						<input type="username" name="username" class="len250"/>
-					</td>
-				</tr>
-				<tr>
-					<th>密码:</th>
-					<td>
-						<input type="password" class="len250" name="password"/>
-					</td>
-				</tr>
-				<tr>
-					<th>验证码:</th>
-					<td>
-						<input type="code" class="len100" name="code"/> <img src="<?php echo U(GROUP_NAME.'/Login/verify');?>" id="code" style="padding-left:10px;"/> <a href="javascript:void(change_code(this));">看不清</a>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" style="padding-left:180px;"> <input type="submit" class="submit" value="登录" /></td>
-				</tr>
+<div id="top"> </div>
+<form id="login" name="login" action="<?php echo U(GROUP_NAME.'/Login/login');?>" method="post">
+  <div id="center">
+    <div id="center_left"></div>
+    <div id="center_middle">
+      <div class="user">
+        <label>用户名：
+        <input type="text" name="user" id="user" />
+        </label>
+      </div>
+      <div class="user">
+        <label>密　码：
+        <input type="password" name="pwd" id="pwd" />
+        </label>
+      </div>
+      <div class="chknumber">
+        <label>验证码：
+        <input name="chknumber" type="text" id="chknumber" maxlength="4" class="chknumber_input" />
+        </label>
+        <img src="<?php echo U(GROUP_NAME.'/Login/verify');?>" id="code" class="yanzhenma"/>
+      </div>
+    </div>
+    <div id="center_middle_right"></div>
+    <div id="center_submit">
+      <div class="button"> <img src="__PUBLIC__/Images/dl.gif" width="57" height="20" onclick="form_submit()" > </div>
+      <div class="button"> <img src="__PUBLIC__/Images/cz.gif" width="57" height="20" onclick="form_reset()"> </div>
+    </div>
+    <div id="center_right"></div>
+  </div>
 </body>
 </html>

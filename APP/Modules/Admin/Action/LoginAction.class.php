@@ -4,9 +4,11 @@ class LoginAction extends Action{
 		$this->display();
 	}
 	
-	public function verify(){
+
+	//生成验证码
+	public function verify() {
 		import('ORG.Util.Image');
-		Image::buildImageVerify(4,1,'png','50','28');
+		Image::buildImageVerify (4,1,'png',60,26);
 	}
 	
 }
