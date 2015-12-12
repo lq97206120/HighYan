@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>海彦后台管理系统</title>
   <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/base.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/index.css"/>
      <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css"/>
@@ -96,42 +96,78 @@
 		  </tr>
 		</table>
 		  <ul class="left-menu">
-		 <li>
-            <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;公告信息中心</a></span>
-            <ul class="son">
-           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;公告管理</a></li>
-             </ul>
-          </li>
-		
-          <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;成员信息中心</a></span>
-            <ul class="son">
-              <li><a href="<?php echo U('Admin/Show/user');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;成员管理</a></li>
-            </ul>
-          </li>
-          <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;论文信息中心</a></span>
-            <ul class="son">
-              <li><a href="<?php echo U('Admin/Paper/paper');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;论文管理</a></li>
-            </ul>
-          </li>
-          <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;项目信息中心</a></span>
-            <ul class="son">
-              <li><a href="<?php echo U('Admin/Project/project');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;项目管理</a></li>
-            </ul>
-          </li>
+			<?php if(is_array($role)): foreach($role as $key=>$v): if(($v['name'] == 'employee') OR ($v['name'] == 'shopleader')): ?><li>
+				  	<?php if($v['name'] == 'employee'): ?><span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+			            <ul class="son">
+			           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+			           	</ul>
+				  	<?php else: ?>
+					  	 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+			            <ul class="son">
+			           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+			           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品管理</a></li>
+			           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店员管理</a></li>
+			             </ul><?php endif; ?>
+		           
+		          </li>
+				<?php elseif($v['name'] == 'provider'): ?>
+							  <li>
+							  
+					            <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;供应商中心</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					             </ul>
+					          </li>
+						<?php else: ?>
+							  <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;部门管理</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/Shop/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;部门查询</a></li>
+					             </ul>
+					          </li>
+					        
+					          <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;商品管理</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/Goods/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品查询</a></li>
+					             </ul>
+					          </li>
+					          <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;订单管理</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					             </ul>
+					          </li>
+					          <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;会员管理</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+					             </ul>
+					          </li>
+					          <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;员工管理</a></span>
+					            <ul class="son">
+					           		<li><a href="<?php echo U('Admin/User/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;员工查询</a></li>
+					             </ul>
+					          </li><?php endif; endforeach; endif; ?>
+			
+			 
            <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;设备信息中心</a></span>
+            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;权限管理中心</a></span>
             <ul class="son">
-              <li><a href="<?php echo U('Admin/Facility/facility');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;设备管理</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;用户列表</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/role');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;角色列表</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/node');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;节点列表</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/addUser');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加用户</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/addRole');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加角色</a></li>
+              <li><a href="<?php echo U('Admin/Rbac/addNode');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加节点</a></li>
             </ul>
           </li>
           <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;系统信息管理</a></span>
+            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;个人信息中心</a></span>
             <ul class="son">
-              <li><a href="javascript:void(0)" target="opt"  onclick="changeadmin();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;管理员信息设置</a></li>
-             <li><a href="javascript:void(0)" target="opt" onclick="changepwd();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;管理员密码修改</a></li>
+              <li><a href="javascript:void(0)" target="opt"  onclick="changeadmin();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;个人信息设置</a></li>
+             <li><a href="javascript:void(0)" target="opt" onclick="changepwd();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;密码修改</a></li>
              <li><a href="javascript:void(0)" target="opt"  onclick="help();"><i class="icon-fixed-width icon-book"></i>&nbsp;&nbsp;系统帮助</a></li>
             </ul>
           </li>
