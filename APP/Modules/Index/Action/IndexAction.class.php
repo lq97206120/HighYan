@@ -3,38 +3,21 @@ class IndexAction extends Action{
 	public function index(){
 		$this->display();
 	}
-	
-public function bottom(){
+	//结婚季
+	public function jiehunji(){
 		$this->display();
 	}
-	
-public function top(){
+	//产品系列
+	public function chanpinxilie(){
 		$this->display();
 	}
-	
-public function chanpinxilie(){
+	//工艺展示
+	public function gongyizhanshi(){
 		$this->display();
 	}
-	
-public function contactMe(){
+	//联系我们
+	public function contactUs(){
 		$this->display();
 	}
-public function content(){
-		$this->display();
-	}
-public function gongyizhanshi(){
-		$this->display();
-	}
-public function homepage(){
-		$this->display();
-	}
-public function jiehunji(){
-		$this->display();
-	}
-public function titlebar(){
-		$this->display();
-	}
-public function youxiuanli(){
-		$this->display();
-	}
+
 }
