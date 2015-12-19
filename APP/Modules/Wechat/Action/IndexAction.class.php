@@ -1,13 +1,8 @@
 <?php
 class IndexAction extends Action{
-	public function index(){
-		$this->display();
-	}
-	public function bottom(){
-		$this->display();
-	}
 	
-	public function top(){
+	//微信首页
+	public function index(){
 		$this->display();
 	}
 	
@@ -15,24 +10,18 @@ class IndexAction extends Action{
 		$this->display();
 	}
 	
-	public function contactMe(){
+	public function contactme(){
 		$this->display();
 	}
-	public function content(){
-		$this->display();
-	}
+	
 	public function gongyizhanshi(){
 		$this->display();
 	}
-	public function homepage(){
-		$this->display();
-	}
+	
 	public function jiehunji(){
 		$this->display();
 	}
-	public function titlebar(){
-		$this->display();
-	}
+	
 	public function youxiuanli(){
 		$this->display();
 	}
