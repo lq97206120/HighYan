@@ -1,7 +1,12 @@
 <?php
 class LoginAction extends Action{
-	public function index(){
-		$this->display();
+	//step 2: 调用微信接口，发送请求
+	public function oauth2(){
+		$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?
+				appid='.C(APP_ID).'&redirect_uri='.C(REDIRECT_URI).'&response_type=code
+				&scope='.C(SCOPE).'&state='.C(STATE);
+		redirect($url);
+		
 	}
 	
 

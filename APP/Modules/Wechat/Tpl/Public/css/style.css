@@ -73,3 +73,19 @@ input{-webkit-appearance: none;appearance: none; outline:none;}
 /*首页*/
 .top-nav{ position:relative; width:100%;}
 .wid100{ width:100%;}
+
+/*会员中心*/
+.my-pho{ width:90%; padding:10px 5%; background:#fff; margin-bottom:10px;}
+.my-l{ float:left; width:30%; padding-right:3%; text-align:center;}
+.my-l img{ width:100px; height:100px;}
+.my-r{ float:left; width:67%; position:relative;}
+.my-r h2{ font-size:16px; font-weight:normal; color:#333; line-height:30px; margin-bottom:20px;}
+.my-r h3{ font-size:12px; font-weight:normal; color:#e03f09; line-height:30px;}
+.my-r p{ font-size:12px; font-weight:normal; color:#808080; line-height:20px;}
+.my-rt{ position:absolute; right:0; top:5px; z-index:11;}
+.chongz{ position:absolute; right:0; bottom:0; z-index:11; background:#E03F09; color:#fff; display:block; height:30px; width:59px; text-align:center; border-radius:5px; line-height:30px; font-size:14px;}
+.my-rtlogo{ height:30px; margin-top:-5px;}
+.my-list{ width:90%; padding:0 5%; background:#fff;}
+.my-list li{ border-bottom:1px solid #f2f2f2; background:url(../images/icon_xiangyou.png) no-repeat right center; background-size:10px 18px;}
+.my-list img{ width:20px; height:20px; margin:0 5px;}
+.my-list a{ display:block; width:100%; padding:16px 0; line-height:20px; font-size:16px; color:#999;}

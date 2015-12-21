@@ -17,5 +17,7 @@ return array(
      'DB_PREFIX'=>'hy_',
 	//默认过滤函数
 	'DEFAULT_FILTER'=>'htmlspecialchars',
+	//配置微信参数
+	'LOAD_EXT_CONFIG' => 'wechat',
 );
 ?>
