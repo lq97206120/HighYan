@@ -47,11 +47,12 @@
 	<div style="margin:10px 0;"></div>
 	
 	
-	<table id="dg" title="学生信息列表" style="width:1100px;height:308px" >
+	<table id="dg" title="商品信息列表" style="width:1100px;height:308px" >
 	<?php if(is_array($goods)): foreach($goods as $key=>$u): ?><tr>
 		<td><?php echo ($u["gid"]); ?></td>
 		<td><?php echo ($u["gnum"]); ?></td>
 		<td><?php echo ($u["gname"]); ?></td>
+		<td><?php echo ($u["gprice"]); ?></td>
 		<td><?php if($u['gclass'] == 1): ?>上衣<?php elseif($u['gclass'] == 2): ?>裤子<?php else: ?>鞋子<?php endif; ?></td>
 		<td><a href="<?php echo U('Admin/Goods/shoplist',array('gid'=>$u['gid']));?>">分配管理</a></td>
 		<td><?php if($u['gstatus'] == 1): ?>开启<?php else: ?>关闭<?php endif; ?></td>
@@ -85,6 +86,12 @@
 				    <label for="usernum" class="col-sm-2 control-label">商品名称</label>
 				    <div class="col-sm-10">
 				      <input type="text" class="form-control" id="gname" name="gname"  placeholder="不能为空">
+				    </div>
+			  </div>
+			  <div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">商品价格</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="gprice" name="gprice"  placeholder="不能为空">
 				    </div>
 			  </div>
 			  <div class="form-group">
@@ -130,6 +137,12 @@
 			    <label for="username" class="col-sm-2 control-label">商品名称</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="gname" name="gname"  placeholder="不能为空">
+			    </div>
+		  </div>
+		  <div class="form-group">
+			    <label for="username" class="col-sm-2 control-label">商品价格</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="gprice" name="gprice"  placeholder="不能为空">
 			    </div>
 		  </div>
  		  <div class="form-group">
@@ -202,7 +215,7 @@
 		});
 			$('#adduserbtn').click(function(){
 								
-				if($('#adduserModal #gnum').val() == '' || $('#adduserModal #gname').val() == ''){
+				if($('#adduserModal #gnum').val() == '' || $('#adduserModal #gname').val() == ''|| $('#adduserModal #gprice').val() == ''){
 					alert('每个单元都不能为空！');
 					return false;
 				}
@@ -288,6 +301,7 @@
 				{field:'gid',hidden:true},
 				{field:'gnum',title:"商品编号",width:30},
 		        {field:'gname',title:'商品名称',width:80},
+		        {field:'gprice',title:'商品参考价格',width:30},
 		        {field:'gclass',title:"商品种类",width:40},
 		        {field:'gshop',title:"分配管理",width:20},
 		        {field:'gstatus',title:"状态",width:20},

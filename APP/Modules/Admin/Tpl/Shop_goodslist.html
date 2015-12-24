@@ -8,6 +8,10 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
 <script>
 	$(function(){
+		$('input[level=1]').click(function(){
+			var inputs=$(this).parents('.app').find('input');
+			$(this).attr('checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
+		});
 		$('input[level=2]').click(function(){
 			var inputs=$(this).parents('dl').find('input');
 			$(this).attr('checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
@@ -20,18 +24,24 @@
 		<div id='wrap'>
 			<a  class='add-app' href="{:U('Admin/Shop/index')}">返回</a>
 				<div class='app'>
-					<dl>
-  						<dt>
-							<strong>单位名称：</strong><span>{$shop.sname}</span>
-							<input type='checkbox'  level='2'/>
-						</dt>
-  				    <foreach name='goods' item='v'>
-  						<dd>
-  							<span>{$v.gname}</span>
-							<input type='checkbox' name='goods[]' value="{$v['gid']}" <if condition='$v["possess"]'>checked='checked'</if>/>
-  						</dd>
-  					</foreach>
-  					</dl>
+					<p>
+						<strong>单位名称：<span>{$shop.sname}</span></strong>
+						<input type='checkbox'  level='1'/>
+					</p>
+					<foreach name='goods' item='g'>
+						<dl>
+		  						<dt>
+									<strong>商品种类：<span>{$g.classname}</span></strong>
+									<input type='checkbox'  level='2'/>
+								</dt>
+		  				    <foreach name="g['contents']" item='v'>
+		  						<dd>
+		  							<span>{$v.gname}</span>
+									<input type='checkbox' name='goods[]' value="{$v['gid']}" <if condition='$v["possess"]'>checked='checked'</if>/>
+		  						</dd>
+		  					</foreach>
+	  					</dl>
+					</foreach>
 				 
 				</div>
 		

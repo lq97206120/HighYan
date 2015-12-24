@@ -47,7 +47,7 @@
 	<div style="margin:10px 0;"></div>
 	
 	
-	<table id="dg" title="学生信息列表" style="width:1100px;height:308px" >
+	<table id="dg" title="部门信息列表" style="width:1100px;height:308px" >
 	<?php if(is_array($shop)): foreach($shop as $key=>$u): ?><tr>
 		<td><?php echo ($u["sid"]); ?></td>
 		<td><?php echo ($u["sname"]); ?></td>

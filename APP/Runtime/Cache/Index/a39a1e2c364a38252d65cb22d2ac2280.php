@@ -27,7 +27,7 @@
 <body>
 	<div id="main">
 		<div class="title">
-			<img src="__PUBLIC__/Images/top.gif"/>
+		
 		</div>
 		<nav>
 			<a href="#" id="menuIcon">Ξ</a><!#表示浏览器不会跳转，仍然停留在该页面>

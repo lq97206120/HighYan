@@ -8,6 +8,10 @@
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.7.2.min.js"></script>
 <script>
 	$(function(){
+		$('input[level=1]').click(function(){
+			var inputs=$(this).parents('.app').find('input');
+			$(this).attr('checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
+		});
 		$('input[level=2]').click(function(){
 			var inputs=$(this).parents('dl').find('input');
 			$(this).attr('checked')?inputs.attr('checked','checked'):inputs.removeAttr('checked');
@@ -20,16 +24,20 @@
 		<div id='wrap'>
 			<a  class='add-app' href="<?php echo U('Admin/Shop/index');?>">返回</a>
 				<div class='app'>
-					<dl>
-  						<dt>
-							<strong>单位名称：</strong><span><?php echo ($shop["sname"]); ?></span>
-							<input type='checkbox'  level='2'/>
-						</dt>
-  				    <?php if(is_array($goods)): foreach($goods as $key=>$v): ?><dd>
-  							<span><?php echo ($v["gname"]); ?></span>
-							<input type='checkbox' name='goods[]' value="<?php echo ($v['gid']); ?>" <?php if($v["possess"]): ?>checked='checked'<?php endif; ?>/>
-  						</dd><?php endforeach; endif; ?>
-  					</dl>
+					<p>
+						<strong>单位名称：<span><?php echo ($shop["sname"]); ?></span></strong>
+						<input type='checkbox'  level='1'/>
+					</p>
+					<?php if(is_array($goods)): foreach($goods as $key=>$g): ?><dl>
+		  						<dt>
+									<strong>商品种类：<span><?php echo ($g["classname"]); ?></span></strong>
+									<input type='checkbox'  level='2'/>
+								</dt>
+		  				    <?php if(is_array($g['contents'])): foreach($g['contents'] as $key=>$v): ?><dd>
+		  							<span><?php echo ($v["gname"]); ?></span>
+									<input type='checkbox' name='goods[]' value="<?php echo ($v['gid']); ?>" <?php if($v["possess"]): ?>checked='checked'<?php endif; ?>/>
+		  						</dd><?php endforeach; endif; ?>
+	  					</dl><?php endforeach; endif; ?>
 				 
 				</div>
 		

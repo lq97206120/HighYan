@@ -28,17 +28,23 @@ function goods_merge($goods,$possess=null){
 		$arr[]=$v;
 	}
 	//p($arr);
-	return $arr;
+	//return $arr;
 	//定义商品的种类
-//	$class=array();
-//	for($i=0;$i<4;$i++){
-//		foreach($arr as $t){
-//			if(($i+1)==$t['gclass'])
-//			$class[$i][]=$t;
-//		}
-//		if(!$class[$i])$class[$i]=array();
-//	}
-//	return $class;//返回给上级['child']
+	$class=array();
+	for($i=0;$i<=2;$i++){
+		$class[$i]['classid']=$i+1;
+		switch($i){
+			case '0':$class[$i]['classname']="上衣";break;
+			case '1':$class[$i]['classname']="裤子";break;
+			case '2':$class[$i]['classname']="鞋子";break;
+		}
+		foreach($arr as $t){
+			if($i==($t['gclass']-1))
+			$class[$i]['contents'][]=$t;
+		}
+		if(!$class[$i])$class[$i]=array();
+	}
+	return $class;//返回给上级['child']
 }
 //递归重组部门信息为多维数组
 function shop_merge($shop,$assign=null){
@@ -86,5 +92,26 @@ function user_manyone($user){
 		$arra[$i]['shop']=$user[$i]['shop'][0]['sid'];
 		$arra[$i]['shopsname']=$user[$i]['shop'][0]['sname'];
 	}
+	return $arra;
+}
+//个人信息修改设置
+function user_one($user){
+	$arra=array();
+		
+		$arra['uid']=$user['uid'];
+		$arra['unum']=$user['unum'];
+		$arra['uname']=$user['uname'];
+		$arra['uphone']=$user['uphone'];
+		$arra['umale']=$user['umale'];
+		$arra['ubirth']=$user['ubirth'];
+		$arra['udate']=$user['udate'];
+		$arra['ustatus']=$user['ustatus'];
+		$arra['ulogintime']=$user['ulogintime'];
+		$arra['uloginip']=$user['uloginip'];
+		$arra['role']=$user['role'][0]['id'];
+		$arra['roleremark']=$user['role'][0]['remark'];
+		$arra['shop']=$user['shop'][0]['sid'];
+		$arra['shopsname']=$user['shop'][0]['sname'];
+	
 	return $arra;
 }

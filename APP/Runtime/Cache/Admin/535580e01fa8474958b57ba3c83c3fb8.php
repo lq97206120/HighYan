@@ -3,18 +3,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>海彦后台管理系统</title>
-  <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/base.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/index.css"/>
-     <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css"/>
+	
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/base.css"/>
+  	<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/index.css"/>
+ 	<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-easyui-1.3.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-easyui-1.3.5/themes/icon.css">
+	
+	<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/bootstrap/bootstrap.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
      <style type="text/css">
 	.normaltab{color:#1F3A87 ;}
     .hovertab{ background-color:#420202;font-weight:bold;}
     .hovertab a{color:#FFFFFF}
 	.dis{display:block;}
     .undis{display:none;}
+    .help{font-size:18px;font-family:'Helve Neue',Helvetica,Arial,sans-serif;line-height:2em;}
+    .modal{width:550px;}
+    .modal-dialog{overflow-x:hidden;overflow-y:hidden;}
+    .modal-content{width:100%;font-size:14px;line-height:1.4285;color:#333333;font-family:'Helve Neue',Helvetica,Arial,sans-serif;}
+   	.modal-content .modal-header .modal-title{font-size:18px;line-height:1.4285;}
+   	.modal-content .modal-body{position:relative;padding:20px;overflow-x:hidden;overflow-y:hidden;}
+   	.modal-content .modal-body .form-group{margin-right:-15px;margin-left:-15px;margin-bottom:15px;}
+   	.modal-content .modal-body .form-group .col-sm-2{width:18%;float:left;display:block;margin-bottom:15px;}
+   	.modal-content .modal-body .form-group .control-label{text-align:right;display:inline-block;font-weight:bold;line-height:28px;vertical-align:middle;}
+   	.modal-content .modal-body .form-group .col-sm-10{width:75%;float:left;display:block;margin-left:14px;margin-bottom:15px;margin-right:20px;}
+   	.modal-content .modal-body .form-group .col-sm-10 .form-control{display:block;width:97%;height:28px;padding:6px 12px;font-size:14px;line-height:1.4285;vertical-align:middle;background-color:#ffffff;border:1px solid #cccccc;border-radius:4px;}
 	</style>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
-     <script type="text/javascript" src="__PUBLIC__/layer/layer.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.min.js"></script>
 </head>
 <body>
 	 <!-- 头部开始 -->
@@ -30,7 +49,7 @@
 	       <li id="z_3" class="home"><a href="<?php echo U('Admin/Paper/paper');?>" target="opt">论文管理</a></li>
 	       <li id="z_4" class="home"><a href="<?php echo U('Admin/Project/project');?>" target="opt">项目管理</a></li>
           <li id="z_5" class="home"><a href="<?php echo U('Admin/Facility/facility');?>" target="opt">设备管理</a></li>
-			<!--  <li id="z_5" class="home"><a href="<?php echo U('Admin/Index/changepwd',array('userid'=>$_SESSION['uid']));?>" target="opt">修改密码</a></li> -->
+			<!--  <li id="z_5" class="home"><a href="<?php echo U('Admin/Index/changepwd',array('uid'=>$_SESSION['uid']));?>" target="opt">修改密码</a></li> -->
 	       <li id="z_6" class="home"><a href="javascript:void(0)" target="opt" onclick="changepwd();">修改密码</a></li>
 	       <li id="z_7" class="home"><a href="javascript:void(0)" target="opt" onclick="help();">查看帮助</a></li>
 	
@@ -41,8 +60,8 @@
           <div class="userpanel">
           <ul>
             <li>
-            <!--  <a href="<?php echo U('Admin/Index/changeadmin',array('userid'=>$_SESSION['uid']));?>" target="opt" ><i class="icon icon-user"></i>信息设置</a> -->
-            <a href="javascript:void(0)" target="opt"  onclick="changeadmin();"><i class="icon icon-user"></i>信息设置</a>
+            <!--  <a href="<?php echo U('Admin/Index/changemsg',array('userid'=>$_SESSION['uid']));?>" target="opt" ><i class="icon icon-user"></i>信息设置</a> -->
+            <a href="javascript:void(0)" target="opt"  onclick="changemsg();"><i class="icon icon-user"></i>信息设置</a>
              <a href="javascript:void(0)" target="opt" onclick="changepwd();"><i class="icon icon-key"></i>修改密码</a>
              <a href="<?php echo U('Admin/Index/logout');?>"><i class="icon icon-cog"></i>退出登录</a>
             </li>
@@ -77,7 +96,7 @@
 
     <div id="content">
     <!--  左部开始 -->
-      <div id="menu">
+      <div id="menu" >
 	  
 	  <div id="dis">
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -96,10 +115,12 @@
 		  </tr>
 		</table>
 		  <ul class="left-menu">
-			<?php if(is_array($role)): foreach($role as $key=>$v): if(($v['name'] == 'employee') OR ($v['name'] == 'shopleader')): ?><li>
-				  	<?php if($v['name'] == 'employee'): ?><span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+		  <!-- 角色判定 -->
+			<?php if(($us['roleremark'] == '店员') OR ($us['roleremark'] == '店长')): ?><li>
+				  	<?php if($us['roleremark'] == '店员'): ?><span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
 			            <ul class="son">
-			           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+			           		<li><a href="<?php echo U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']));?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
+			           		<li><a href="<?php echo U('Admin/Employee/order');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
 			           	</ul>
 				  	<?php else: ?>
 					  	 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
@@ -110,7 +131,7 @@
 			             </ul><?php endif; ?>
 		           
 		          </li>
-				<?php elseif($v['name'] == 'provider'): ?>
+				<?php elseif($us['roleremark'] == '供应商'): ?>
 							  <li>
 							  
 					            <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;供应商中心</a></span>
@@ -141,7 +162,8 @@
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;会员管理</a></span>
 					            <ul class="son">
-					           		<li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+					            <li><a href="<?php echo U('Admin/Book/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
+					           		<li><a href="<?php echo U('Admin/Memb/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
 					             </ul>
 					          </li>
 					          <li>
@@ -149,45 +171,185 @@
 					            <ul class="son">
 					           		<li><a href="<?php echo U('Admin/User/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;员工查询</a></li>
 					             </ul>
-					          </li><?php endif; endforeach; endif; ?>
-			
+					          </li><?php endif; ?>
+				 <!-- 角色判定结束 -->
 			 
-           <li>
-            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;权限管理中心</a></span>
-            <ul class="son">
-              <li><a href="<?php echo U('Admin/Rbac/index');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;用户列表</a></li>
-              <li><a href="<?php echo U('Admin/Rbac/role');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;角色列表</a></li>
-              <li><a href="<?php echo U('Admin/Rbac/node');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;节点列表</a></li>
-              <li><a href="<?php echo U('Admin/Rbac/addUser');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加用户</a></li>
-              <li><a href="<?php echo U('Admin/Rbac/addRole');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加角色</a></li>
-              <li><a href="<?php echo U('Admin/Rbac/addNode');?>" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加节点</a></li>
-            </ul>
-          </li>
+           
           <li>
             <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;个人信息中心</a></span>
             <ul class="son">
-              <li><a href="javascript:void(0)" target="opt"  onclick="changeadmin();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;个人信息设置</a></li>
-             <li><a href="javascript:void(0)" target="opt" onclick="changepwd();"><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;密码修改</a></li>
-             <li><a href="javascript:void(0)" target="opt"  onclick="help();"><i class="icon-fixed-width icon-book"></i>&nbsp;&nbsp;系统帮助</a></li>
+             <li><a href="" data-toggle="modal" data-target="#changemsgModal"  ><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;个人信息设置</a></li>
+             <li><a href="" data-toggle="modal" data-target="#changepwdModal"  ><i class="icon-fixed-width icon-cogs"></i>&nbsp;&nbsp;密码修改</a></li>
+             <li><a href="" data-toggle="modal" data-target="#helpModal"><i class="icon-fixed-width icon-book"></i>&nbsp;&nbsp;系统帮助</a></li>
             </ul>
           </li>
         </ul>
 		</div>
-		
-        <ul id="shortcut-ico" class="fn-hide">
-          <li><a href="<?php echo U('Admin/Msg/msg');?>" target="opt" title="公告管理"><i class="icon icon-pencil"></i></a></li>
-          <li><a href="<?php echo U('Admin/Show/user');?>" target="opt" title="成员管理"><i class="icon icon-pencil"></i></a></li>
-          <li><a href="<?php echo U('Admin/Paper/paper');?>" target="opt" title="论文管理"><i class="icon icon-pencil"></i></a></li>
-          <li><a href="<?php echo U('Admin/Project/project');?>" target="opt" title="项目管理"><i class="icon icon-pencil"></i></a></li>
-          <li><a href="<?php echo U('Admin/Facility/facility');?>" target="opt" title="设备管理"><i class="icon icon-pencil"></i></a></li>
+		<ul id="shortcut-ico" class="fn-hide">
+          <li><a href="<?php echo U('Admin/Shop/index');?>" target="opt" title="部门管理"><i class="icon icon-pencil"></i></a></li>
+          <li><a href="<?php echo U('Admin/Goods/index');?>" target="opt" title="商品管理"><i class="icon icon-pencil"></i></a></li>
+          <li><a href="<?php echo U('Admin/Order/index');?>" target="opt" title="订单管理"><i class="icon icon-pencil"></i></a></li>
+          <li><a href="<?php echo U('Admin/Memb/index');?>" target="opt" title="会员管理"><i class="icon icon-pencil"></i></a></li>
+          <li><a href="<?php echo U('Admin/User/index');?>" target="opt" title="员工管理"><i class="icon icon-pencil"></i></a></li>
         </ul>
-        <div class="close-left" title="点击显示快捷菜单"></div>
+		<div class="close-left" title="点击显示快捷菜单"></div>
       </div>
       <!--  左部结束 -->
 
       <!--  右部开始 -->
       <div id="opt">
         <iframe name="opt" src="<?php echo U('Admin/Index/home');?>" frameborder="0"></iframe>
+        
+        <!--个人信息设置模态框-->
+       
+		<div class="modal fade" id="changemsgModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+		   <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" >个人信息设置</h4>
+		      </div>
+		      <div class="modal-body">
+			     <form method='post' action="__URL__/update" role='form' class='form-horizontal' >
+	
+					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">工号:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control"  name="unum"  value='<?php echo ($us["unum"]); ?>' readonly="true">
+						     </div>
+					  </div>
+					  <div class="form-group">
+						    <label for="username" class="col-sm-2 control-label">姓名:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control"  name="uname" value='<?php echo ($us["uname"]); ?>'  >
+						    </div>
+					  </div>
+		  			  <div class="form-group">
+						    <label for="userbirth" class="col-sm-2 control-label">出生日期:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" onClick="WdatePicker()"  name="ubirth" value='<?php echo ($us["ubirth"]); ?>'>
+						    </div>
+					  </div>
+					 
+			
+					  <div class="form-group">
+						    <label for="usertel" class="col-sm-2 control-label">联系电话:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control"  name="uphone" value='<?php echo ($us["uphone"]); ?>'>
+						    </div>
+					  </div>
+					
+					    <div class="form-group">
+						    <label for="userlimits" class="col-sm-2 control-label">职位:</label>
+						    <div class="col-sm-10">
+						    	 <input type="text" class="form-control"  name="role"  value='<?php echo ($us["roleremark"]); ?>' readonly="true">
+						     </div>
+					  	</div>
+						  <div class="form-group">
+							    <label for="userlimits" class="col-sm-2 control-label">所属单位:</label>
+							    <div class="col-sm-10">
+						    	 	<input type="text" class="form-control"  name="shop" value='<?php echo ($us["shopsname"]); ?>' readonly="true">
+						    	</div>
+						  </div>
+					   <div class="form-group">
+					     <input type="hidden" name="uid" value='<?php echo ($us["uid"]); ?>'>
+					  </div>
+		  		   		<div class="form-group">
+						    <label for="usersex" class="col-sm-2 control-label">性别:</label>
+						    <?php if($us["umale"] == "1"): ?><div class="col-sm-10">
+						     	    <input type="radio"  name="umale" value='1'  style="width: 50px"  checked="checked"/>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio"   name="umale" value='0' style="width: 50px" />&nbsp;&nbsp;女
+						    	</div>
+						    <?php else: ?>
+						    	<div class="col-sm-10">
+						     	    <input type="radio"  name="umale" value='1'  style="width: 50px" />&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio"   name="umale" value='0' style="width: 50px" checked="checked"/>&nbsp;&nbsp;女
+						    	</div><?php endif; ?>
+				  		</div>
+			  		  
+					  
+				 
+		      </div>
+		      <div class="modal-footer">
+				       <input type="submit" class="btn btn-primary" value="保 存" >
+				      </div>
+		    </div>
+		     </form>
+		  </div>
+		</div>
+		<!--个人信息设置模态框结束-->
+		
+		 <!--密码修改模态框-->
+       
+		<div class="modal fade" id="changepwdModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+		   <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" >密码修改</h4>
+		      </div>
+		      <div class="modal-body">
+			     <form method='post' action="__URL__/updatepwd" role='form' class='form-horizontal' >
+	
+					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">工号:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control"  name="unum"  value='<?php echo ($us["unum"]); ?>' readonly="true">
+						     </div>
+					  </div>
+  					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">姓名:</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control"  name="uname"  value='<?php echo ($us["uname"]); ?>' readonly="true">
+						     </div>
+				  	 </div>
+  					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">原始密码:</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control"  name="upasswordold" >
+						     </div>
+					  </div>
+  					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">新密码:</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control"  name="upasswordnew" >
+						     </div>
+					  </div>
+  					 <div class="form-group">
+						    <label for="usernum" class="col-sm-2 control-label">确认密码:</label>
+						    <div class="col-sm-10">
+						      <input type="password" class="form-control"  name="upasswordrenew" >
+						     </div>
+				  </div>
+			  	 <div class="form-group">
+				     <input type="hidden" name="uid" value='<?php echo ($us["uid"]); ?>'>
+				  </div> 		  
+				</div>
+		      <div class="modal-footer">
+				       <input type="submit" class="btn btn-primary" value="保 存" >
+				      </div>
+		    </div>
+		     </form>
+		  </div>
+		</div>
+		<!--密码修改模态框结束-->
+		
+		 <!--帮助模态框-->
+       
+		<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+		   <div class="modal-dialog">
+		    <div class="modal-content">
+			      <div class="modal-header">
+			      	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" >系统帮助</h4>
+			      </div>
+			      <div class="modal-body">
+			      	<p class='help'>建议使用IE11、火狐、谷歌浏览器<br/>默认密码是：123456</p>
+				  </div>
+			 </div>
+		    </div>
+		</div>
+		<!--帮助模态框结束-->
       </div>
       <!--  右部结束 -->    
       
@@ -195,40 +357,7 @@
     
 	<!-- 左部js开始 -->
       <script type="text/javascript">
-      var changepwdUrl = "<?php echo U('Admin/Index/changepwd',array('userid'=>$_SESSION['uid']),'');?>";
-      var changeadminUrl = "<?php echo U('Admin/Index/changeadmin',array('userid'=>$_SESSION['uid']));?>";
-       var helpUrl = "<?php echo U('Admin/Index/help','','');?>";
-      
-      function changepwd(){
-    	  $.layer({
-    		    type : 1,
-    		    title : '修改密码',
-    		    page : {url : changepwdUrl},
-    		    area : ['500px' , '300px'],
-    		    offset : ['100px','']
-    		});
-      }
-      
-      function changeadmin(){   	      	
-        	  $.layer({
-        		    type : 1,
-        		    title : '管理员信息设置',
-        		    page : {url : changeadminUrl},
-        		    area : ['500px' , '530px'],
-        		    offset : ['60px','']
-        		});
-      }
-
-      function help(){             
-            $.layer({
-                type : 2,
-                title : '查看帮助',
-                iframe : {src : helpUrl},
-                area : ['500px' , '500px'],
-                offset : ['60px','']
-            });
-      }
-      
+     
       
       window.onload=function(){(window.onresize=function(){
           //获取可见宽度
@@ -277,5 +406,6 @@
       });
       </script>
     <!--   左部分js结束 -->
+  
 </body>
 </html>

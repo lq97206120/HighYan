@@ -7,7 +7,7 @@ class UserAction extends CommonAction{
 	$this->shops=M('shop')->select();
 	import("ORG.Util.Page");
 	$count=D('UserRelation')->relation(true)->count();
-	$page=new Page($count,13);
+	$page=new Page($count,12);
 	$limit = $page->firstRow . ',' . $page->listRows;
 	$user=D('UserRelation')->relation(true)->limit($limit)->select();
 	$user=user_manyone($user);//消除数组
@@ -133,7 +133,7 @@ class UserAction extends CommonAction{
 			if($searchcondition=="unum"||$searchcondition=="uname"||$searchcondition=="uphone"||$searchcondition=="ustatus"||$searchcondition=="umale"){
 				$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
 				$count = D( 'UserRelation' )->where($condition)->count ();
-				$page = new Page ( $count, 13 );
+				$page = new Page ( $count, 12 );
 				$limit = $page->firstRow . ',' . $page->listRows;
 				
 				$user = D ( 'UserRelation' )->relation(true)->where($condition)->limit ( $limit )->order('unum desc')->select ();
@@ -157,7 +157,7 @@ class UserAction extends CommonAction{
 					
 					}
 					$count =$m;
-					$page = new Page ( $m, 13 );
+					$page = new Page ( $m, 12 );
 					$limit = $page->firstRow . ',' . $page->listRows;
 					$this->page = $page->show ();
 					$this->user = $role;
@@ -172,7 +172,7 @@ class UserAction extends CommonAction{
 										
 				}
 					$count = $n;
-					$page = new Page ( $n, 13 );
+					$page = new Page ( $n, 12 );
 					$limit = $page->firstRow . ',' . $page->listRows;
 					$this->page = $page->show ();
 					$this->user = $shop;

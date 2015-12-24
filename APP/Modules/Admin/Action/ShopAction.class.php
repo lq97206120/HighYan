@@ -22,6 +22,7 @@ Class ShopAction extends CommonAction{
 				$receive=array(
 				'sname'=>$_POST['sname'],
 				'saddr'=>$_POST['saddr'],
+				'sguide'=>$_POST['sguide'],
 				'sphone'=>$_POST['sphone'],
 				'sstatus'=>'1',
 			
@@ -46,6 +47,7 @@ Class ShopAction extends CommonAction{
 				'sid'=>$_POST['sid'],
 				'sname'=>$_POST['sname'],
 				'saddr'=>$_POST['saddr'],
+				'sguide'=>$_POST['sguide'],
 				'sphone'=>$_POST['sphone'],
 				'sstatus'=>$_POST['sstatus'],
 								
@@ -100,10 +102,10 @@ Class ShopAction extends CommonAction{
 		
 		//获取该单位有的商品
 		$possess=M('goods_shop')->where(array('shop_id'=>$_GET['sid']))->getField('goods_id',true);
-	
+		
 		//组合数组
 		$goods=goods_merge($goods,$possess);
-		//p($goods);
+				
 		$shop=M('shop')->where(array('sid'=>$_GET['sid']))->field(array('sname,sid'))->find();
 		$this->goods=$goods;
 		$this->shop=$shop;

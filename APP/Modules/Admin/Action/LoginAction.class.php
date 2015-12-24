@@ -46,7 +46,7 @@ class LoginAction extends Action{
 					);
 					M('user')->save($data);
 					
-					session(C('USER_AUTH_KEY'),$result['uid']);
+					session('uid',$result['uid']);
 					session('unum',$result['unum']);
 					session('uname',$result['uname']);
 					session('upassword',$result['upassword']);

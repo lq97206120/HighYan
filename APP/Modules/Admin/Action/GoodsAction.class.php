@@ -21,6 +21,7 @@ class GoodsAction extends CommonAction{
 				$receive=array(
 				'gnum'=>$_POST['gnum'],
 				'gname'=>$_POST['gname'],
+				'gprice'=>$_POST['gprice'],
 				'gclass'=>$_POST['gclass'],
 				'gstatus'=>'1',
 			
@@ -45,6 +46,7 @@ class GoodsAction extends CommonAction{
 				'gid'=>$_POST['gid'],
 				'gnum'=>$_POST['gnum'],
 				'gname'=>$_POST['gname'],
+				'gprice'=>$_POST['gprice'],
 				'gclass'=>$_POST['gclass'],
 				'gstatus'=>$_POST['gstatus'],
 								
