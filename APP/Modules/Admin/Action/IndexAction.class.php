@@ -6,6 +6,7 @@ class IndexAction extends CommonAction{
 		$us = D('UserRelation')->relation(true)->where(array('uid'=>$uid))->find();
 		$us=user_one($us);
 		$this->us = $us;
+		
 		$this->display ();
 	}
 	//显示后台中间主页

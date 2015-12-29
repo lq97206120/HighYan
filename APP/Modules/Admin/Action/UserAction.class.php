@@ -9,7 +9,7 @@ class UserAction extends CommonAction{
 	$count=D('UserRelation')->relation(true)->count();
 	$page=new Page($count,12);
 	$limit = $page->firstRow . ',' . $page->listRows;
-	$user=D('UserRelation')->relation(true)->limit($limit)->select();
+	$user=D('UserRelation')->relation(true)->order('unum')->limit($limit)->select();
 	$user=user_manyone($user);//消除数组
 	$this->user=$user;
 	$this->page = $page->show ();
@@ -21,7 +21,11 @@ class UserAction extends CommonAction{
 			if (! empty ( $uid )) {
 				$user = M ( "user" );
 				$result = $user->delete ( $uid );
-				if (false !== $result) {
+				//清空role_user中的记录
+				$deleteroleResult=M('role_user')->where(array('user_id'=>$uid))->delete();
+				//清空shop_user中的记录
+				$deleteshopResult=M('shop_user')->where(array('user_id'=>$uid))->delete();
+				if (false !== $roleResult||$shopResult||$result) {
 					
 				} else {
 					$this->error ( '删除出错！' );
@@ -136,7 +140,7 @@ class UserAction extends CommonAction{
 				$page = new Page ( $count, 12 );
 				$limit = $page->firstRow . ',' . $page->listRows;
 				
-				$user = D ( 'UserRelation' )->relation(true)->where($condition)->limit ( $limit )->order('unum desc')->select ();
+				$user = D ( 'UserRelation' )->relation(true)->where($condition)->order('unum')->limit ( $limit )->order('unum desc')->select ();
 				
 				$user=user_manyone($user);
 				
@@ -144,7 +148,7 @@ class UserAction extends CommonAction{
 				$this->user = $user;
 				$this->roles=M('role')->select();//列出角色表
 				$this->shops=M('shop')->select();
-				$this->display();
+				$this->display('index');
 			}else{
 				
 			//处理role与shop
@@ -163,7 +167,7 @@ class UserAction extends CommonAction{
 					$this->user = $role;
 					$this->roles=M('role')->select();//列出角色表
 					$this->shops=M('shop')->select();
-					$this->display();
+					$this->display('index');
 					
 					
 				}elseif($searchcondition=="shop"){
@@ -178,7 +182,7 @@ class UserAction extends CommonAction{
 					$this->user = $shop;
 					$this->roles=M('role')->select();//列出角色表
 					$this->shops=M('shop')->select();
-					$this->display();
+					$this->display('index');
 				
 			}
 

@@ -13,7 +13,7 @@ class MembAction extends CommonAction{
 		
 	}
 
-	// 添加用户
+	// 添加会员
 	public function insert() {
 				
 		$receive=array(
@@ -77,7 +77,7 @@ class MembAction extends CommonAction{
 			$memb=M('memb')->where($condition)->limit ( $limit )->select ();
 			$this->page = $page->show ();
 			$this->memb = $memb;
-			$this->display();
+			$this->display('index');
 		
 		}
 	}

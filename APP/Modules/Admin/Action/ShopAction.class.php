@@ -7,7 +7,7 @@ Class ShopAction extends CommonAction{
 		$count=M('shop')->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$shop=M('shop')->limit($limit)->select();
+		$shop=M('shop')->order('sclass')->limit($limit)->select();
 		$this->shop=$shop;
 		$this->page = $page->show ();
 		$this->display();
@@ -21,9 +21,11 @@ Class ShopAction extends CommonAction{
 		if(empty($shopResult)){
 				$receive=array(
 				'sname'=>$_POST['sname'],
+				'sclass'=>$_POST['sclass'],
 				'saddr'=>$_POST['saddr'],
 				'sguide'=>$_POST['sguide'],
 				'sphone'=>$_POST['sphone'],
+				'smail'=>$_POST['smail'],
 				'sstatus'=>'1',
 			
 			);
@@ -46,9 +48,11 @@ Class ShopAction extends CommonAction{
 			$shop=array(
 				'sid'=>$_POST['sid'],
 				'sname'=>$_POST['sname'],
+				'sclass'=>$_POST['sclass'],
 				'saddr'=>$_POST['saddr'],
 				'sguide'=>$_POST['sguide'],
 				'sphone'=>$_POST['sphone'],
+				'smail'=>$_POST['smail'],
 				'sstatus'=>$_POST['sstatus'],
 								
 				);
@@ -80,7 +84,15 @@ Class ShopAction extends CommonAction{
 		
 		$searchcondition = I ( 'searchcondition','');
 		$searchcontent = I('searchcontent','');
-
+		if($searchcondition=='sclass'){
+			switch($searchcontent){
+				case '店铺': $searchcontent=1;break;
+				case '管理':	$searchcontent=2;break;
+				case '供应商':$searchcontent=3;break;
+					
+			}
+					
+		}
 		
 		if(!empty($searchcondition) && !empty($searchcontent) ){
 			import ( 'ORG.Util.Page' );
@@ -88,10 +100,10 @@ Class ShopAction extends CommonAction{
 			$count=M('shop')->where($condition)->count ();
 			$page=new Page($count,10);
 			$limit=$page->firstRow . ',' . $page->listRows;
-			$shop=M('shop')->where($condition)->limit ( $limit )->select ();
+			$shop=M('shop')->where($condition)->order('sclass')->limit ( $limit )->select ();
 			$this->page = $page->show ();
 			$this->shop = $shop;
-			$this->display();
+			$this->display('index');
 		
 		}
 	}

@@ -36,7 +36,7 @@ function goods_merge($goods,$possess=null){
 		switch($i){
 			case '0':$class[$i]['classname']="上衣";break;
 			case '1':$class[$i]['classname']="裤子";break;
-			case '2':$class[$i]['classname']="鞋子";break;
+			case '2':$class[$i]['classname']="背心";break;
 		}
 		foreach($arr as $t){
 			if($i==($t['gclass']-1))
@@ -72,25 +72,47 @@ function shop_merge($shop,$assign=null){
 //	return $class;//返回给上级['child']
 }
 //用户表的合并
-function user_manyone($user){
+function user_manyone($user,$sid){
 	$arra=array();
-	
+	if($sid==0){
+		for($i=0;$i<count($user);$i++){
+			$arra[$i]['uid']=$user[$i]['uid'];
+			$arra[$i]['unum']=$user[$i]['unum'];
+			$arra[$i]['uname']=$user[$i]['uname'];
+			$arra[$i]['upassword']=$user[$i]['upassword'];
+			$arra[$i]['uphone']=$user[$i]['uphone'];
+			$arra[$i]['umale']=$user[$i]['umale'];
+			$arra[$i]['ubirth']=$user[$i]['ubirth'];
+			$arra[$i]['udate']=$user[$i]['udate'];
+			$arra[$i]['ustatus']=$user[$i]['ustatus'];
+			$arra[$i]['ulogintime']=$user[$i]['ulogintime'];
+			$arra[$i]['uloginip']=$user[$i]['uloginip'];
+			$arra[$i]['role']=$user[$i]['role'][0]['id'];
+			$arra[$i]['roleremark']=$user[$i]['role'][0]['remark'];
+			$arra[$i]['shop']=$user[$i]['shop'][0]['sid'];
+			$arra[$i]['shopsname']=$user[$i]['shop'][0]['sname'];
+		}
+	}
+	else{
 	for($i=0;$i<count($user);$i++){
-		$arra[$i]['uid']=$user[$i]['uid'];
-		$arra[$i]['unum']=$user[$i]['unum'];
-		$arra[$i]['uname']=$user[$i]['uname'];
-		$arra[$i]['upassword']=$user[$i]['upassword'];
-		$arra[$i]['uphone']=$user[$i]['uphone'];
-		$arra[$i]['umale']=$user[$i]['umale'];
-		$arra[$i]['ubirth']=$user[$i]['ubirth'];
-		$arra[$i]['udate']=$user[$i]['udate'];
-		$arra[$i]['ustatus']=$user[$i]['ustatus'];
-		$arra[$i]['ulogintime']=$user[$i]['ulogintime'];
-		$arra[$i]['uloginip']=$user[$i]['uloginip'];
-		$arra[$i]['role']=$user[$i]['role'][0]['id'];
-		$arra[$i]['roleremark']=$user[$i]['role'][0]['remark'];
-		$arra[$i]['shop']=$user[$i]['shop'][0]['sid'];
-		$arra[$i]['shopsname']=$user[$i]['shop'][0]['sname'];
+			if($user[$i]['shop'][0]['sid']==$sid){
+					$arra[$i]['uid']=$user[$i]['uid'];
+					$arra[$i]['unum']=$user[$i]['unum'];
+					$arra[$i]['uname']=$user[$i]['uname'];
+					$arra[$i]['upassword']=$user[$i]['upassword'];
+					$arra[$i]['uphone']=$user[$i]['uphone'];
+					$arra[$i]['umale']=$user[$i]['umale'];
+					$arra[$i]['ubirth']=$user[$i]['ubirth'];
+					$arra[$i]['udate']=$user[$i]['udate'];
+					$arra[$i]['ustatus']=$user[$i]['ustatus'];
+					$arra[$i]['ulogintime']=$user[$i]['ulogintime'];
+					$arra[$i]['uloginip']=$user[$i]['uloginip'];
+					$arra[$i]['role']=$user[$i]['role'][0]['id'];
+					$arra[$i]['roleremark']=$user[$i]['role'][0]['remark'];
+					$arra[$i]['shop']=$user[$i]['shop'][0]['sid'];
+					$arra[$i]['shopsname']=$user[$i]['shop'][0]['sname'];
+			}
+		}
 	}
 	return $arra;
 }
@@ -113,5 +135,13 @@ function user_one($user){
 		$arra['shop']=$user['shop'][0]['sid'];
 		$arra['shopsname']=$user['shop'][0]['sname'];
 	
+	return $arra;
+}
+function shopposess($goods,$i){
+	$arra=array();
+	foreach($goods as $v){
+		if($i==$v['gclass'])
+		$arra[]=$v;
+	}
 	return $arra;
 }

@@ -54,7 +54,7 @@
 		<td>{$u.gnum}</td>
 		<td>{$u.gname}</td>
 		<td>{$u.gprice}</td>
-		<td><if condition="$u['gclass'] eq 1">上衣<elseif condition="$u['gclass'] eq 2"/>裤子<else/>鞋子</if></td>
+		<td><if condition="$u['gclass'] eq 1">上衣<elseif condition="$u['gclass'] eq 2"/>裤子<else/>背心</if></td>
 		<td><a href="{:U('Admin/Goods/shoplist',array('gid'=>$u['gid']))}">分配管理</a></td>
 		<td><if condition="$u['gstatus'] eq 1">开启<else/>关闭</if></td>
 		<td>
@@ -101,7 +101,7 @@
 				    <div class="col-sm-10">
 				     <input type="radio"   name="gclass" value='1' checked="checked" style="width: 50px"/>&nbsp;&nbsp;上衣&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio"     name="gclass" value='2' style="width: 50px"/>&nbsp;&nbsp;裤子
-					<input type="radio"     name="gclass" value='3' style="width: 50px"/>&nbsp;&nbsp;鞋子
+					<input type="radio"     name="gclass" value='3' style="width: 50px"/>&nbsp;&nbsp;背心
 				    </div>
 	 		  </div>
 	      
@@ -152,7 +152,7 @@
 			    <div class="col-sm-10">
 			      	<input type="radio"   name="gclass" value='1' checked="checked" style="width: 50px"/>&nbsp;&nbsp;上衣&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio"   name="gclass" value='2' style="width: 50px"/>&nbsp;&nbsp;裤子
-					<input type="radio"   name="gclass" value='3' style="width: 50px"/>&nbsp;&nbsp;鞋子
+					<input type="radio"   name="gclass" value='3' style="width: 50px"/>&nbsp;&nbsp;背心
 			    </div>
 		  </div> 
 		 

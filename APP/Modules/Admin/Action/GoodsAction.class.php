@@ -98,7 +98,7 @@ class GoodsAction extends CommonAction{
 			$this->page = $page->show ();
 			$this->goods = $goods;
 			
-			$this->display();
+			$this->display('index');
 		
 		}
 	}

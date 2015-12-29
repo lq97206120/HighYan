@@ -122,14 +122,18 @@
 				  		 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
 			            <ul class="son">
 			           		<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
-			           		<li><a href="{:U('Admin/Employee/order')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
-			           	</ul>
+			           		<li><a href="{:U('Admin/Employee/selforder',array('unum'=>$us['unum'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;个人订单查询</a></li>
+			           		<li><a href="{:U('Admin/Employee/shoporder',array('ossname'=>$us['shopsname'],))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店铺订单查询</a></li>
+			           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+			           </ul>
 				  	<else/>
 					  	 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
 			            <ul class="son">
-			           		<li><a href="{:U('Admin/Msg/msg')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
-			           		<li><a href="{:U('Admin/Msg/msg')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品管理</a></li>
-			           		<li><a href="{:U('Admin/Msg/msg')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店员管理</a></li>
+			            	<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
+			           		<li><a href="{:U('Admin/Shopleader/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+			           		<li><a href="{:U('Admin/Shopleader/goodslist',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品管理</a></li>
+			           		<li><a href="{:U('Admin/Shopleader/user',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店员管理</a></li>
+			           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
 			             </ul>
 				  	</if>
 		           
@@ -139,7 +143,7 @@
 							  
 					            <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;供应商中心</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Msg/msg')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		<li><a href="{:U('Admin/Provider/index',array('opsname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
 					             </ul>
 					          </li>
 						<else/>
@@ -159,7 +163,7 @@
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;订单管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Msg/msg')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		<li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
 					             </ul>
 					          </li>
 					          <li>

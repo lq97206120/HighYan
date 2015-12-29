@@ -52,7 +52,7 @@ class BookAction extends CommonAction{
 			$book=M('book')->where($condition)->limit ( $limit )->order('bstatus asc')->select ();
 			$this->page = $page->show ();
 			$this->book=$book;
-			$this->display();
+			$this->display('index');
 		
 		}
 	}
