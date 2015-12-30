@@ -27,11 +27,18 @@ class OrderAction extends CommonAction{
 								
 				);
 				$result=M('order')->save($receive);
+				
 				if($result){
+					
+					$opsname=M('shop')->where(array('sname'=>$receive['opsname']))->find();
+					$mail=$opsname['smail'];
+					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,订单号为:{$receive['onum']}.");
+					
 					$this->success("修改成功",U('Admin/Order/index',array('unum'=>$_POST['unum'])));
 				}else
 					$this->error("未改动",U('Admin/Order/index',array('unum'=>$_POST['unum'])));
-	}
+		}
+	
 	//订单查询
 	public function ordersearch(){
 		

@@ -43,26 +43,14 @@
         <span class="slogan">v1.0</span>
       </div>
 	  
-	   <ul class="headermenu">
-	       <li id="z_1" class="home"><a href="{:U('Admin/Msg/msg')}" target="opt">公告管理</a></li>  
-         <li id="z_2" class="home"><a href="{:U('Admin/Show/user')}" target="opt">成员管理</a></li>        
-	       <li id="z_3" class="home"><a href="{:U('Admin/Paper/paper')}" target="opt">论文管理</a></li>
-	       <li id="z_4" class="home"><a href="{:U('Admin/Project/project')}" target="opt">项目管理</a></li>
-          <li id="z_5" class="home"><a href="{:U('Admin/Facility/facility')}" target="opt">设备管理</a></li>
-			<!--  <li id="z_5" class="home"><a href="{:U('Admin/Index/changepwd',array('uid'=>$_SESSION['uid']))}" target="opt">修改密码</a></li> -->
-	       <li id="z_6" class="home"><a href="javascript:void(0)" target="opt" onclick="changepwd();">修改密码</a></li>
-	       <li id="z_7" class="home"><a href="javascript:void(0)" target="opt" onclick="help();">查看帮助</a></li>
-	
-	         
-	    </ul>
       <div class="head-right">
-        <div class="userinfo user-name"><span><i class="icon-sort"></i>管理员&nbsp;<php>echo $_SESSION['uname']</php></span>
+        <div class="userinfo user-name"><span><i class="icon-sort"></i>{$us['roleremark']}:{$us['unum']}</span>
           <div class="userpanel">
           <ul>
             <li>
             <!--  <a href="{:U('Admin/Index/changemsg',array('userid'=>$_SESSION['uid']))}" target="opt" ><i class="icon icon-user"></i>信息设置</a> -->
-            <a href="javascript:void(0)" target="opt"  onclick="changemsg();"><i class="icon icon-user"></i>信息设置</a>
-             <a href="javascript:void(0)" target="opt" onclick="changepwd();"><i class="icon icon-key"></i>修改密码</a>
+            <a href="" data-toggle="modal" data-target="#changemsgModal"><i class="icon icon-user"></i>信息设置</a>
+             <a href="" data-toggle="modal" data-target="#changepwdModal"><i class="icon icon-key"></i>修改密码</a>
              <a href="{:U('Admin/Index/logout')}"><i class="icon icon-cog"></i>退出登录</a>
             </li>
           </ul>
@@ -105,7 +93,7 @@
 				<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
 				  <tr>
 					<td width="25%" rowspan="2"><img src="__PUBLIC__/images/ico02.gif" width="35" height="35" onclick="" /></td>
-					<td width="75%" height="22" class="left-font01"><font color="#0088cc">您好,<php>echo $_SESSION['uname']</php></font></td>
+					<td width="75%" height="22" class="left-font01"><font color="#0088cc">您好,{$us['uname']}</font></td>
 				  </tr>
 				  <tr>
 					<td height="22" class="left-font01"><a href="{:U('Admin/Index/logout')}"><font color="#0088cc">[&nbsp;退出&nbsp;]</font></a></td>
@@ -179,6 +167,13 @@
 					           		<li><a href="{:U('Admin/User/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;员工查询</a></li>
 					             </ul>
 					          </li>
+					           <li>
+							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;公告管理</a></span>
+					            <ul class="son">
+					           		<li><a href="{:U('Admin/Inform/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;公告查询</a></li>
+					             </ul>
+					          </li>
+					          
 				 </if>
 				 <!-- 角色判定结束 -->
 			 

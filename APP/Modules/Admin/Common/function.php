@@ -145,3 +145,4 @@ function shopposess($goods,$i){
 	}
 	return $arra;
 }
+   

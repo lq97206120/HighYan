@@ -545,6 +545,13 @@ class EmployeeAction extends CommonAction{
 		if (! empty ($onum )) {
 				$receive=array('onum'=>$onum,'pullok'=>1,);
 				$result =M('order')->save($receive);
+				
+				$order=M(order)->where(array('onum'=>$onum))->find();
+				$opsname=$order['opsname'];
+				$shop=M('shop')->where(array('sname'=>$opsname))->find();
+				$mail=$shop['smail'];
+				$r=think_send_mail("{$mail}",'海彦',"打样完成","打样完成,订单号为:{$onum}.");
+				
 				if (false !== $result) {
 					
 				} else {

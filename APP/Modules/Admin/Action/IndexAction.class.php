@@ -11,6 +11,14 @@ class IndexAction extends CommonAction{
 	}
 	//显示后台中间主页
 	public function home(){
+		
+		$uid =$_SESSION['uid'];
+		$us = D('UserRelation')->relation(true)->where(array('uid'=>$uid))->find();
+		$us=user_one($us);
+		$this->us = $us;
+		$inform=M('inform')->order('idate desc')->select();
+		$new=$inform[0];
+		$this->new=$new;
 		$this->display();
 	}
 

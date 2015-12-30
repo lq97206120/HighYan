@@ -198,6 +198,7 @@ class ShopleaderAction extends CommonAction{
 		//处理打样
 		if($_POST['ispullleader']=='1') {$pullok=0;$providerpull=0;}
 		else {$pullok=1;$providerpull=1;}
+		
 		$receive=array(
 				'onum'=>$_POST['onum'],
 				'omnum'=>$_POST['omnum'],
@@ -277,9 +278,17 @@ class ShopleaderAction extends CommonAction{
 			$db=M('order');
 			$result=$db->save($receive);
 			if($result){
-				$this->success("添加成功",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				if($_POST['leaderverifystatus']=='1'){
+					$center=M('shop')->where(array('sname'=>"管理部门"))->find();
+					$mail=$center['smail'];
+					
+					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,订单号为:{$receive['onum']}.");
+					
+					
+				}
+				$this->success("保存成功",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 			}else 
-				$this->error("添加失败",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->error("保存失败",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 	
 	}
 	//订单查询
@@ -378,11 +387,19 @@ class ShopleaderAction extends CommonAction{
 			}
 		
 	}
-	//处理打样收发
+
+//处理打样收发
 	public function pullok($onum){
 		if (! empty ($onum )) {
 				$receive=array('onum'=>$onum,'pullok'=>1,);
 				$result =M('order')->save($receive);
+				
+				$order=M(order)->where(array('onum'=>$onum))->find();
+				$opsname=$order['opsname'];
+				$shop=M('shop')->where(array('sname'=>$opsname))->find();
+				$mail=$shop['smail'];
+				$r=think_send_mail("{$mail}",'海彦',"打样完成","打样完成,订单号为:{$onum}.");
+				
 				if (false !== $result) {
 					
 				} else {
