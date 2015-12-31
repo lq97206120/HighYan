@@ -7,7 +7,7 @@ class BookAction extends CommonAction{
 		$count=M('book')->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$book=M('book')->limit($limit)->order('bstatus asc')->select();
+		$book=M('book')->limit($limit)->order('bstatus,bdate desc')->select();
 		$this->book=$book;
 		$this->page = $page->show ();
 		$this->display();

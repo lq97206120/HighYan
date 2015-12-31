@@ -7,7 +7,7 @@ class EmployeeAction extends CommonAction{
 		$count=M('book')->where(array('bsid'=>$_GET['sid']))->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$book=M('book')->where(array('bsid'=>$_GET['sid']))->limit($limit)->order('bstatus asc')->select();
+		$book=M('book')->where(array('bsid'=>$_GET['sid']))->limit($limit)->order('bstatus,bdate desc')->select();
 		$this->book=$book;
 		//店铺id
 		$this->bsid=$_GET['sid'];

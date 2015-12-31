@@ -64,7 +64,7 @@
 		<td>{$u.bname}</td>
 		<td><if condition="$u['bmale'] eq 1">男<else/>女</if></td>
 		<td>{$u.bphone}</td>
-		<td>{$u.bdate}</td>
+		<td>{$u.bdate|date='y-m-d H:i',###}</td>
 		<td>{$u.bshopsname}</td>
 		<td><if condition="$u['bstatus'] eq 0"><a class='blue' href="javascript:void(0)" onclick="changebstatus({$u.bnum},{$uid})">未处理</a><else/>已处理</if></td>
 		<td>{$u.bunum}</td>
