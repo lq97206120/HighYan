@@ -36,13 +36,20 @@ class UserAction extends CommonAction{
 		
 	}
 	
-	// 修改用户信息
-	public function modify() {
-		p($_POST);
-		$userid = I ( 'userid', '', 'intval' );
-		$us = M ( 'user' )->find ( $userid );
-		$this->us = $us;
-		$this->display ();
+	// 重置用户密码
+	public function resetpwd($uid){
+		if (! empty ( $uid )) {
+					$user = M ( "user" );
+					$receive=array('uid'=>$uid,'upassword'=>md5("123456"),);
+					$result = $user->save ( $receive );
+					if ($result) {
+						$this->success("修改成功");
+					} else {
+						$this->error ( '重置出错！' );
+					}
+				} else {
+					$this->error ( 'ID错误！' );
+				}
 	}
 	
 	// 更新用户信息

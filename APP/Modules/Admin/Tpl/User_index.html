@@ -70,6 +70,7 @@
 		<td>{$u.role}</td>
 		<td>{$u.shop}</td>
 		<td>
+			<a href="javascript:void(0)" onclick="resetpwd({$u.uid})">密码重置&nbsp;</a>
 			<a href="javascript:void(0)" onclick="deleteuser({$u.uid})">删除</a>
 		</td>		
 	</tr>
@@ -280,6 +281,29 @@
 				return;
 			}	
 		}
+
+
+		function resetpwd(uid){
+			if(confirm("确认重置")){
+			$.ajax({
+				type:"POST",
+				url:"__URL__/resetpwd/uid/"+uid,
+				success:function(data,textStatus,jqXHR){
+				alert("重置成功");
+					window.location.reload();
+
+				},
+				error:function(jqXHR,textStatus,errorThrown){
+					alert("重置失败");
+				}
+			})
+				
+			}
+			else{
+			
+				return;
+			}	
+		}
 		
 		$(function(){
 			$('#searchbtn').click(function(){
@@ -402,7 +426,7 @@
 		       {field:'shopsname',title:'所属单位',width:80},
 		       {field:'role',title:'rid',width:20,hidden:true},
 		        {field:'shop',title:'sid',width:20,hidden:true},
-		        {field:'ss',title:'操作',width:60},
+		        {field:'ss',title:'操作',width:100},
 		       
 		        
 		   	  ]]

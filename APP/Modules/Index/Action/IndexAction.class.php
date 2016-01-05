@@ -16,7 +16,9 @@ class IndexAction extends Action{
 	
 	
 	//联系我们
-	public function contactUs(){
+	public function contactus(){
+		$menu=M('menu')->order('mid')->select();
+		$this->menu=$menu;
 		$this->display();
 	}
 	//预约

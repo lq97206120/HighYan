@@ -49,7 +49,7 @@
 	<div style="margin:10px 0;"></div>
 	
 	
-	<table id="dg" title="部门信息列表" style="width:1100px;height:308px" >
+	<table id="dg" title="部门信息列表" style="width:1200px;height:308px" >
 	<foreach name='shop' item='u'>
 	<tr>
 		<td>{$u.sid}</td>
@@ -59,6 +59,7 @@
 		<td>{$u.sphone}</td>
 		<td>{$u.smail}</td>
 		<td><a href="{:U('Admin/Shop/goodslist',array('sid'=>$u['sid']))}">商品管理</a></td>
+		<td><if condition="$u['sclass']  eq 1"><a href="{:U('Admin/Shop/frontset',array('sid'=>$u['sid']))}">前台设置</a><else/>&nbsp;</if></td>
 		<td><if condition="$u['sstatus'] eq 1">开启<else/>关闭</if></td>
 		<td>{$u.sguide}</td>
 		<td>
@@ -105,7 +106,8 @@
 		  <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">路线</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="sguide" name="sguide"  placeholder="不能为空">
+			      <textarea class="form-control" rows="3" id="sguide" name="sguide"  placeholder="不能为空"></textarea>
+			      
 			    </div>
 		  </div>
 		  <div class="form-group">
@@ -168,7 +170,7 @@
 		 <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">路线</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="sguide" name="sguide"  placeholder="不能为空">
+			      <textarea class="form-control" rows="3" id="sguide" name="sguide"  placeholder="不能为空"></textarea>
 			    </div>
 		  </div>
 		  <div class="form-group">
@@ -336,7 +338,8 @@
 		        {field:'saddr',title:'地址',width:80},
 		        {field:'sphone',title:"电话",width:40},
 		        {field:'smail',title:"邮箱",width:60},
-		        {field:'sgoods',title:"商品管理",width:20},
+		        {field:'sgoods',title:"商品管理",width:30},
+		        {field:'sfrontset',title:"前台设置",width:30},
 		        {field:'sstatus',title:"状态",width:20},
 		        {field:'sguide',title:"路线",width:80},
 		        {field:'ss',title:'操作',width:30},

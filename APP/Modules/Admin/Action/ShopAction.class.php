@@ -139,5 +139,19 @@ Class ShopAction extends CommonAction{
 		}else 
 			$this->error("删除失败！",U('Admin/Shop/index'));
 	}
+	//处理前台参数
+	public function frontset(){
+		$shop=M('shop')->where(array('sid'=>$_GET['sid']))->field(array('sname,sid,simage,snorth,seast'))->find();
+		$this->shop=$shop;
+		$this->display();
+	}
+	//处理前台参数handle
+	public function frontsethandle(){
+		$result=M('shop')->save($_POST);
+		if($result)
+			$this->success('修改成功！',U('Admin/Shop/index'));
+		else 
+			$this->error("修改失败！",U('Admin/Shop/index'));	
+	}
 	
 }

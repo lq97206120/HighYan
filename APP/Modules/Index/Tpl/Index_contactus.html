@@ -4,7 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>海彦男仕礼服</title>
-<link rel="stylesheet" href="__PUBLIC__/Css/common.css"/>
+
+ <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.css">
+ <link rel="stylesheet" href="__PUBLIC__/Css/common.css"/>
+ <style>
+ 	.center{text-align:center;}
+ 	.book{margin:4em auto;width:35em;}
+ 	body{font-size:100%;}
+ 	.control-label{font-size:80%;}
+ </style>
 <script type="text/javascript" src="__PUBLIC__/Js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -47,12 +55,27 @@
 			</ul>
 		</nav>
 		<div class="content">
-			{$singlemenu['mcontent']}
+			<h2 class='center'>预约单</h2>
+			<hr/>
+			
 		</div>
 		<footer>
 			<img src="__PUBLIC__/Images/bottomNew.gif">
 		</footer>
 	</div>
-
+<script>
+	$(function(){
+		
+		$('#adduserbtn').click(function(){
+							
+			if($('#shop').val() == '0'||$('#bphone').val() == ''){
+				alert('联系电话不能为空或者请选择店铺');
+				return false;
+			}
+									
+		});
+		
+	});
+</script>
 </body>
 </html>
