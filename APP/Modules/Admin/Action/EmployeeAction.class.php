@@ -439,10 +439,12 @@ class EmployeeAction extends CommonAction{
 		
 		import("ORG.Util.Page");
 		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->order('shopok')->count();
+		
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','omnum','omname','omphone','ougname','odgname','obgname','osunum','bookdate','leaderverifystatus','ispullleader','providerpull','pullok','providerok','shopok','okdate');
 		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('leaderverifystatus,providerpull,pullok,providerok,shopok')->select();
+		
 		$this->order=$order;
 		
 //		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();

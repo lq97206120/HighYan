@@ -27,8 +27,5 @@ class FrontAction extends CommonAction{
 		else
 		$this->error('保存失败',U('Admin/Front/menu'));
 	}
-	//联系我们中的图片管理
-	public function contactus(){
-		$this->display();
-	}
+	
 }

@@ -2,6 +2,7 @@
 class IndexAction extends CommonAction{
 	//后台首页
 	public function index(){
+		//p($_SESSION);
 		$uid =$_SESSION['uid'];
 		$us = D('UserRelation')->relation(true)->where(array('uid'=>$uid))->find();
 		$us=user_one($us);

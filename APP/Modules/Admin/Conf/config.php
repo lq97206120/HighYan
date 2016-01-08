@@ -6,8 +6,8 @@ return array(
     'URL_HTML_SUFFIX'=>'',
 	'RBAC_SUPERADMIN'=>'100000',//超级管理员名称
 	'ADMIN_AUTH_KEY'=>'superadmin',//超级管理员识别
-	'USER_AUTH_ON'=>false,//是否开启验证
-	'USER_AUTH_TYPE'=>1, //验证类型(1:登录时验证数据库,2实时验证)
+	'USER_AUTH_ON'=>true,//是否开启验证
+	'USER_AUTH_TYPE'=>2, //验证类型(1:登录时验证数据库,2实时验证)
 	'USER_AUTH_KEY'=>'uid',//用户认证识别号
 	'NOT_AUTH_MODULE'=>'Index',//无需认证的控制器模块
 	'NOT_AUTH_ACTION'=>'addUserHandle,addRoleHandle,addNodeHandle,accessHandle,access',//无需认证的动作方法
