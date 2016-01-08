@@ -19,6 +19,9 @@ class IndexAction extends Action{
 	public function contactus(){
 		$menu=M('menu')->order('mid')->select();
 		$this->menu=$menu;
+		$shop=M('shop')->where(array('sclass'=>1))->field(array('sid,sname,saddr,sphone,sguide,simage,snorth,seast'))->select();
+		$this->shop=$shop;
+		
 		$this->display();
 	}
 	//预约

@@ -35,7 +35,7 @@
 <body>
 	<div id="main">
 		<div class="title">
-		
+		<img src="__PUBLIC__/Images/top.gif">
 		</div>
 		<nav>
 			<a href="#" id="menuIcon">Ξ</a><!#表示浏览器不会跳转，仍然停留在该页面>
@@ -55,8 +55,8 @@
 			</ul>
 		</nav>
 		<div class="content">
-			<h2 class='center'>预约单</h2>
-			<hr/>
+			<h3 class='center'>预约单</h3>
+			
 			<div class='book'>
 				
 				<form id="form1" method='post' action="{:U(GROUP_NAME.'/Index/bookhandle')}" class="form-horizontal">
@@ -64,21 +64,21 @@
 				   <div class="form-group">
 					    <label for="usernum" class="col-sm-3 control-label">姓名：</label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" id="bname" name="bname"  placeholder="姓名">
+					      <input style="width:40vmin;" type="text" class="form-control" id="bname" name="bname"  placeholder="姓名">
 					    </div>
 					    
 				  </div>
 				  <div class="form-group">
 					    <label for="usersex" class="col-sm-3 control-label">性别：</label>
 					    <div class="col-sm-6">
-					     <input type="radio"   name="bmale" value='1' checked="checked" style="width: 50px"/>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio"    name="bmale" value='0' style="width: 50px"/>&nbsp;&nbsp;女
+					     <input type="radio"   name="bmale" value='1' checked="checked" style="width: 8vmin;"/>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio"    name="bmale" value='0' style="width:8vmin;"/>&nbsp;&nbsp;女
 					    </div>
 				  </div>
 				    <div class="form-group">
 					    <label for="usernum" class="col-sm-3 control-label">联系电话：</label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" id="bphone" name="bphone"  placeholder="电话">
+					      <input style="width:40vmin;" type="text" class="form-control" id="bphone" name="bphone"  placeholder="电话">
 					    </div>
 				  </div>
 				  
@@ -86,7 +86,7 @@
 			    <div class="form-group">
 					    <label for="userlimits" class="col-sm-3 control-label">预约店铺：</label>
 					    <div class="col-sm-6">
-						     <select id="shop" name="shop" class="form-control">
+						     <select id="shop" name="shop" class="form-control" style="width:40vmin;">
 								<option value="0">==请选择店铺==</option>
 								<foreach name='shop' item='v'>
 								<option value='{$v['sid']}'>{$v.sname}</option>
@@ -98,7 +98,7 @@
 				  
 				   <div class="modal-footer">
 				   
-			       <input type="submit" class="btn btn-primary" value="提 交" id="adduserbtn" name="adduserbtn">
+			       <input type="submit" class="btn btn-primary" value="提 交" id="adduserbtn" name="adduserbtn" style="width:15vmin;">
 			      </div>
 				  
 			  </form>

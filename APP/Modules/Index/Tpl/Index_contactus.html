@@ -4,9 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>海彦男仕礼服</title>
-
+<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
  <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.css">
  <link rel="stylesheet" href="__PUBLIC__/Css/common.css"/>
+  <link rel="stylesheet" href="__PUBLIC__/Css/contactUs.css"/>
  <style>
  	.center{text-align:center;}
  	.book{margin:4em auto;width:35em;}
@@ -30,14 +33,16 @@
 		});
 	})
 </script>
-
+<script type="text/javascript"
+		src="http://webapi.amap.com/maps?v=1.3&key=0479b3237f84e6d4c0fdea00dea00deab60e">
+	</script>
 </head>
 <body>
 	<div id="main">
 		<div class="title">
-		
+		<img src="__PUBLIC__/Images/top.gif">
 		</div>
-		<nav>
+		<nav style="position:relative;z-index:10">
 			<a href="#" id="menuIcon">Ξ</a><!#表示浏览器不会跳转，仍然停留在该页面>
 			<ul>
 				<foreach name='menu' item='v'>
@@ -54,28 +59,85 @@
 				
 			</ul>
 		</nav>
-		<div class="content">
-			<h2 class='center'>预约单</h2>
-			<hr/>
-			
-		</div>
+<!-- 附加导航 -->
+
+<div class="content" style="position:relative;z-index:1">
+<div class="row">
+ <div class="col-xs-2" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked"  data-spy="affix"  data-offset-top="125">
+            <!-- 要改---店铺名称 -->
+            	<foreach name='shop' item='v'>
+            	
+	                <li><a href="#section_{$v['sid']}"  style="font-size:2.5vmin">{$v['sname']}</a></li>
+                </foreach>
+            </ul>
+        </div>
+	<!-- myScrollspy的div --> 
+	<div class="col-xs-10"> 
+			<div  style="width:80%">
+				<foreach name='shop' item='w'>
+					<div id="section_{$w['sid']}" style="font-size:3vmin">{$w['sname']}</div>
+					
+					<div>	<!-- 要改位置img -->{$w['simage']}</div>
+				   <div class="panel-group" id="accordion_{$w['sid']}">
+					 <div class="panel panel-default">
+					    <div class="panel-heading">
+					        <a  id="hs" data-toggle="collapse" data-parent="#accordion_{$w['sid']}" 
+					          href="#collapse_{$w['sid']}">
+					         	<font style="font-size:2.5vmin;">点击查看店铺详细信息</font>
+					        </a>
+					 
+					 </div>
+					    <div id="collapse_{$w['sid']}" class="panel-collapse collapse" >
+					      <div class="panel-body">
+					     			<!-- 要改----显示地图的位置 -->
+					     			<div id="container_{$w['sid']}" style="width:70%;float:left;height:30vmin;
+font: 1.0em  Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei','微软黑体', Arial;"> 
+					     									<!-- zoom 地图显示的缩放级别 center 地图中心点坐标值-->
+					     								<!-- 坐标是：	{$w['snorth']},{$w['seast']} -->
+										 		<script type="text/javascript">
+										 	
+														var map=new AMap.Map('container_{$w['sid']}',{
+															resizeEnable:true,
+															zoom:15,
+															center:[{$w['snorth']},{$w['seast']}]
+														});
+												
+														  var marker=new AMap.Marker(
+																  {
+																		position:[{$w['snorth']},{$w['seast']}]
+																	  });
+														  marker.setMap(map);
+						
+								
+											  </script>
+					     			
+					     			
+					     			</div>
+					     			<div style="width:30%;float:left;">
+					     			
+					     			    <p><span style="color:blue;float:left;font-size:2.5vmin;">地址&nbsp;</span><span style="font-size:2.5vmin;">{$w['saddr']}</span></p>
+					     			    <p><span style="color:blue;float:left;font-size:2.5vmin;">路线&nbsp;</span><span style="font-size:2.5vmin;">{$w['sguide']}</span></p>
+					     			    <p><span style="color:blue;float:left;font-size:2.5vmin;">联系电话&nbsp;</span><span style="font-size:2.5vmin;">{$w['sphone']}</span></p>
+					     			    
+					     			</div>
+					      </div>
+					
+					      </div>
+					    </div>
+					  </div>
+				</foreach>				
+			</div>
+	</div>
+	<!-- end  <div class="col-xs-10"> -->
+	
+	</div><!-- end row -->
+	<div><img src="__PUBLIC__/Images/logo_bottom.gif"></div>
+</div>
 		<footer>
 			<img src="__PUBLIC__/Images/bottomNew.gif">
 		</footer>
 	</div>
-<script>
-	$(function(){
-		
-		$('#adduserbtn').click(function(){
-							
-			if($('#shop').val() == '0'||$('#bphone').val() == ''){
-				alert('联系电话不能为空或者请选择店铺');
-				return false;
-			}
-									
-		});
-		
-	});
-</script>
+
 </body>
 </html>

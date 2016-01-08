@@ -139,45 +139,46 @@
 							  <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;部门管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Shop/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;部门查询</a></li>
+					           		<li><a href="{:U('Admin/Shop/index')}" target="opt"><i class="icon-fixed-width icon-flag"></i>&nbsp;&nbsp;部门查询</a></li>
 					             </ul>
 					          </li>
 					        
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;商品管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Goods/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品查询</a></li>
+					           		<li><a href="{:U('Admin/Goods/index')}" target="opt"><i class="icon-fixed-width icon-gift"></i>&nbsp;&nbsp;商品查询</a></li>
 					             </ul>
 					          </li>
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;订单管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		<li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt"><i class="icon-fixed-width icon-shopping-cart"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		 <li><a href="{:U('Admin/Book/index')}" target="opt"><i class="icon-fixed-width icon-book"></i>&nbsp;&nbsp;预约查询</a></li>
 					             </ul>
 					          </li>
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;会员管理</a></span>
 					            <ul class="son">
-					            <li><a href="{:U('Admin/Book/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
-					           		<li><a href="{:U('Admin/Memb/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+					           
+					           		<li><a href="{:U('Admin/Memb/index')}" target="opt"><i class="icon-fixed-width icon-user"></i>&nbsp;&nbsp;会员查询</a></li>
 					             </ul>
 					          </li>
 					          <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;员工管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/User/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;员工查询</a></li>
+					           		<li><a href="{:U('Admin/User/index')}" target="opt"><i class="icon-fixed-width icon-user"></i>&nbsp;&nbsp;员工查询</a></li>
 					             </ul>
 					          </li>
 					           <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;公告管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Inform/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;公告查询</a></li>
+					           		<li><a href="{:U('Admin/Inform/index')}" target="opt"><i class="icon-fixed-width icon-info-sign"></i>&nbsp;&nbsp;公告查询</a></li>
 					             </ul>
 					          </li>
 					           <li>
 							    <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;前台管理</a></span>
 					            <ul class="son">
-					           		<li><a href="{:U('Admin/Front/menu')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;菜单管理</a></li>
+					           		<li><a href="{:U('Admin/Front/menu')}" target="opt"><i class="icon-fixed-width icon-home"></i>&nbsp;&nbsp;菜单管理</a></li>
 					           		
 					             
 					             </ul>
@@ -198,11 +199,25 @@
         </ul>
 		</div>
 		<ul id="shortcut-ico" class="fn-hide">
-          <li><a href="#" target="opt" ><i class="icon icon-pencil"></i></a></li>
-          <li><a href="#" target="opt" ><i class="icon icon-pencil"></i></a></li>
-          <li><a href="#" target="opt" ><i class="icon icon-pencil"></i></a></li>
-          <li><a href="#" target="opt"><i class="icon icon-pencil"></i></a></li>
-          <li><a href="#" target="opt" ><i class="icon icon-pencil"></i></a></li>
+		<if condition="($us['roleremark'] eq '店员') OR ($us['roleremark'] eq '店长')">
+			<if condition="$us['roleremark'] eq '店员'">
+			<else/>
+				
+			</if>
+		<elseif condition="$us['roleremark'] eq '供应商'"/>
+		<else/>
+		  <li><a href="{:U('Admin/Shop/index')}" target="opt" title="部门查询"> <i class="icon-flag"></i></a></li>
+	      <li><a href="{:U('Admin/Goods/index')}" target="opt" title="商品查询"><i class="icon-gift"></i></a></li>
+          <li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt" title="订单查询"><i class="icon-shopping-cart"></i></a></li>
+          <li><a  href="{:U('Admin/Memb/index')}" target="opt" title="会员查询"><i class="icon-user"></i></a></li>
+          <li><a href="{:U('Admin/User/index')}" target="opt" title="员工查询"><i class="icon-user"></i></a></li>
+          <li><a href="{:U('Admin/Inform/index')}" target="opt" title="公告查询"><i class="icon-info-sign"></i></a></li>
+          <li><a href="{:U('Admin/Front/menu')}" target="opt" title="菜单查询"><i class="icon-home"></i></a></li>
+          
+	 	</if>
+		
+		
+    
         </ul>
 		<div class="close-left" title="点击显示快捷菜单"></div>
       </div>
