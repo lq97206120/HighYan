@@ -4,11 +4,12 @@ class ProviderAction extends CommonAction{
 	public function index(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('leaderverifystatus'=>'1','assignstatus'=>'1','opsname'=>$_GET['opsname']))->count();
+		$count=M('order')->where(array('inspectorverify'=>'1','shopleaderverify'=>'1','opsname'=>$_GET['opsname']))->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','ougname','odgname','obgname','ossname','ossaddr','ossphone','ossmail','bookdate','ispullleader','providerpull','pullok','providerok','shopok','okdate');
-		$order=M('order')->limit($limit)->where(array('leaderverifystatus'=>'1','assignstatus'=>'1','opsname'=>$_GET['opsname']))->field($field)->order('shopok,ispullleader desc,providerpull,pullok desc')->select();
+		$field=array('onum','oscalenum','ossname','bookdate','ispull','pullstatus','pullok','goodsok','pullokdate','goodsokdate');
+		$order=M('order')->limit($limit)->where(array('inspectorverify'=>'1','shopleaderverify'=>'1','opsname'=>$_GET['opsname']))->field($field)->order('bookdate desc')->select();
+		
 		$this->opsname=$_GET['opsname'];
 		$this->order=$order;
 		$this->page = $page->show ();
@@ -16,9 +17,11 @@ class ProviderAction extends CommonAction{
 	}
 	//读取订单信息
 	public function readorder(){
-		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
+		
 		$this->opsname=$_GET['opsname'];
 		$this->order=$order;
+		//p($order);
 		$this->display();
 	}
 	//查询订单
@@ -103,5 +106,56 @@ class ProviderAction extends CommonAction{
 			}
 		}
 		
+//添加货物流程
+	public function addExpress(){
+			
+		if(($_POST['pullok']=='0')||($_POST['eclass']=='1')){
+					
+						$receive=array(
+							'pexpress'=>$_POST['pexpress'],
+							'pexpressnum'=>$_POST['pexpressnum'],
+							'edate'=>time(),
+							'eclass'=>$_POST['eclass'],
+						);
+						$reco=array('onum'=>$_POST['onum'],'pullstatus'=>'1','expresslock'=>'0',);
+						$order=M('order')->save($reco);
+						$express=M('express')->add($receive);
+						//写入订单流程关系表
+						$merge=array('express_id'=>$express,'order_num'=>$_POST['onum']);
+						M('express_order')->add($merge);
+					if($express){
+						$this->success("修改成功");
+					}else 
+						$this->error("修改失败");
+				}
+				else
+					$this->error("打样已经完成");
+			
+			
+	}
+//处理修改
+	public function readExpressHandle(){
+		$receive=array(
+			'eid'=>$_POST['eid'],
+			'pexpress'=>$_POST['pexpress'],
+			'pexpressnum'=>$_POST['pexpressnum'],
+			'pgetstatus'=>$_POST['pgetstatus'],
+		);
+		if($_POST['pullok']=='1'){
+			$pullstatus=0;
+		}
+		else{
+			$pullstatus=4;
+		}
 		
+		if($_POST['pgetstatus']=='1'){
+			$reco=array('onum'=>$_POST['onum'],'pullstatus'=>$pullstatus,'expresslock'=>'1',);
+			$order=M('order')->save($reco);
+		}
+		$express=M('express')->save($receive);
+		if($express){
+				$this->success("修改成功");
+			}else 
+				$this->error("未修改");
+	}		
 }

@@ -22,7 +22,7 @@ Class UserRelationModel extends RelationModel{
 			'foreign_key'=>'user_id',//主表在中间表的字段名称
 			'relation_foreign_key'=>'shop_id',//副表在中间表的字段 名称
 			'relation_table'=>'hy_shop_user',//中间表
-			'mapping_fields'=>'sid,sname',
+			'mapping_fields'=>'sid,sname,sclass',
 			)
 	);
 	

@@ -72,8 +72,8 @@ class EmployeeAction extends CommonAction{
 		$count=M('order')->where(array('osunum'=>$_GET['unum']))->order('shopok')->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','omnum','omname','omphone','ougname','odgname','obgname','osunum','bookdate','leaderverifystatus','ispullleader','providerpull','pullok','providerok','shopok','okdate');
-		$order=M('order')->where(array('osunum'=>$_GET['unum']))->limit($limit)->field($field)->order('leaderverifystatus,providerpull,pullok,providerok,shopok')->select();
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
+		$order=M('order')->where(array('osunum'=>$_GET['unum']))->limit($limit)->field($field)->order('bookdate desc')->select();
 		$this->order=$order;
 		
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -106,6 +106,7 @@ class EmployeeAction extends CommonAction{
 		$ougid=I('cloth',0,'intval');
 		$odgid=I('pants',0,'intval');
 		$obgid=I('vest',0,'intval');
+		$otgid=I('tcloth',0,'intval');
 		//处理数据库字段为空的问题
 		$cloth=M('goods')->where(array('gid'=>$ougid))->field($field)->find();
 			if(empty($cloth))
@@ -121,15 +122,128 @@ class EmployeeAction extends CommonAction{
 			if(empty($vest))
 					{
 						$vest['gnum']='';$vest['gname']='';
-					}	
-		
+					}
+		$tcloth=M('goods')->where(array('gid'=>$otgid))->field($field)->find();
+			if(empty($tcloth))
+					{
+						$tcloth['gnum']='';$tcloth['gname']='';
+					}
+								
+		if($_POST['rbook']=="on"){
+			$rbook=1;
+		}
+		else{
+			$rbook=0;
+		}
+		if($_POST['rsale']=="on"){
+			$rsale=1;
+		}
+		else{
+			$rsale=0;
+		}
+		if($_POST['rrent']=="on"){
+			$rrent=1;
+		}
+		else{
+			$rrent=0;
+		}
+		if($_POST['rpacke']=="on"){
+			$rpacke=1;
+		}
+		else{
+			$rpacke=0;
+		}
+	if($_POST['belly']=="on"){
+				$belly=1;
+			}
+			else{
+				$belly=0;
+			}
+			if($_POST['sleg']=="on"){
+				$sleg=1;
+			}
+			else{
+				$sleg=0;
+			}
+			if($_POST['upleg']=="on"){
+				$upleg=1;
+			}
+			else{
+				$upleg=0;
+			}
+			if($_POST['flathip']=="on"){
+				$flathip=1;
+			}
+			else{
+				$flathip=0;
+			}
+			if($_POST['oleg']=="on"){
+				$oleg=1;
+			}
+			else{
+				$oleg=0;
+			}
+			if($_POST['xleg']=="on"){
+				$xleg=1;
+			}
+			else{
+				$xleg=0;
+			}
 		$receive=array(
-				'omnum'=>$_POST['omnum'],
+				'reservenum'=>$_POST['reservenum'],
+				'photocom'=>$_POST['photocom'],
+				'bookdate'=>$_POST['bookdate'],
+				'photodate'=>$_POST['photodate'],
 				'omname'=>$_POST['omname'],
+				'engagedate'=>$_POST['engagedate'],
+				'marrydate'=>$_POST['marrydate'],
+				'ommale'=>$_POST['ommale'],
+				'bookpulldate'=>$_POST['bookpulldate'],
+				'omnum'=>$_POST['omnum'],
+				'bookgetdate'=>$_POST['bookgetdate'],
 				'omphone'=>$_POST['omphone'],
+				'rentgetdate'=>$_POST['rentgetdate'],
+				'rentbackdate'=>$_POST['rentbackdate'],
+				'omaddr'=>$_POST['omaddr'],
+				'clothremark1'=>$_POST['clothremark1'],
+				'clothremark2'=>$_POST['clothremark2'],
+				'clothremark3'=>$_POST['clothremark3'],
+				'clothremark4'=>$_POST['clothremark4'],
+				'clothremark5'=>$_POST['clothremark5'],
+				'deposit'=>$_POST['deposit'],
+				'total'=>$_POST['total'],
+				'rbook'=>$rbook,
+				'rrent'=>$rrent,
+				'rsale'=>$rsale,
+				'rpacke'=>$rpacke,
+				'gather1bookmoney'=>$_POST['gather1bookmoney'],
+				'gather1sparemoney'=>$_POST['gather1sparemoney'],
+				'gather1date'=>$_POST['gather1date'],
+				'gather1user'=>$_POST['gather1user'],
+				'gather2bookmoney'=>$_POST['gather2bookmoney'],
+				'gather2sparemoney'=>$_POST['gather2sparemoney'],
+				'gather2date'=>$_POST['gather2date'],
+				'gather2user'=>$_POST['gather2user'],
+				'rcode'=>$_POST['rcode'],
+				'rsleeve'=>$_POST['rsleeve'],
+				'rneck'=>$_POST['rneck'],
+				'rwaist'=>$_POST['rwaist'],
+				'rleglength'=>$_POST['rleglength'],
+				'rshoes'=>$_POST['rshoes'],
+				'photonum'=>$_POST['photonum'],
+				'majiaprice'=>$_POST['majiaprice'],
+				'majiafabric'=>$_POST['majiafabric'],
+				'tie1'=>$_POST['tie1'],
+				'tie2'=>$_POST['tie2'],
+				'referee'=>$_POST['referee'],
+				'rremark'=>$_POST['rremark'],
+		
+				'oscalenum'=>$_POST['oscalenum'],
+				'scale'=>$_POST['scale'],
 				'ougid'=>$ougid,
 				'ougnum'=>$cloth['gnum'],
 				'ougname'=>$cloth['gname'],
+				'uremark'=>$_POST['uremark'],			
 				'ushoulderwidth1'=>$_POST['ushoulderwidth1'],
 				'ushoulderwidth2'=>$_POST['ushoulderwidth2'],
 				'usleevewidth1'=>$_POST['usleevewidth1'],
@@ -156,6 +270,7 @@ class EmployeeAction extends CommonAction{
 				'odgid'=>$odgid,
 				'odgnum'=>$pants['gnum'],
 				'odgname'=>$pants['gname'],
+				'dremark'=>$_POST['dremark'],
 				'dwaistsur1'=>$_POST['dwaistsur1'],
 				'dwaistsur2'=>$_POST['dwaistsur2'],
 				'dhipsur1'=>$_POST['dhipsur1'],
@@ -173,12 +288,12 @@ class EmployeeAction extends CommonAction{
 				'dkneesur1'=>$_POST['dkneesur1'],
 				'dkneesur2'=>$_POST['dkneesur2'],
 				'dpantssur'=>$_POST['dpantssur'],
-				'belly'=>I('belly','','intval'),
-				'sleg'=>I('sleg','','intval'),
-				'upleg'=>I('upleg','','intval'),
-				'flathip'=>I('flathip','','intval'),
-				'oleg'=>I('oleg','','intval'),
-				'xleg'=>I('xleg','','intval'),
+				'belly'=>$belly,
+				'sleg'=>$sleg,
+				'upleg'=>$upleg,
+				'flathip'=>$flathip,
+				'oleg'=>$oleg,
+				'xleg'=>$xleg,
 				'dcode'=>$_POST['dcode'],
 				'dpantsfabric'=>$_POST['dpantsfabric'],
 		
@@ -192,15 +307,42 @@ class EmployeeAction extends CommonAction{
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
 		
+				'otgid'=>$otgid,
+				'otgnum'=>$tcloth['gnum'],
+				'otgname'=>$tcloth['gname'],
+				'tremark'=>$_POST['tremark'],			
+				'tshoulderwidth1'=>$_POST['tshoulderwidth1'],
+				'tshoulderwidth2'=>$_POST['tshoulderwidth2'],
+				'tsleevewidth1'=>$_POST['tsleevewidth1'],
+				'tsleevewidth2'=>$_POST['tsleevewidth2'],
+				'tclothlength1'=>$_POST['tclothlength1'],
+				'tclothlength2'=>$_POST['tclothlength2'],
+				'tbreathsur1'=>$_POST['tbreathsur1'],
+				'tbreathsur2'=>$_POST['tbreathsur2'],
+				'twaistsur1'=>$_POST['twaistsur1'],
+				'twaistsur2'=>$_POST['twaistsur2'],
+				'thipsur1'=>$_POST['thipsur1'],
+				'thipsur2'=>$_POST['thipsur2'],
+				'tbreathwidth1'=>$_POST['tbreathwidth1'],
+				'tbreathwidth2'=>$_POST['tbreathwidth2'],
+				'tbackwidth1'=>$_POST['tbackwidth1'],
+				'tbackwidth2'=>$_POST['tbackwidth2'],
+				'tnecksur'=>$_POST['tnecksur'],
+				'tneckstyle'=>$_POST['tneckstyle'],
+				'tbosom'=>$_POST['tbosom'],
+				'tsleevesur'=>$_POST['tsleevesur'],
+				'tcode'=>$_POST['tcode'],
+				'tclothfabric'=>$_POST['tclothfabric'],
+		
 				'ossname'=>$shop['sname'],
-				'ossaddr'=>$shop['saddr'],
-				'ossphone'=>$shop['sphone'],
+				
 				'ossmail'=>$shop['smail'],
 				'osunum'=>$_POST['osunum'],
 				
 			);
 			$db=M('order');
 			$result=$db->add($receive);
+			
 			if($result){
 				$this->success("添加成功",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
 			}else 
@@ -211,7 +353,7 @@ class EmployeeAction extends CommonAction{
 	}
 	//读取修改订单
 	public function readselforder(){
-		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
 				
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -234,11 +376,73 @@ class EmployeeAction extends CommonAction{
 	//更新订单信息
 	public function orderupdate() {
 		
+		//处理复选框
+		if($_POST['rbook']=="on"){
+				$rbook=1;
+			}
+			else{
+				$rbook=0;
+			}
+			if($_POST['rsale']=="on"){
+				$rsale=1;
+			}
+			else{
+				$rsale=0;
+			}
+			if($_POST['rrent']=="on"){
+				$rrent=1;
+			}
+			else{
+				$rrent=0;
+			}
+			if($_POST['rpacke']=="on"){
+				$rpacke=1;
+			}
+			else{
+				$rpacke=0;
+			}
+			if($_POST['belly']=="on"){
+				$belly=1;
+			}
+			else{
+				$belly=0;
+			}
+			if($_POST['sleg']=="on"){
+				$sleg=1;
+			}
+			else{
+				$sleg=0;
+			}
+			if($_POST['upleg']=="on"){
+				$upleg=1;
+			}
+			else{
+				$upleg=0;
+			}
+			if($_POST['flathip']=="on"){
+				$flathip=1;
+			}
+			else{
+				$flathip=0;
+			}
+			if($_POST['oleg']=="on"){
+				$oleg=1;
+			}
+			else{
+				$oleg=0;
+			}
+			if($_POST['xleg']=="on"){
+				$xleg=1;
+			}
+			else{
+				$xleg=0;
+			}
 		$field=array('gnum','gname','gid');
 		//处理选择框
 		$ougid=I('cloth',0,'intval');
 		$odgid=I('pants',0,'intval');
 		$obgid=I('vest',0,'intval');
+		$otgid=I('tcloth',0,'intval');
 		//处理数据库字段为空的问题
 		$cloth=M('goods')->where(array('gid'=>$ougid))->field($field)->find();
 			if(empty($cloth))
@@ -255,15 +459,68 @@ class EmployeeAction extends CommonAction{
 					{
 						$vest['gnum']='';$vest['gname']='';
 					}	
-		
+		$tcloth=M('goods')->where(array('gid'=>$otgid))->field($field)->find();
+			if(empty($tcloth))
+					{
+						$tcloth['gnum']='';$tcloth['gname']='';
+					}
+						
 		$receive=array(
 				'onum'=>$_POST['onum'],
-				'omnum'=>$_POST['omnum'],
+				'reservenum'=>$_POST['reservenum'],
+				'photocom'=>$_POST['photocom'],
+				'bookdate'=>$_POST['bookdate'],
+				'photodate'=>$_POST['photodate'],
 				'omname'=>$_POST['omname'],
+				'engagedate'=>$_POST['engagedate'],
+				'marrydate'=>$_POST['marrydate'],
+				'ommale'=>$_POST['ommale'],
+				'bookpulldate'=>$_POST['bookpulldate'],
+				'omnum'=>$_POST['omnum'],
+				'bookgetdate'=>$_POST['bookgetdate'],
 				'omphone'=>$_POST['omphone'],
+				'rentgetdate'=>$_POST['rentgetdate'],
+				'rentbackdate'=>$_POST['rentbackdate'],
+				'omaddr'=>$_POST['omaddr'],
+				'clothremark1'=>$_POST['clothremark1'],
+				'clothremark2'=>$_POST['clothremark2'],
+				'clothremark3'=>$_POST['clothremark3'],
+				'clothremark4'=>$_POST['clothremark4'],
+				'clothremark5'=>$_POST['clothremark5'],
+				'deposit'=>$_POST['deposit'],
+				'total'=>$_POST['total'],
+				'rbook'=>$rbook,
+				'rrent'=>$rrent,
+				'rsale'=>$rsale,
+				'rpacke'=>$rpacke,
+				'gather1bookmoney'=>$_POST['gather1bookmoney'],
+				'gather1sparemoney'=>$_POST['gather1sparemoney'],
+				'gather1date'=>$_POST['gather1date'],
+				'gather1user'=>$_POST['gather1user'],
+				'gather2bookmoney'=>$_POST['gather2bookmoney'],
+				'gather2sparemoney'=>$_POST['gather2sparemoney'],
+				'gather2date'=>$_POST['gather2date'],
+				'gather2user'=>$_POST['gather2user'],
+				'rcode'=>$_POST['rcode'],
+				'rsleeve'=>$_POST['rsleeve'],
+				'rneck'=>$_POST['rneck'],
+				'rwaist'=>$_POST['rwaist'],
+				'rleglength'=>$_POST['rleglength'],
+				'rshoes'=>$_POST['rshoes'],
+				'photonum'=>$_POST['photonum'],
+				'majiaprice'=>$_POST['majiaprice'],
+				'majiafabric'=>$_POST['majiafabric'],
+				'tie1'=>$_POST['tie1'],
+				'tie2'=>$_POST['tie2'],
+				'referee'=>$_POST['referee'],
+				'rremark'=>$_POST['rremark'],
+		
+				'oscalenum'=>$_POST['oscalenum'],
+				'scale'=>$_POST['scale'],
 				'ougid'=>$ougid,
 				'ougnum'=>$cloth['gnum'],
 				'ougname'=>$cloth['gname'],
+				'uremark'=>$_POST['uremark'],			
 				'ushoulderwidth1'=>$_POST['ushoulderwidth1'],
 				'ushoulderwidth2'=>$_POST['ushoulderwidth2'],
 				'usleevewidth1'=>$_POST['usleevewidth1'],
@@ -290,6 +547,7 @@ class EmployeeAction extends CommonAction{
 				'odgid'=>$odgid,
 				'odgnum'=>$pants['gnum'],
 				'odgname'=>$pants['gname'],
+				'dremark'=>$_POST['dremark'],
 				'dwaistsur1'=>$_POST['dwaistsur1'],
 				'dwaistsur2'=>$_POST['dwaistsur2'],
 				'dhipsur1'=>$_POST['dhipsur1'],
@@ -307,12 +565,12 @@ class EmployeeAction extends CommonAction{
 				'dkneesur1'=>$_POST['dkneesur1'],
 				'dkneesur2'=>$_POST['dkneesur2'],
 				'dpantssur'=>$_POST['dpantssur'],
-				'belly'=>I('belly','','intval'),
-				'sleg'=>I('sleg','','intval'),
-				'upleg'=>I('upleg','','intval'),
-				'flathip'=>I('flathip','','intval'),
-				'oleg'=>I('oleg','','intval'),
-				'xleg'=>I('xleg','','intval'),
+				'belly'=>$belly,
+				'sleg'=>$sleg,
+				'upleg'=>$upleg,
+				'flathip'=>$flathip,
+				'oleg'=>$oleg,
+				'xleg'=>$xleg,
 				'dcode'=>$_POST['dcode'],
 				'dpantsfabric'=>$_POST['dpantsfabric'],
 		
@@ -325,7 +583,34 @@ class EmployeeAction extends CommonAction{
 				'bcenter'=>$_POST['bcenter'],
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
-						
+		
+				'otgid'=>$otgid,
+				'otgnum'=>$tcloth['gnum'],
+				'otgname'=>$tcloth['gname'],
+				'tremark'=>$_POST['tremark'],			
+				'tshoulderwidth1'=>$_POST['tshoulderwidth1'],
+				'tshoulderwidth2'=>$_POST['tshoulderwidth2'],
+				'tsleevewidth1'=>$_POST['tsleevewidth1'],
+				'tsleevewidth2'=>$_POST['tsleevewidth2'],
+				'tclothlength1'=>$_POST['tclothlength1'],
+				'tclothlength2'=>$_POST['tclothlength2'],
+				'tbreathsur1'=>$_POST['tbreathsur1'],
+				'tbreathsur2'=>$_POST['tbreathsur2'],
+				'twaistsur1'=>$_POST['twaistsur1'],
+				'twaistsur2'=>$_POST['twaistsur2'],
+				'thipsur1'=>$_POST['thipsur1'],
+				'thipsur2'=>$_POST['thipsur2'],
+				'tbreathwidth1'=>$_POST['tbreathwidth1'],
+				'tbreathwidth2'=>$_POST['tbreathwidth2'],
+				'tbackwidth1'=>$_POST['tbackwidth1'],
+				'tbackwidth2'=>$_POST['tbackwidth2'],
+				'tnecksur'=>$_POST['tnecksur'],
+				'tneckstyle'=>$_POST['tneckstyle'],
+				'tbosom'=>$_POST['tbosom'],
+				'tsleevesur'=>$_POST['tsleevesur'],
+				'tcode'=>$_POST['tcode'],
+				'tclothfabric'=>$_POST['tclothfabric'],
+		
 			);
 			
 			$db=M('order');
@@ -638,5 +923,124 @@ class EmployeeAction extends CommonAction{
 		
 		}
 	}
-
+	//处理流程修改
+	public function readExpressHandle(){
+		
+		if(empty($_POST['sexpress'])){
+			$sexpress='';
+		}else{
+			$sexpress=$_POST['sexpress'];
+		}
+		if(empty($_POST['sexpressnum'])){
+			$sexpressnum='';
+		}else{
+			$sexpressnum=$_POST['sexpressnum'];
+		}
+		
+		if($_POST['sgetstatus']=='1'){
+			$reco=array('onum'=>$_POST['onum'],'pullstatus'=>'2',);
+			$order=M('order')->save($reco);
+		}
+		
+		
+		if(!empty($_POST['sexpressnum'])){
+			$reco=array('onum'=>$_POST['onum'],'pullstatus'=>'3',);
+			$order=M('order')->save($reco);
+		}
+		
+		if($_POST['eclass']=="样品"){
+			if($_POST['okstatus']=='1'){
+				$recop=array('onum'=>$_POST['onum'],'pullok'=>'1','pullstatus'=>'0',);
+				$order=M('order')->save($recop);
+			}else{
+				$recop=array('onum'=>$_POST['onum'],'pullok'=>'0',);
+				$order=M('order')->save($recop);
+			}
+		}
+		else{
+			if($_POST['okstatus']=='1'){
+				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'1',);
+				$order=M('order')->save($recop);
+			}else{
+				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'0',);
+				$order=M('order')->save($recop);
+			}
+			
+		}
+		$receive=array(
+			'eid'=>$_POST['eid'],
+			'sexpress'=>$sexpress,
+			'sexpressnum'=>$sexpressnum,
+			'sgetstatus'=>$_POST['sgetstatus'],
+		);
+		
+		$db=M('express');
+		$express=$db->save($receive);
+		
+		if($express || $order){
+				$this->success("修改成功");
+			}else 
+				$this->error("未修改");
+	}	
+	//处理添加返修单
+	public function addRepair(){
+		$db=M('repair');
+		$numResult=$db->where(array('rnum'=>$_POST['rnum']))->find();
+		
+		if(empty($numResult)){
+				$receive=array(
+				'rnum'=>$_POST['rnum'],
+				'isback'=>$_POST['isback'],
+				'senddate'=>$_POST['senddate'],
+				'getdate'=>$_POST['getdate'],
+				'upremark1'=>$_POST['upremark1'],
+				'downremark1'=>$_POST['downremark1'],
+				'backremark1'=>$_POST['backremark1'],
+				'rphoto'=>$_POST['rphoto'],
+				
+			);
+			$repair=M('repair')->add($receive);
+			$merge=array('repair_id'=>$repair,'order_num'=>$_POST['onum']);
+			$result=M('repair_order')->add($merge);
+			if($repair){
+				//改变repairlock
+				$reco=array('onum'=>$_POST['onum'],'repairlock'=>0,'repairid'=>$repair,);
+				$order=M('order')->save($reco);
+				$this->success("添加成功");
+			}else 
+				$this->error("添加失败");
+			
+		}
+		else{
+			
+			$this->error("改订单已经存在");
+		}
+	}
+	//读取返修单
+	public function readrepair(){
+		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->repair=$repair;
+		$this->onum=$_GET['onum'];
+		
+		$this->display();
+	}
+	
+	public function readRepairHandle(){
+		$receive=array(
+			'rid'=>$_POST['rid'],
+			'rnum'=>$_POST['rnum'],
+			'isback'=>$_POST['isback'],
+			'senddate'=>$_POST['senddate'],
+			'getdate'=>$_POST['getdate'],
+			'upremark1'=>$_POST['upremark1'],
+			'downremark1'=>$_POST['downremark1'],
+			'backremark1'=>$_POST['backremark1'],
+			'rphoto'=>$_POST['rphoto'],
+		);
+		$repair=M('repair')->save($receive);
+		if($repair){
+				$this->success("修改成功");
+			}else 
+				$this->error("修改失败");
+	}
 }

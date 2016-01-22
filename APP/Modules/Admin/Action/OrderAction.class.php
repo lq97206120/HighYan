@@ -2,7 +2,7 @@
 class OrderAction extends CommonAction{
 	//查询订单
 	public function index(){
-		
+	
 		import("ORG.Util.Page");
 		$count=M('order')->order('shopok')->count();
 		$page=new Page($count,10);
@@ -15,6 +15,138 @@ class OrderAction extends CommonAction{
 		$this->unum=$_GET['unum'];
 		$this->page = $page->show ();
 		$this->display();
+	}
+	//读取订单
+	public function readorder(){
+		
+		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$this->order=$order;
+		$ossname=$order['ossname'];
+		
+		$shop=D('ShopRelation')->relation('goods')->where(array('sname'=>$ossname))->find();
+		$possess=$shop['goods'];
+		
+		$cloth=shopposess($possess,1);
+		$pants=shopposess($possess,2);
+		$vest=shopposess($possess,3);
+//		p($cloth);
+//		p($pants);
+//		p($vest);
+		$this->cloth=$cloth;
+		$this->pants=$pants;
+		$this->vest=$vest;
+		$this->onum=$_GET['onum'];
+		$this->unum=$_GET['unum'];
+		$this->display();
+	}
+	//处理订单参数的修改
+	public function allorderupdate(){
+		
+	$field=array('gnum','gname','gid');
+		//处理选择框
+		$ougid=I('cloth',0,'intval');
+		$odgid=I('pants',0,'intval');
+		$obgid=I('vest',0,'intval');
+		//处理数据库字段为空的问题
+		$cloth=M('goods')->where(array('gid'=>$ougid))->field($field)->find();
+			if(empty($cloth))
+				{
+					$cloth['gnum']='';$cloth['gname']='';
+				}	
+		$pants=M('goods')->where(array('gid'=>$odgid))->field($field)->find();	
+			if(empty($pants))
+					{
+						$pants['gnum']='';$pants['gname']='';
+					}	
+		$vest=M('goods')->where(array('gid'=>$obgid))->field($field)->find();
+			if(empty($vest))
+					{
+						$vest['gnum']='';$vest['gname']='';
+					}	
+				
+		$receive=array(
+				'onum'=>$_POST['onum'],
+				'omnum'=>$_POST['omnum'],
+				'omname'=>$_POST['omname'],
+				'omphone'=>$_POST['omphone'],
+				'ougid'=>$ougid,
+				'ougnum'=>$cloth['gnum'],
+				'ougname'=>$cloth['gname'],
+				'ushoulderwidth1'=>$_POST['ushoulderwidth1'],
+				'ushoulderwidth2'=>$_POST['ushoulderwidth2'],
+				'usleevewidth1'=>$_POST['usleevewidth1'],
+				'usleevewidth2'=>$_POST['usleevewidth2'],
+				'uclothlength1'=>$_POST['uclothlength1'],
+				'uclothlength2'=>$_POST['uclothlength2'],
+				'ubreathsur1'=>$_POST['ubreathsur1'],
+				'ubreathsur2'=>$_POST['ubreathsur2'],
+				'uwaistsur1'=>$_POST['uwaistsur1'],
+				'uwaistsur2'=>$_POST['uwaistsur2'],
+				'uhipsur1'=>$_POST['uhipsur1'],
+				'uhipsur2'=>$_POST['uhipsur2'],
+				'ubreathwidth1'=>$_POST['ubreathwidth1'],
+				'ubreathwidth2'=>$_POST['ubreathwidth2'],
+				'ubackwidth1'=>$_POST['ubackwidth1'],
+				'ubackwidth2'=>$_POST['ubackwidth2'],
+				'unecksur'=>$_POST['unecksur'],
+				'uneckstyle'=>$_POST['uneckstyle'],
+				'ubosom'=>$_POST['ubosom'],
+				'usleevesur'=>$_POST['usleevesur'],
+				'ucode'=>$_POST['ucode'],
+				'uclothfabric'=>$_POST['uclothfabric'],
+		
+				'odgid'=>$odgid,
+				'odgnum'=>$pants['gnum'],
+				'odgname'=>$pants['gname'],
+				'dwaistsur1'=>$_POST['dwaistsur1'],
+				'dwaistsur2'=>$_POST['dwaistsur2'],
+				'dhipsur1'=>$_POST['dhipsur1'],
+				'dhipsur2'=>$_POST['dhipsur2'],
+				'dpantslength1'=>$_POST['dpantslength1'],
+				'dpantslength2'=>$_POST['dpantslength2'],
+				'dupcrotch1'=>$_POST['dupcrotch1'],
+				'dupcrotch2'=>$_POST['dupcrotch2'],
+				'dallcrotch1'=>$_POST['dallcrotch1'],
+				'dallcrotch2'=>$_POST['dallcrotch2'],
+				'dwaistdown1'=>$_POST['dwaistdown1'],
+				'dwaistdown2'=>$_POST['dwaistdown2'],
+				'dlegsur1'=>$_POST['dlegsur1'],
+				'dlegsur2'=>$_POST['dlegsur2'],
+				'dkneesur1'=>$_POST['dkneesur1'],
+				'dkneesur2'=>$_POST['dkneesur2'],
+				'dpantssur'=>$_POST['dpantssur'],
+				'belly'=>I('belly','','intval'),
+				'sleg'=>I('sleg','','intval'),
+				'upleg'=>I('upleg','','intval'),
+				'flathip'=>I('flathip','','intval'),
+				'oleg'=>I('oleg','','intval'),
+				'xleg'=>I('xleg','','intval'),
+				'dcode'=>$_POST['dcode'],
+				'dpantsfabric'=>$_POST['dpantsfabric'],
+		
+				'obgid'=>$obgid,
+				'obgnum'=>$vest['gnum'],
+				'obgname'=>$vest['gname'],
+				'bfrontlength'=>$_POST['bfrontlength'],
+				'bbacklength'=>$_POST['bbacklength'],
+				'bup'=>$_POST['bup'],
+				'bcenter'=>$_POST['bcenter'],
+				'bcode'=>$_POST['bcode'],
+				'bbackfabric'=>$_POST['bbackfabric'],
+				'ispullleader'=>$_POST['ispullleader'],
+				'pullok'=>$pullok,
+				
+						
+			);
+			
+			$db=M('order');
+			$result=$db->save($receive);
+			if($result){
+				
+				$this->success("保存成功",U('Admin/Order/index',array('unum'=>$_POST['unum'])));
+			}else 
+				$this->error("保存失败",U('Admin/Order/index',array('unum'=>$_POST['unum'])));
+	
 	}
 	//修改分配
 	public function orderupdate(){

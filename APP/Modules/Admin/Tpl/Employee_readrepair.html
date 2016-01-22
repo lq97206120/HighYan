@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-easyui-1.3.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-easyui-1.3.5/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap-responsive.min.css">
+	<script language="javascript" type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/bootstrap/bootstrap.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
+
+<style>
+		.head{text-align:center;}
+		.container{width:70%;align:center;}
+		.red{color:red;}
+		.blue{color:blue;}
+		.operate{color:#428bca;}
+		.modal-dialog{width:100%;}
+		.inputpadding{padding-left:1px;}
+		.pantssize{font-size:14px;}
+		.back{position:absolute;right:10px;top:10px;}
+</style>
+<script>
+	window.UEDITOR_HOME_URL='__ROOT__/Data/Ueditor/';
+	window.onload=function(){
+			window.UEDITOR_CONFIG.initialFrameHeight=320;
+			//window.UEDITOR_CONFIG.getActionUrl = "{:U(GROUP_NAME.'/Blog/upload')}"; //提交页面
+			//window.UEDITOR_CONFIG.imagePath = URL + "php/";
+			//UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+			//UE.Editor.prototype.getActionUrl = function(action){
+			//if(action == 'uploadimage') {
+			//return '{:U(GROUP_NAME.'/Blog/upload')}';
+			//}
+			//return this._bkGetActionUrl(action);
+			//}
+			//window.UEDITOR_CONFIG.imageUrl='{:U(GROUP_NAME.'/Blog/upload')}';
+			//window.UEDITOR_CONFIG.imagePath=URL+"php/";
+			//上传文件的保存路径的修改再config.json里
+			UE.getEditor('rphoto');
+			
+		}
+</script>
+
+<js file='__ROOT__/Data/Ueditor/ueditor.config.js' />
+<js file='__ROOT__/Data/Ueditor/ueditor.all.min.js' />
+</head>
+<body>
+	<!-- Modal 读取返修信息开始 -->
+		<div id='container' class='container'>
+			<h2 class='head'>返修单读取修改</h2>
+			<hr/>
+			<hr/>
+	      <form id="form2" method='post' action="__URL__/readRepairHandle" class="form-horizontal">
+
+			<div class="form-group">
+					<label for="usernum" class="col-sm-2 control-label">返修号</label>
+				    <div class="col-sm-3 inputpadding">
+				      <input type="text" class="form-control " id="rnum" name="rnum" value='{$repair["rnum"]}' >
+				    </div>
+			  	   <label for="usernum" class="col-sm-2 control-label">返修类型</label>
+				   <if condition='$repair["isback"] eq 0'>
+				   		 <div class="col-sm-offset-1 col-sm-1 inputpadding">
+					      <input type="radio"  name="isback" value='1'>&nbsp;<span>大修</span>
+					    </div>
+					    <div class="col-sm-1 inputpadding">
+					      <input type="radio"  name="isback" value='0' checked='checked'>&nbsp;<span>小修</span>
+					    </div>	
+				   <else/>
+				   		 <div class="col-sm-offset-1 col-sm-1 inputpadding">
+					      <input type="radio"  name="isback" value='1' checked='checked'>&nbsp;<span>大修</span>
+					    </div>
+					    <div class="col-sm-1 inputpadding">
+					      <input type="radio"  name="isback" value='0'>&nbsp;<span>小修</span>
+					    </div>	
+				   </if>
+				 
+			  </div>
+			<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">返修日期</label>
+				    <div class="col-sm-3 inputpadding">
+				      <input type="text" class="form-control " id="senddate" name="senddate" value='{$repair["senddate"]}' onClick="WdatePicker()" >
+				    </div>
+				    <label for="usernum" class="col-sm-2 control-label">取货日期</label>
+				    <div class="col-sm-3 inputpadding">
+				      <input type="text" class="form-control " id="getdate" name="getdate" value='{$repair["getdate"]}' onClick="WdatePicker()" >
+				    </div>
+			</div>
+			
+			<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">上衣</label>
+				    <label for="usernum" class="col-sm-offset-2 col-sm-2 control-label">裤子</label>
+				    <label for="usernum" class="col-sm-offset-2 col-sm-2 control-label">背心</label>
+			</div>
+			
+				<textarea class="form-control" id='upremark1' name='upremark1' style="height:375px;width:30%;float:left;margin-right:3%;">{$repair["upremark1"]}</textarea>
+				<textarea class="form-control" id='downremark1' name='downremark1' style="height:375px;width:30%;float:left;margin-right:3%;">{$repair["downremark1"]}</textarea>
+				<textarea class="form-control" id='backremark1' name='backremark1' style="height:375px;width:30%;float:left;margin-right:1%;">{$repair["backremark1"]}</textarea>
+			
+			<div class="form-group"  style="clear:both;">
+			<hr/>
+			<label for="usernum" class="col-sm-6 control-label">上传图片</label>
+				   
+			</div>
+			<div class="form-group">
+				   <textarea  id="rphoto" name="rphoto">{$repair["rphoto"]}</textarea> 
+			</div>
+			
+		  <div class="modal-footer">
+		  		<input type="hidden" name="rid" id="rid" value='{$repair["rid"]}' >
+		    	 <input type='hidden' name='onum' value="{$onum}">
+		    	 <a class="btn btn-primary"  href="{:U('Admin/Employee/readselforder',array('onum'=>$onum))}" target="opt"><span>返回</span></a>
+				<input type="submit" class="btn btn-primary" value="保 存" >
+	      </div>
+		  </form>
+	</div>
+	<!--Repair 信息结束 -->
+	<script>
+	
+		if({$repair['isok']}=='1'){
+			var x=document.getElementById('container').getElementsByTagName('input');
+			for(var i=0;i<x.length;i++){
+					x[i].setAttribute('disabled','disabled');	
+			}
+			
+			var z=document.getElementById('container').getElementsByTagName('textarea');
+			for(var i=0;i<z.length;i++){
+					z[i].setAttribute('disabled','disabled');	
+			}
+		}
+		
+	</script>
+</body>
+</html>

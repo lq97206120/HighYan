@@ -81,6 +81,7 @@
 		<td><if condition="$u['assignstatus'] eq 1"><if condition="$u['shopok'] eq 0"><a class='blue'>未完成</a><else/>已完成</if><else/>&nbsp;</if></td>
 		<td><if condition="$u['shopok'] eq 1">{$u.okdate}<else/>&nbsp;</if></td>
 		<td>
+			<a href="{:U('Admin/Order/readorder',array('onum'=>$u['onum'],'unum'=>$unum))}" target="opt">读取&nbsp;</a>
 			<a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a>
 		</td>
 				
@@ -266,7 +267,7 @@
 		        {field:'ocunum',title:'指派人工号',width:35},
 		        {field:'shopok',title:'订单最终状态',width:40},
 		        {field:'okdate',title:'完成日期',width:40},
-		        {field:'ss',title:'操作',width:25},
+		        {field:'ss',title:'操作',width:30},
 		   	  ]]
 			});
 		});

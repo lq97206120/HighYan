@@ -134,6 +134,7 @@ function user_one($user){
 		$arra['roleremark']=$user['role'][0]['remark'];
 		$arra['shop']=$user['shop'][0]['sid'];
 		$arra['shopsname']=$user['shop'][0]['sname'];
+		$arra['sclass']=$user['shop'][0]['sclass'];
 	
 	return $arra;
 }

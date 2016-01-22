@@ -105,29 +105,43 @@
 		</table>
 		  <ul class="left-menu">
 		  <!-- 角色判定 -->
-			<if condition="($us['roleremark'] eq '店员') OR ($us['roleremark'] eq '店长')">
-				  <li>
-				  	<if condition="$us['roleremark'] eq '店员'">
-				  		 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
-			            <ul class="son">
-			           		<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
-			           		<li><a href="{:U('Admin/Employee/selforder',array('unum'=>$us['unum'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;个人订单查询</a></li>
-			           		<li><a href="{:U('Admin/Employee/shoporder',array('ossname'=>$us['shopsname'],))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店铺订单查询</a></li>
-			           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
-			           </ul>
-				  	<else/>
-					  	 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
-			            <ul class="son">
-			            	<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
-			           		<li><a href="{:U('Admin/Shopleader/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
-			           		<li><a href="{:U('Admin/Shopleader/goodslist',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品管理</a></li>
-			           		<li><a href="{:U('Admin/Shopleader/user',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店员管理</a></li>
-			           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
-			             </ul>
-				  	</if>
-		           
-		          </li>
-				<elseif condition="$us['roleremark'] eq '供应商'"/>
+			<if condition="($us['sclass'] eq '1')">
+					<li>
+						 <switch name='us.roleremark'>
+							 <case value="导购员" >
+								 	<span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+						            <ul class="son">
+						           		<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
+						           		<li><a href="{:U('Admin/Employee/selforder',array('unum'=>$us['unum'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;个人订单查询</a></li>
+						           		<li><a href="{:U('Admin/Employee/shoporder',array('ossname'=>$us['shopsname'],))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店铺订单查询</a></li>
+						           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+						           </ul>
+							 </case>
+							 <case value="设计师" >
+							 	<span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+						            <ul class="son">
+						           	  <li><a href="{:U('Admin/Designer/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		</ul>
+							 </case>
+							 <case value="设计总监">
+							 		<ul class="son">
+						           	  <li><a href="{:U('Admin/Inspector/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+					           		</ul>
+							 </case>
+							 <case value="店长" >
+								 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
+						            <ul class="son">
+						            	<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
+						           		<li><a href="{:U('Admin/Shopleader/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
+						           		<li><a href="{:U('Admin/Shopleader/goodslist',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;商品管理</a></li>
+						           		<li><a href="{:U('Admin/Shopleader/user',array('sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店员管理</a></li>
+						           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
+						             </ul>
+							 </case>
+							 <default />
+						 </switch>
+					 </li>
+				<elseif condition="$us['sclass'] eq '3'"/>
 							  <li>
 							  
 					            <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;供应商中心</a></span>
@@ -184,7 +198,19 @@
 					             </ul>
 					             
 					          </li>
-					       
+					          <!--RBAC 角色管理   -->
+					          <li>
+					            <span><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;权限管理中心</a></span>
+					            <ul class="son">
+					              <li><a href="{:U('Admin/Rbac/index')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;用户列表</a></li>
+					              <li><a href="{:U('Admin/Rbac/role')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;角色列表</a></li>
+					              <li><a href="{:U('Admin/Rbac/node')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;节点列表</a></li>
+					              <li><a href="{:U('Admin/Rbac/addUser')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加用户</a></li>
+					              <li><a href="{:U('Admin/Rbac/addRole')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加角色</a></li>
+					              <li><a href="{:U('Admin/Rbac/addNode')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;添加节点</a></li>
+					            </ul>
+					          </li>
+					      	
 					          
 				 </if>
 				 <!-- 角色判定结束 -->

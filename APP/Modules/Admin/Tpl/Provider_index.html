@@ -65,22 +65,44 @@
 	<tr>
 		
 		<td>{$u.onum}</td>
-		<td>{$u.ougname}</td>
-		<td>{$u.odgname}</td>
-		<td>{$u.obgname}</td>
-		
-		<td>{$u.ossname}</td>	
-		<td>{$u.ossaddr}</td>
-		<td>{$u.ossphone}</td>
-		<td>{$u.ossmail}</td>
-				
-		<td>{$u.bookdate}</td>
-		<td><if condition="$u['ispullleader'] eq 1"><span class='blue'>要打样</span><else/>已打样</if></td>
-		<td><if condition="$u['ispullleader'] eq 1"><if condition="$u['providerpull'] eq 0"><a href="#" onclick="changepull({$u.onum})">未寄出</a><else/>已寄出</if><else/>已寄出</if></td>
-		<td><if condition="$u['ispullleader'] eq 1"><if condition="$u['providerpull'] eq 1"><if condition="$u['pullok'] eq 0"><span class='blue'>未打样</span><else/>已打样</if><else>&nbsp;</if> <else/>已打样</if></td>
-		<td><if condition="$u[pullok] eq 1"><if condition="$u['providerok'] eq 0"><a href="#" onclick="changeproviderok({$u.onum})">未制作</a><else/>已寄出</if><else/>&nbsp;</if></td>
-		<td><if condition="$u['shopok'] eq 0">&nbsp;<else/>已完成</if></td>
-		<td><if condition="$u['shopok'] eq 1">{$u.okdate}<else/>&nbsp;</if></td>
+		<td>{$u.oscalenum}</td>
+		<td>{$u.ossname}</td>
+		<td>{$u.bookdate|date='y-m-d H:i',###}</td>
+		<td>
+			<if condition='$u["ispull"] eq 1'>
+				<span class='blue'>要打样</span>
+			<else/>
+				不打样
+			</if>
+		</td>
+		<td><if condition='$u["pullok"] eq 0'>
+				<switch name='u.pullstatus'>
+					<case value="0">生产制作中</case>
+					<case value="1">供应商已寄出</case>
+					<case value="2">店铺已收到</case>
+					<case value="3">店铺已寄出</case>
+					<case value="4">供应商已收到</case>
+					<default />
+				</switch>	
+			<else/>已完成</if>
+		</td>
+		<td><if condition='$u["pullok"] eq 0'>&nbsp;<else/>{$u.pullokdate|date='y-m-d H:i',###}</if></td>
+		<td>
+			<if condition='$u["pullok"] eq 1'>
+				<if condition='$u["goodsok"] eq 0'>
+					<switch name='u.pullstatus'>
+						<case value="0">生产制作中</case>
+						<case value="1">供应商已寄出</case>
+						<case value="2">店铺已收到</case>
+						<case value="3">店铺已寄出</case>
+						<case value="4">供应商已收到</case>
+						<default />
+					</switch>	
+				<else/>已完成</if>
+			<else/>&nbsp;
+			</if>	
+		</td>
+		<td><if condition='$u["goodsok"] eq 0'>&nbsp;<else/>{$u.goodsokdate|date='y-m-d H:i',###}</if></td>
 		<td>
 			<a href="{:U('Admin/Provider/readorder',array('onum'=>$u['onum'],'opsname'=>$opsname,))}" target="opt">读取</a>
 		</td>	
@@ -165,23 +187,15 @@
 				
 			  columns:[[
 	           
-	          	{field:'onum',title:"订单号",width:50},
-		        {field:'ougname',title:'上衣款式',width:50}, 
-		      	{field:'odgname',title:'裤子款式',width:50},
-		        {field:'obgname',title:'背心款式',width:50},
-
-		        {field:'ossname',title:"店铺名称",width:40},
-		        {field:'ossaddr',title:"店铺地址",width:130},
-		        {field:'ossphone',title:"店铺电话",width:50},
-		        {field:'ossmail',hidden:true},
-		      		       
-		        {field:'bookdate',title:'下单日期',width:40},
-		      	{field:'ispullleader',title:'店长意见',width:30},
-		      	{field:'providerpull',title:'样本收发',width:30},
-		      	{field:'pullok',title:'打样状态',width:30},
-		      	{field:'providerok',title:'成品收发',width:30},
-		        {field:'shopok',title:'订单最终状态',width:40},
-		        {field:'okdate',title:'完成日期',width:40},
+	          	{field:'onum',title:"合订号",width:50},
+		        {field:'oscalenum',title:'量身单号',width:50}, 
+		      	{field:'ossname',title:'店铺名称',width:50},
+		        {field:'bookdate',title:'下单日期',width:50},
+				{field:'ispull',title:"是否打样",width:40},
+		        {field:'pullstatus',title:"打样状态",width:50},
+		        {field:'pullokdate',title:"打样完成时间",width:50},
+		        {field:'goodstatus',title:"成品状态",width:50},
+		        {field:'goodsokdate',title:"成品完成时间",width:50},
 		        {field:'ss',title:'操作',width:30},
 		   	  ]]
 			});

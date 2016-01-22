@@ -8,23 +8,25 @@ Class OrderRelationModel extends RelationModel{
 	Protected $tableName='order';
 	//定义关联关系
 	Protected $_link=array(
-			'user'=>array(
-					'mapping_type'=>MANY_TO_MANY,//多对多关系
-					'mapping_name'=>'user',
-					'foreign_key'=>'order_num',//主表在中间表的字段名称
-					'relation_foreign_key'=>'user_id',//副表在中间表的字段 名称
-					'relation_table'=>'hy_user_order',//中间表
-					'mapping_fields'=>'uid,unum,uname',
+						
+			'express'=>array(
+			'mapping_type'=>MANY_TO_MANY,//一对多关系
+			'mapping_name'=>'express',
+			'foreign_key'=>'order_num',//主表在中间表的字段名称
+			'relation_foreign_key'=>'express_id',//副表在中间表的字段 名称
+			'relation_table'=>'hy_express_order',//中间表
+			
 			),
 			
-			'shop'=>array(
-			'mapping_type'=>MANY_TO_MANY,//多对多关系
-			'mapping_name'=>'shop',
+			'repair'=>array(
+			'mapping_type'=>MANY_TO_MANY,//一对多关系
+			'mapping_name'=>'repair',
 			'foreign_key'=>'order_num',//主表在中间表的字段名称
-			'relation_foreign_key'=>'shop_id',//副表在中间表的字段 名称
-			'relation_table'=>'hy_shop_order',//中间表
-			'mapping_fields'=>'sid,sname,saddr,sphone,sclass',
+			'relation_foreign_key'=>'repair_id',//副表在中间表的字段 名称
+			'relation_table'=>'hy_repair_order',//中间表
+			
 			),
+			
 	);
 	
 }

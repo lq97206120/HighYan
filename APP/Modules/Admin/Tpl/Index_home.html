@@ -35,23 +35,26 @@
             </div>
         </div>
       </div>
-       <div >
-          <div class="box">
-              <div class="title">
-                  <h4>
-                      <span class="icon-exclamation-sign"></span>
-                      <span>系统公告</span>
-                  </h4>
-                  <a href="#" class="minimize hide"></a>
-              </div>
-              <div class="content " style="display: block;">
-                <h4 class='informtitle sys'>{$new['ititle']}</h4>
-                <div class='informdate'>{$new.idate|date='y-m-d H:i',###}</div>
-                <p class='inform'>{$new['icontent']}</p>
-                
-              </div>
-          </div>
-        </div>
+       	<if condition="$us['roleremark'] eq '供应商'">
+       	<else/>
+       		<div >
+	          <div class="box">
+	              <div class="title">
+	                  <h4>
+	                      <span class="icon-exclamation-sign"></span>
+	                      <span>系统公告</span>
+	                  </h4>
+	                  <a href="#" class="minimize hide"></a>
+	              </div>
+	              <div class="content " style="display: block;">
+	                <h4 class='informtitle sys'>{$new['ititle']}</h4>
+	                <div class='informdate'>{$new.idate|date='y-m-d H:i',###}</div>
+	                <p class='inform'>{$new['icontent']}</p>
+	                
+	              </div>
+	          </div>
+	        </div>
+       	</if>
         
 	        <div >
 	          <div class="box">
