@@ -587,38 +587,35 @@
 		  	 		</tr>
 		  	 	</foreach>	
 		  	  </table>
-		 		<if condition='$order["goodsok"] eq 0'><if condition='$order["expresslock"] eq 1'><button class="btn btn-default" style="width:30%;margin-bottom:5px;"  data-toggle="modal" data-target="#addExpressModal">添加流程+</button><else/></if><else/>&nbsp;</if>
+		 		<if condition='$order["goodsok"] eq 0'><if condition='$order["expresslock"] eq 1'><button class="btn btn-default" style="width:30%;margin-bottom:5px;"  data-toggle="modal" data-target="#addExpressModal">添加流程+</button><else/></if><else/>&nbsp;</if><span class='red'>*完成上一轮流程才能添加*</span>
 		 </div>
-	 	 <div  class='col-sm-3'>
-	 	 <hr/>
-	  	  	<h3>返修单</h3>
+	 	  <div  class='col-sm-3'>
+	 	<hr/>
+	  	  <div class="form-group" style="height:34px;">
+		  	  <label class="col-sm-3 control-label">&nbsp;</label> 
+   		   </div>
 	  	  <hr/>
-	 	 	<div style='height:500px;'>
-	 	 		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		
-		  		<li>1111</li>
-		  		<li>1111</li>
-		  		<li>1111</li>
+	  	  	  	<h3>返修单</h3>
+	  	  <hr/>
+	 	 	  <table id="dgr" style="width:300px;height:380px" >
+		  	 	<foreach name='order.repair' item='v'>
+		  	 		<if condition='($v["isback"] eq 1) AND ($v["isok"] eq 1)'>
+		  	 			<tr>
+			  	 			<td>{$v.rid}</td>
+			  	 			<td>{$v.rnum}</td>
+			  	 			<td><if condition='$v["isback"] eq 0'>小修<else/><span class='blue'>大修</span></if></td>
+			  	 			<td>
+			  	 				<a href="{:U('Admin/Provider/readrepair',array('rid'=>$v['rid'],'onum'=>$order['onum'],'opsname'=>$opsname,))}" target="opt">读取&nbsp;</a>
+				 			</td>
+			  	 			
+			  	 		</tr>
+		  	 		<else/>
+		  	 		</if>
+		  	 	</foreach>	
+		  	  </table>
+		 		<if condition='($order["goodsok"] eq 0) AND ($order["inspectorverify"] eq 1) AND ($order["shopleaderrverify"] eq 1)'><if condition='$order["repairlock"] eq 1'><button class="btn btn-default" style="width:32%;margin-bottom:5px;"  data-toggle="modal" data-target="#addRepairModal">添加返修单+</button><else/>&nbsp;</if><else/>&nbsp;</if>
+		
 	 	 	</div>
-	 	 	<div >
-	 	 	
-	 	 	</div>
-	 	 </div>
 	  	</div>	
 	  	<!-- 量身单下部结束 -->
 	 	  <div class="modal-footer">
@@ -862,6 +859,22 @@
 				{field:'pgetstatus',hidden:true},
 				{field:'pullok',hidden:true},
 				{field:'goodsok',hidden:true},
+		   	  ]]
+			});
+
+		
+		$('#dgr').datagrid({
+		       fitColumns:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false,
+				
+			  columns:[[
+				{field:'rid',hidden:true},         
+				{field:'rnum',title:"返修单号",width:320},
+				{field:'isback',title:"返修类型",width:300},
+				{field:'ss',title:"操作",width:200},
+				
 		   	  ]]
 			});
 		});

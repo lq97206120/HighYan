@@ -4,11 +4,12 @@ class InspectorAction extends CommonAction{
 	public function order(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->order('shopok')->count();
+		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','oscalenum','bookdate','bookpulldate','bookgetdate','osunum','ispull','inspectorverify','shopleaderverify','opsname');
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
 		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=subtime($order);
 		$this->order=$order;
 		
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -33,9 +34,9 @@ class InspectorAction extends CommonAction{
 //读取订单修改信息
 	public function readorder(){
 		
-		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
-				
+						
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
 		$possess=$shop['goods'];
 		
@@ -46,7 +47,6 @@ class InspectorAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
-		$this->osunum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
@@ -169,54 +169,7 @@ class InspectorAction extends CommonAction{
 			}			
 		$receive=array(
 				'onum'=>$_POST['onum'],
-				'reservenum'=>$_POST['reservenum'],
-				'photocom'=>$_POST['photocom'],
-				'bookdate'=>$_POST['bookdate'],
-				'photodate'=>$_POST['photodate'],
-				'omname'=>$_POST['omname'],
-				'engagedate'=>$_POST['engagedate'],
-				'marrydate'=>$_POST['marrydate'],
-				'ommale'=>$_POST['ommale'],
-				'bookpulldate'=>$_POST['bookpulldate'],
-				'omnum'=>$_POST['omnum'],
-				'bookgetdate'=>$_POST['bookgetdate'],
-				'omphone'=>$_POST['omphone'],
-				'rentgetdate'=>$_POST['rentgetdate'],
-				'rentbackdate'=>$_POST['rentbackdate'],
-				'omaddr'=>$_POST['omaddr'],
-				'clothremark1'=>$_POST['clothremark1'],
-				'clothremark2'=>$_POST['clothremark2'],
-				'clothremark3'=>$_POST['clothremark3'],
-				'clothremark4'=>$_POST['clothremark4'],
-				'clothremark5'=>$_POST['clothremark5'],
-				'deposit'=>$_POST['deposit'],
-				'total'=>$_POST['total'],
-				'rbook'=>$rbook,
-				'rrent'=>$rrent,
-				'rsale'=>$rsale,
-				'rpacke'=>$rpacke,
-				'gather1bookmoney'=>$_POST['gather1bookmoney'],
-				'gather1sparemoney'=>$_POST['gather1sparemoney'],
-				'gather1date'=>$_POST['gather1date'],
-				'gather1user'=>$_POST['gather1user'],
-				'gather2bookmoney'=>$_POST['gather2bookmoney'],
-				'gather2sparemoney'=>$_POST['gather2sparemoney'],
-				'gather2date'=>$_POST['gather2date'],
-				'gather2user'=>$_POST['gather2user'],
-				'rcode'=>$_POST['rcode'],
-				'rsleeve'=>$_POST['rsleeve'],
-				'rneck'=>$_POST['rneck'],
-				'rwaist'=>$_POST['rwaist'],
-				'rleglength'=>$_POST['rleglength'],
-				'rshoes'=>$_POST['rshoes'],
-				'photonum'=>$_POST['photonum'],
-				'majiaprice'=>$_POST['majiaprice'],
-				'majiafabric'=>$_POST['majiafabric'],
-				'tie1'=>$_POST['tie1'],
-				'tie2'=>$_POST['tie2'],
-				'referee'=>$_POST['referee'],
-				'rremark'=>$_POST['rremark'],
-		
+						
 				'oscalenum'=>$_POST['oscalenum'],
 				'scale'=>$_POST['scale'],
 				'ougid'=>$ougid,
@@ -322,11 +275,11 @@ class InspectorAction extends CommonAction{
 			$db=M('order');
 			$result=$db->save($receive);
 			if($result){
-				if($_POST['leaderverifystatus']=='1'){
-					$center=M('shop')->where(array('sname'=>"管理部门"))->find();
-					$mail=$center['smail'];
-					
-					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,订单号为:{$receive['onum']}.");
+				if($_POST['shopleaderverify']=='1'){
+					$provider=M('shop')->where(array('sname'=>$opsname))->find();
+					$mail=$provider['smail'];
+				
+					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,合订号为:{$_POST['onum']}.");
 					
 					
 				}
@@ -334,6 +287,71 @@ class InspectorAction extends CommonAction{
 			}else 
 				$this->error("保存失败",U('Admin/Inspector/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 	
+	}
+	//订单查询
+	//订单查询
+	public function ordersearch(){
+		
+		$searchcondition = I ( 'searchcondition','');
+		$searchcontent = I('searchcontent','');
+		$ossname=I('ossname','');
+		if(!empty($searchcondition) && !empty($searchcontent)){
+			import ( 'ORG.Util.Page' );
+			//处理总监审核
+			if($searchcondition=="inspectorverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理店长审核
+			if($searchcondition=="shopleaderverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理是否打样
+			if($searchcondition=="ispull"){
+				if($searchcontent=="要打样")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			
+			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
+			//查询条件
+			$condition['ossname']=$ossname;
+			$count=M('order')->where($condition)->count ();
+			$page=new Page($count,10);
+			$limit=$page->firstRow . ',' . $page->listRows;
+			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=subtime($order);
+			$this->order=$order;
+			//分配商品
+				
+			$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_POST['sid']))->find();
+			$possess=$shop['goods'];
+			
+			$cloth=shopposess($possess,1);
+			$pants=shopposess($possess,2);
+			$vest=shopposess($possess,3);
+		
+			$this->sid=$_POST['sid'];
+			$this->ossname=$_POST['ossname'];
+			$this->cloth=$cloth;
+			$this->pants=$pants;
+			$this->vest=$vest;
+			$this->page = $page->show ();
+			$this->order = $order;
+			$this->display('order');
+		
+		}
+	}
+	//处理读取返修单
+	public function readrepair(){
+		
+		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->sid=$_GET['sid'];
+		$this->ossname=$_GET['ossname'];
+		$this->repair=$repair;
+		$this->onum=$_GET['onum'];
+		$this->display();
 	}
 	
 }

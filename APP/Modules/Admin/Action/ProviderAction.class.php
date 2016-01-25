@@ -26,49 +26,29 @@ class ProviderAction extends CommonAction{
 	}
 	//查询订单
 	public function ordersearch(){
-	
+		
 		$searchcondition = I ( 'searchcondition','');
 		$searchcontent = I('searchcontent','');
 		
 		if(!empty($searchcondition) && !empty($searchcontent)){
 			import ( 'ORG.Util.Page' );
 			
-			//处理店长意见
-			if($searchcondition=="ispullleader"){
+			//处理是否打样
+			if($searchcondition=="ispull"){
 				if($searchcontent=="要打样")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			
-			//处理样本收发
-			if($searchcondition=="providerpull"){
-				if($searchcontent=="已寄出")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理打样状态
-			if($searchcondition=="pullok"){
-				if($searchcontent=="已打样")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理成品收发
-			if($searchcondition=="providerok"){
-				if($searchcontent=="已寄出")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			
-			//处理完成状态
-			if($searchcondition=="shopok"){
-				if($searchcontent=="已完成")$searchcontent=1;
 				else $searchcontent=0;
 			}
 			
 			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
 			//员工查询编号条件
 			$condition['opsname']=$_POST['opsname'];
+			$condition['inspectorverify']=1;
+			$condition['shopleaderverify']=1;
 			$count=M('order')->where($condition)->count ();
 			$page=new Page($count,10);
-			$limit=$page->firstRow . ',' . $page->listRows;
-			$order=M('order')->where($condition)->limit ( $limit )->order('shopok,leaderverifystatus,ispullleader')->select ();
-			
+			$field=array('onum','oscalenum','ossname','bookdate','ispull','pullstatus','pullok','goodsok','pullokdate','goodsokdate');
+			$order=M('order')->limit($limit)->where($condition)->field($field)->order('bookdate desc')->select();
+		
 			$this->opsname=$_POST['opsname'];
 		
 			$this->page = $page->show ();
@@ -124,6 +104,12 @@ class ProviderAction extends CommonAction{
 						$merge=array('express_id'=>$express,'order_num'=>$_POST['onum']);
 						M('express_order')->add($merge);
 					if($express){
+						
+						$order=M('order')->where(array('onum'=>$_POST['onum']))->field(array('ossmail'))->find();
+						$mail=$order['ossmail'];
+				
+						$r=think_send_mail("{$mail}",'海彦',"新物流","有新快递;快递公司:{$_POST['pexpress']},物流号：{$_POST['pexpressnum']},合订号为:{$_POST['onum']}.");
+						
 						$this->success("修改成功");
 					}else 
 						$this->error("修改失败");
@@ -157,5 +143,12 @@ class ProviderAction extends CommonAction{
 				$this->success("修改成功");
 			}else 
 				$this->error("未修改");
+	}
+	//处理返修单
+	public function readrepair(){
+		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->repair=$repair;
+		$this->onum=$_GET['onum'];
+		$this->display();
 	}		
 }

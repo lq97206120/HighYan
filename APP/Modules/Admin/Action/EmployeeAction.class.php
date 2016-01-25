@@ -5,7 +5,7 @@ class EmployeeAction extends CommonAction{
 		//预约查询
 		import("ORG.Util.Page");
 		$count=M('book')->where(array('bsid'=>$_GET['sid']))->count();
-		$page=new Page($count,10);
+		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$book=M('book')->where(array('bsid'=>$_GET['sid']))->limit($limit)->order('bstatus,bdate desc')->select();
 		$this->book=$book;
@@ -54,7 +54,7 @@ class EmployeeAction extends CommonAction{
 			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
 			$condition['bsid']=$_POST['bsid'];
 			$count=M('book')->where($condition)->count ();
-			$page=new Page($count,10);
+			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
 			$book=M('book')->where($condition)->limit ( $limit )->order('bstatus asc')->select ();
 			$this->page = $page->show ();
@@ -69,11 +69,12 @@ class EmployeeAction extends CommonAction{
 	public function selforder(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('osunum'=>$_GET['unum']))->order('shopok')->count();
-		$page=new Page($count,10);
+		$count=M('order')->where(array('osunum'=>$_GET['unum']))->count();
+		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
 		$order=M('order')->where(array('osunum'=>$_GET['unum']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=subtime($order);
 		$this->order=$order;
 		
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -464,8 +465,8 @@ class EmployeeAction extends CommonAction{
 					{
 						$tcloth['gnum']='';$tcloth['gname']='';
 					}
-						
-		$receive=array(
+		//订购单				
+		$receive1=array(
 				'onum'=>$_POST['onum'],
 				'reservenum'=>$_POST['reservenum'],
 				'photocom'=>$_POST['photocom'],
@@ -515,6 +516,16 @@ class EmployeeAction extends CommonAction{
 				'referee'=>$_POST['referee'],
 				'rremark'=>$_POST['rremark'],
 		
+			);
+			if($_POST['shopleaderverify']=='0'){
+				$db=M('order');
+				$result1=$db->save($receive1);
+				
+			}
+			//修改量身单
+			$receive2=array(
+				'onum'=>$_POST['onum'],
+			
 				'oscalenum'=>$_POST['oscalenum'],
 				'scale'=>$_POST['scale'],
 				'ougid'=>$ougid,
@@ -610,18 +621,20 @@ class EmployeeAction extends CommonAction{
 				'tsleevesur'=>$_POST['tsleevesur'],
 				'tcode'=>$_POST['tcode'],
 				'tclothfabric'=>$_POST['tclothfabric'],
+				
 		
 			);
-			
-			$db=M('order');
-			$result=$db->save($receive);
-			
-			if($result){
+			if($_POST['inspectorverify']=='0'){
+				$db=M('order');
+				$result2=$db->save($receive2);
+				
+			}
+			if($result1 || $result2){
 				$this->success("添加成功",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
 			}else 
 				$this->error("添加失败",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
 	
-	}
+		}
 	
 	//个人查询
 	public function selfsearch(){
@@ -631,59 +644,33 @@ class EmployeeAction extends CommonAction{
 		$osunum=I('osunum','');
 		if(!empty($searchcondition) && !empty($searchcontent)){
 			import ( 'ORG.Util.Page' );
-			//处理审核状态
-			if($searchcondition=="leaderverifystatus"){
-				if($searchcontent=="已审核")$searchcontent=1;
+			//处理总监审核
+			if($searchcondition=="inspectorverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
 				else $searchcontent=0;
 			}
-			//处理店长意见
-			if($searchcondition=="ispullleader"){
+			//处理店长审核
+			if($searchcondition=="shopleaderverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理是否打样
+			if($searchcondition=="ispull"){
 				if($searchcontent=="要打样")$searchcontent=1;
 				else $searchcontent=0;
 			}
-			//处理打样状态
-			if($searchcondition=="pullok"){
-				if($searchcontent=="已打样")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理完成状态
-			if($searchcondition=="shopok"){
-				if($searchcontent=="已完成")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理商品编号
-			if($searchcondition=="ognum"){
-				$db=M('goods');
-				$gclass=$db->where(array('gnum'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougnum";break;
-					case '2': $searchcondition="odgnum";break;
-					case '3': $searchcondition="obgnum";break;
-						
-				}
-			}
-			//处理商品名称
-			if($searchcondition=="ogname"){
-				$db=M('goods');
-				$gclass=$db->where(array('gname'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougname";break;
-					case '2': $searchcondition="odgname";break;
-					case '3': $searchcondition="obgname";break;
-						
-				}
-			}
+			
 			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
 			//员工查询编号条件
 			$condition['osunum']=$osunum;
 			$count=M('order')->where($condition)->count ();
-			$page=new Page($count,10);
+			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
-			$order=M('order')->where($condition)->limit ( $limit )->order('shopok,leaderverifystatus,ispullleader')->select ();
+			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
+			$order=M('order')->where($condition)->limit ( $limit )->order('bookdate desc')->select ();
+			$order=subtime($order);	
 			//分配商品
-					
+				
 			$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_POST['sid']))->find();
 			$possess=$shop['goods'];
 			
@@ -723,38 +710,45 @@ class EmployeeAction extends CommonAction{
 	public function shoporder(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->order('shopok')->count();
-		
-		$page=new Page($count,10);
+		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->count();
+		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','omnum','omname','omphone','ougname','odgname','obgname','osunum','bookdate','leaderverifystatus','ispullleader','providerpull','pullok','providerok','shopok','okdate');
-		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('leaderverifystatus,providerpull,pullok,providerok,shopok')->select();
-		
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
+		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=subtime($order);
 		$this->order=$order;
 		
-//		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
-//		$possess=$shop['goods'];
-//		
-//		$cloth=shopposess($possess,1);
-//		$pants=shopposess($possess,2);
-//		$vest=shopposess($possess,3);
+		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
+		$possess=$shop['goods'];
+		
+		$cloth=shopposess($possess,1);
+		$pants=shopposess($possess,2);
+		$vest=shopposess($possess,3);
 //		p($cloth);
 //		p($pants);
 //		p($vest);
-//		$this->sid=$_GET['sid'];
+		$this->sid=$_GET['sid'];
 		$this->ossname=$_GET['ossname'];
-//		$this->cloth=$cloth;
-//		$this->pants=$pants;
-//		$this->vest=$vest;
+		$this->cloth=$cloth;
+		$this->pants=$pants;
+		$this->vest=$vest;
 		$this->page = $page->show ();
 		$this->display();
 	}
 	//店铺订单读取
 	public function readshoporder(){
 		
-		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
 		$this->ossname=$_GET['ossname'];
+		$this->display();
+	}
+	//读取店铺返修单
+	public function readshoprepair(){
+		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->repair=$repair;
+		$this->onum=$_GET['onum'];
+		
 		$this->display();
 	}
 //店铺订单查询
@@ -762,65 +756,38 @@ class EmployeeAction extends CommonAction{
 		
 		$searchcondition = I ( 'searchcondition','');
 		$searchcontent = I('searchcontent','');
-		
+		$ossname=I('ossname','');
 		if(!empty($searchcondition) && !empty($searchcontent)){
 			import ( 'ORG.Util.Page' );
-			//处理审核状态
-			if($searchcondition=="leaderverifystatus"){
-				if($searchcontent=="已审核")$searchcontent=1;
+			//处理总监审核
+			if($searchcondition=="inspectorverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
 				else $searchcontent=0;
 			}
-			//处理店长意见
-			if($searchcondition=="ispullleader"){
+			//处理店长审核
+			if($searchcondition=="shopleaderverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理是否打样
+			if($searchcondition=="ispull"){
 				if($searchcontent=="要打样")$searchcontent=1;
 				else $searchcontent=0;
 			}
 			
-			//处理打样状态
-			if($searchcondition=="pullok"){
-				if($searchcontent=="已打样")$searchcontent=1;
-				else $searchcontent=0;
-			}
-		
-			//处理完成状态
-			if($searchcondition=="shopok"){
-				if($searchcontent=="已完成")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理商品编号
-			if($searchcondition=="ognum"){
-				$db=M('goods');
-				$gclass=$db->where(array('gnum'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougnum";break;
-					case '2': $searchcondition="odgnum";break;
-					case '3': $searchcondition="obgnum";break;
-						
-				}
-			}
-			//处理商品名称
-			if($searchcondition=="ogname"){
-				$db=M('goods');
-				$gclass=$db->where(array('gname'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougname";break;
-					case '2': $searchcondition="odgname";break;
-					case '3': $searchcondition="obgname";break;
-						
-				}
-			}
 			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
-			//员工查询编号条件
-			$condition['ossname']=$_POST['ossname'];
+			//查询条件
+			$condition['ossname']=$ossname;
 			$count=M('order')->where($condition)->count ();
-			$page=new Page($count,10);
+			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
-			$order=M('order')->where($condition)->limit ( $limit )->order('shopok,leaderverifystatus,ispullleader')->select ();
+			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=subtime($order);
+			$this->order=$order;//分配商品
 			
+			$this->sid=$_POST['sid'];
 			$this->ossname=$_POST['ossname'];
-		
 			$this->page = $page->show ();
 			$this->order = $order;
 			$this->display('shoporder');
@@ -950,7 +917,7 @@ class EmployeeAction extends CommonAction{
 		
 		if($_POST['eclass']=="样品"){
 			if($_POST['okstatus']=='1'){
-				$recop=array('onum'=>$_POST['onum'],'pullok'=>'1','pullstatus'=>'0',);
+				$recop=array('onum'=>$_POST['onum'],'pullok'=>'1','pullstatus'=>'0','pullokdate'=>time(),);
 				$order=M('order')->save($recop);
 			}else{
 				$recop=array('onum'=>$_POST['onum'],'pullok'=>'0',);
@@ -959,7 +926,7 @@ class EmployeeAction extends CommonAction{
 		}
 		else{
 			if($_POST['okstatus']=='1'){
-				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'1',);
+				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'1','goodsokdate'=>time(),);
 				$order=M('order')->save($recop);
 			}else{
 				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'0',);
@@ -978,6 +945,12 @@ class EmployeeAction extends CommonAction{
 		$express=$db->save($receive);
 		
 		if($express || $order){
+			
+				$order=M('order')->where(array('onum'=>$_POST['onum']))->field(array('opsname'))->find();
+				$shop=M('shop')->where(array('sname'=>$order["opsname"]))->find();
+				$mail=$shop["smail"];
+				$r=think_send_mail("{$mail}",'海彦',"新物流","有新快递;快递公司:{$sexpress},物流号：{$sexpressnum},合订号为:{$_POST['onum']}.");
+					
 				$this->success("修改成功");
 			}else 
 				$this->error("未修改");
@@ -1019,6 +992,8 @@ class EmployeeAction extends CommonAction{
 	//读取返修单
 	public function readrepair(){
 		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->sid=$_GET['sid'];
+		$this->osunum=$_GET['osunum'];
 		$this->repair=$repair;
 		$this->onum=$_GET['onum'];
 		

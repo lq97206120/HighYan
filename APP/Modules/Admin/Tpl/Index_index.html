@@ -124,6 +124,7 @@
 					           		</ul>
 							 </case>
 							 <case value="设计总监">
+								 <span id="span"><a href="#"><i class="icon-chevron-right"></i>&nbsp;&nbsp;店铺中心</a></span>
 							 		<ul class="son">
 						           	  <li><a href="{:U('Admin/Inspector/order',array('unum'=>$us['unum'],'sid'=>$us['shop'],'ossname'=>$us['shopsname']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;订单查询</a></li>
 					           		</ul>
@@ -227,27 +228,32 @@
         </ul>
 		</div>
 		<ul id="shortcut-ico" class="fn-hide">
-		<if condition="($us['roleremark'] eq '店员') OR ($us['roleremark'] eq '店长')">
-			<if condition="$us['roleremark'] eq '店员'">
-			<else/>
-				
-			</if>
-		<elseif condition="$us['roleremark'] eq '供应商'"/>
-		<else/>
-		  <li><a href="{:U('Admin/Shop/index')}" target="opt" title="部门查询"> <i class="icon-flag"></i></a></li>
-	      <li><a href="{:U('Admin/Goods/index')}" target="opt" title="商品查询"><i class="icon-gift"></i></a></li>
-          <li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt" title="订单查询"><i class="icon-shopping-cart"></i></a></li>
-          <li><a  href="{:U('Admin/Memb/index')}" target="opt" title="会员查询"><i class="icon-user"></i></a></li>
-          <li><a href="{:U('Admin/User/index')}" target="opt" title="员工查询"><i class="icon-user"></i></a></li>
-          <li><a href="{:U('Admin/Inform/index')}" target="opt" title="公告查询"><i class="icon-info-sign"></i></a></li>
-          <li><a href="{:U('Admin/Front/menu')}" target="opt" title="菜单查询"><i class="icon-home"></i></a></li>
-          
-	 	</if>
-		
-		
-    
+					<switch name='us.roleremark'>
+						 <case value="导购员">
+						 
+						 </case>
+						 <case value="设计师" >
+						
+						 </case>
+						 <case value="设计总监" >
+						 </case>
+						 <case value="店长" >
+						 </case>
+						 <case value="管理员" >
+						 	 <li><a href="{:U('Admin/Shop/index')}" target="opt" title="部门查询"> <i class="icon-flag"></i></a></li>
+						      <li><a href="{:U('Admin/Goods/index')}" target="opt" title="商品查询"><i class="icon-gift"></i></a></li>
+					          <li><a href="{:U('Admin/Order/index',array('unum'=>$us['unum']))}" target="opt" title="订单查询"><i class="icon-shopping-cart"></i></a></li>
+					          <li><a  href="{:U('Admin/Memb/index')}" target="opt" title="会员查询"><i class="icon-user"></i></a></li>
+					          <li><a href="{:U('Admin/User/index')}" target="opt" title="员工查询"><i class="icon-user"></i></a></li>
+					          <li><a href="{:U('Admin/Inform/index')}" target="opt" title="公告查询"><i class="icon-info-sign"></i></a></li>
+					          <li><a href="{:U('Admin/Front/menu')}" target="opt" title="菜单查询"><i class="icon-home"></i></a></li>
+					          
+						 </case>
+						 <default />
+					 </switch>
+		   
         </ul>
-		<div class="close-left" title="点击显示快捷菜单"></div>
+		<div  class="close-left" title="点击显示快捷菜单"></div>
       </div>
       <!--  左部结束 -->
 

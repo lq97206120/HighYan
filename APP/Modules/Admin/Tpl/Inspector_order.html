@@ -29,24 +29,22 @@
 	  <tr>
 	  	<td>
 	  	<select name="searchcondition" class="form-control">
-			  <option value ="onum">订单号</option>
-			  <option value ="omnum">会员帐号</option>
+			  <option value ="onum">合订号</option>
+			  <option value ="reservenum">订购单号</option>
+			  <option value ="oscalenum">量身单号</option>
+			  <option value ="omname">会员姓名</option>
 			  <option value ="omphone">会员电话</option>
-			  <option value ="ognum">商品编号</option>
-			  <option value ="ogname">商品名称</option>
-			  <option value ="osunum">接待员工号</option>
-			  <option value ="leaderverifystatus">店长审核状态</option>
-			  <option value ="ispullleader">店长意见</option>
-			   <option value ="pullok">打样状态</option>
-			  <option value ="shopok">订单最终状态</option>	
+			  <option value ="osunum">导购员工号</option>
+			  <option value ="ispull">是否打样</option>
+			  <option value ="inspectorverify">总监审核</option>
+			  <option value ="shopleaderverify">店长审核</option>
+			  <option value ="opsname">供应商</option>			
 		</select>
 	  	</td>
 	  	<td>
 	  		<input type="text" class="form-control"  id="searchcontent" name="searchcontent">
 	  	</td>
-	  	<td>
-	  		<input type="hidden"   name="osunum" value='{$osunum}'>
-	  	</td>
+	  	
 	  	<td>
 	  		<input type="hidden"   name="sid" value='{$sid}'>
 	  	</td>
@@ -61,54 +59,90 @@
 	</table>
 	</form>
 	<br/>
-	<button id="userEdit" class="btn btn-default "  data-target="#edituserModal">
-			指派订单
-	</button>
-	<div style="margin:10px 0;"></div>	
-	<table id="dg" title="订单信息列表" style="width:1250px;height:380px" >
+	
+	<div style="margin:10px 0;"></div>
+	
+	
+	<table id="dg" title="订单信息列表" style="width:1360px;height:380px" >
 	<foreach name='order' item='u'>
 	<tr>
-		<td>{$u.onum}</td>
+		<td><if condition='$u["subtime"] eq 1'><if condition="($u['inspectorverify'] eq 0) AND ($u['shopleaderverify'] eq 0)"><span class='blue'>{$u.onum}</span><else/>{$u.onum}</if><else/>{$u.onum}</if></td>
+		<td>{$u.reservenum}</td>
 		<td>{$u.oscalenum}</td>
+		<td>{$u.omname}</td>
+		<td>
+			<if condition='$u["ommale"]  eq 1'>
+				男
+			<else/>
+				女
+			</if>
+		</td>
+		<td>{$u.omphone}</td>
 		<td>{$u.bookdate}</td>
 		<td>{$u.bookpulldate}</td>
 		<td>{$u.bookgetdate}</td>
+		<td>{$u.total}</td>
 		<td>{$u.osunum}</td>
 		<td>
-			<if condition='$u["ispull"] eq 1'>
-				<span>是</span>
+			<if condition='$u["ispull"]  eq 1'>
+				<span class='blue'>要打样</span>
 			<else/>
-				<span>否</span>
+				不打样
 			</if>
 		</td>
 		<td>
-			<if condition='$u["inspectorverify"] eq 1'>
-				<span>是</span>
+			<if condition='$u["inspectorverify"]  eq 1'>
+				已通过
 			<else/>
-				<span>否</span>
+				未通过
 			</if>
 		</td>
 		<td>
-			<if condition='$u["shopleaderverify"] eq 1'>
-				<span>是</span>
+			<if condition='$u["shopleaderverify"]  eq 1'>
+				已通过
 			<else/>
-				<span>否</span>
-			</if>
-		</td>
-		<td>
-			<if condition='$u["assignstatus"] eq 1'>
-				<span>已分配</span>
-			<else/>
-				<span class='blue'>未分配</span>
+				未通过
 			</if>
 		</td>
 		<td>{$u.opsname}</td>
+		<td><if condition="($u['inspectorverify'] eq 1) AND ($u['shopleaderverify'] eq 1)">
+			<if condition='$u["pullok"] eq 0'>
+				<switch name='u.pullstatus'>
+					<case value="0">生产制作中</case>
+					<case value="1">供应商已寄出</case>
+					<case value="2">店铺已收到</case>
+					<case value="3">店铺已寄出</case>
+					<case value="4">供应商已收到</case>
+					<default />
+				</switch>	
+			<else/>已完成</if>
+			<else/>
+			</if>
+		</td>
+		<td><if condition="($u['inspectorverify'] eq 1) AND ($u['shopleaderverify'] eq 1)"><if condition='$u["pullok"] eq 0'>&nbsp;<else/>{$u.pullokdate|date='y-m-d',###}</if></td><else/></if>
+		<td><if condition="($u['inspectorverify'] eq 1) AND ($u['shopleaderverify'] eq 1)">
+			<if condition='$u["pullok"] eq 1'>
+				<if condition='$u["goodsok"] eq 0'>
+					<switch name='u.pullstatus'>
+						<case value="0">生产制作中</case>
+						<case value="1">供应商已寄出</case>
+						<case value="2">店铺已收到</case>
+						<case value="3">店铺已寄出</case>
+						<case value="4">供应商已收到</case>
+						<default />
+					</switch>	
+				<else/>已完成</if>
+			<else/>
+			&nbsp;
+			</if><else/></if>	
+		</td>
+		<td><if condition='$u["goodsok"] eq 0'>&nbsp;<else/>{$u.goodsokdate|date='y-m-d',###}</if></td>
 		<td>
-			<a href="{:U('Admin/Inspector/readorder',array('unum'=>$osunum,'sid'=>$sid,'onum'=>$u['onum'],'ossname'=>$ossname))}" target="opt">读取&nbsp;</a>
-			<if condition="$u['leaderverifystatus'] eq 0"><a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a></if>
+			<a href="{:U('Admin/Inspector/readorder',array('sid'=>$sid,'onum'=>$u['onum'],'ossname'=>$ossname))}" target="opt">读取&nbsp;</a>
 			
 		</td>
 				
+	</tr>
 	</tr>
 	</foreach>
 	</table>
@@ -257,22 +291,27 @@
 				autoRowHeight:false,
 				
 			  columns:[[
-	           
-
-						{field:'onum',title:"合订号",width:30},
-				        {field:'oscalenum',title:'量身单号',width:30},
-				       	{field:'bookdate',title:"订单日",width:30},
-				        {field:'bookpulldate',title:'定做试版日',width:30},
-				        {field:'bookgetdate',title:'取件日',width:30},
-				        {field:'osunum',title:'导购员',width:20},
-				        {field:'ispull',title:'是否打样',width:20},
-				        {field:'inspectorverify',title:'总监审核',width:20},
-				        {field:'shopleaderverify',title:'店长审核',width:20},
-				        {field:'assignstatus',title:'指派状态',width:20},
-				        {field:'opsname',title:'指派单位',width:20},
-				        {field:'pullstatus',title:'打样状态',width:30},
-				        {field:'goodsstatus',title:'成品状态',width:30},
-				        {field:'ss',title:'操作',width:20},
+						  
+			{field:'onum',title:"合订号",width:40},
+			{field:'reservenum',title:'订购单号',width:35},
+			{field:'oscalenum',title:'量身单号',width:35},
+			{field:'omname',title:'姓名',width:28}, 
+			{field:'ommale',title:'性别',width:15},
+			{field:'omphone',title:'电话',width:43},
+			{field:'bookdate',title:"订单日",width:35},
+			{field:'bookpulldate',title:'定做试版日',width:35},
+			{field:'bookgetdate',title:'取件日',width:35},
+			{field:'total',title:'总价格',width:25},
+			{field:'osunum',title:'导购员工号',width:25},
+			{field:'ispull',title:'是否打样',width:30},
+			{field:'inspectorverify',title:'总监审核',width:30},
+			{field:'shopleaderverify',title:'店长审核',width:30},
+			{field:'opsname',title:'供应商',width:30},
+			{field:'pullstatus',title:"打样状态",width:40},
+			{field:'pullokdate',title:"打样完成时间",width:35},
+			{field:'goodstatus',title:"成品状态",width:40},
+			{field:'goodsokdate',title:"成品完成时间",width:35},
+			{field:'ss',title:'操作',width:20},
 		   	  ]]
 			});
 		});

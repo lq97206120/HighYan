@@ -291,6 +291,16 @@
 			     	<div class="col-sm-1 inputpadding">
 			      		<input type="text" class="form-control " id="rwaist" name="rwaist" value='{$order["rwaist"]}' >
 			    	</div>
+			    	<label for="usernum" class=" col-sm-1 control-label"><span class='blue'>总监审核</span></label>
+					<div class="col-sm-2 inputpadding">
+				    	<if condition='$order["inspectorverify"] eq 1'>
+			    		  <input type="radio"   name="inspectorverify" value='1'  disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+				 		  <input type="radio"   name="inspectorverify" value='0' disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;否
+			    		<else/>
+			    		 <input type="radio"   name="inspectorverify" value='1'  disabled='disabled'  style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+				 		  <input type="radio"   name="inspectorverify" value='0' disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+			    		</if>
+			    	</div>
 		  </div>
 		   <div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">收款(2):</label>
@@ -314,6 +324,16 @@
 			     	<div class="col-sm-1 inputpadding">
 			      		<input type="text" class="form-control " id="rshoes" name="rshoes" value='{$order["rshoes"]}' >
 			    	</div>
+			    	 <label for="usernum" class=" col-sm-1 control-label"><span class='blue'>店长审核</span></label>
+					<div class="col-sm-2 inputpadding">
+				    	<if condition='$order["shopleaderverify"] eq 1'>
+			    		  <input type="radio"   name="shopleaderverify" value='1' disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+				 		  <input type="radio"   name="shopleaderverify" value='0'  disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;否
+			    		<else/>
+			    		 <input type="radio"   name="shopleaderverify" value='1'    style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+				 		  <input type="radio"   name="shopleaderverify" value='0'  checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+			    		</if>
+			    	</div> 
 		  </div>
 		  	
 		  	<div class="form-group">
@@ -334,6 +354,9 @@
 			     	<div class="col-sm-1 inputpadding">
 			      		<input type="text" class="form-control " id="tie2" name="tie2"  value='{$order["tie2"]}'>
 			    	</div>
+			    	
+			    	<span class='col-sm-offset-1 red'>*审核通过后不可更改*</span>
+			    	
 		  	</div>
 		  <hr/>
 		  <hr/>
@@ -345,7 +368,7 @@
 				    <div class="col-sm-2 inputpadding">
 				      <input type="text" class="form-control " id="oscalenum" name="oscalenum"  value='{$order["oscalenum"]}' readonly='true'>
 				    </div>
-			  	   <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label">单位：</label>
+			  	   <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'>单位</span></label></label>
 				    <if condition='$order["scale"] eq 1'>
 				    	<div class="col-sm-1 inputpadding">
 					      <input type="radio"  id='chinascale' name="scale" value='1' checked='checked' disabled='disabled'>&nbsp;<span>公制</span>
@@ -361,11 +384,16 @@
 					      <input type="radio" id='enscale'  name="scale" value='0' checked='checked' disabled='disabled'>&nbsp;<span>英制</span>
 					    </div>
 				    </if>	
-				   
-			     <label for="username" class="col-sm-offset-1 col-sm-1 control-label"></label>
-				    <div class="col-sm-2 inputpadding">
-				     
-				    </div>
+				  <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'><span class='blue'>是否打样</span></label>
+						<div class="col-sm-2 inputpadding">
+					    	<if condition='$order["ispull"] eq 1'>
+				    		  <input type="radio"   name="ispull" value='1'   disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+					 		  <input type="radio"   name="ispull" value='0' disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;否
+				    		<else/>
+				    		 <input type="radio"   name="ispull" value='1'   disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+					 		  <input type="radio"   name="ispull" value='0' disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+				    		</if>
+					    </div>
 			  </div>
 		  <div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">上衣款式:</label>
@@ -631,6 +659,7 @@
 					      	 <input type="checkbox" name='sleg' >S腿&nbsp;&nbsp;&nbsp;&nbsp;
 				      </if>
 				 </label>
+				
 				    
 			     
 		  </div>
@@ -654,11 +683,8 @@
 					      	 <input type="checkbox" name='flathip' >平臀&nbsp;&nbsp;&nbsp;&nbsp;
 				      </if>
 				 </label>
-						  
-			     <label for="username" class="col-sm-offset-1 col-sm-1 control-label"></label>
-				    <div class="col-sm-2 inputpadding">
-				     
-				    </div>
+				
+				    
 		  </div>
 		 <div class="form-group">
 			     <label for="usernum" class="col-sm-1 control-label">袖口</label>
@@ -892,7 +918,7 @@
 	  	  <div class="form-group">
 		  	  <label class="col-sm-3 control-label">供应商</label> 
 					     	<div class="col-sm-8">
-					     		  <input type="text" class="form-control " value='{$order["opsname"]}' disabled='disabled'>
+					     		  <input type="text" class="form-control "  readonly='true'>
 				   		   </div>  
    		   </div>
 	  	  <hr/>
@@ -916,7 +942,6 @@
 		  	 		</tr>
 		  	 	</foreach>	
 		  	  </table>
-		 		<if condition='$order["goodsok"] eq 0' ><if condition='$order["expresslock"] eq 1'><button class="btn btn-default" style="width:30%;margin-bottom:5px;"  data-toggle="modal" data-target="#addExpressModal">添加流程+</button><else/></if><else/>&nbsp;</if>
 		</div>
 	 	 <div  class='col-sm-3'>
 	 	<hr/>
@@ -930,7 +955,7 @@
 		  	 	<foreach name='order.repair' item='v'>
 		  	 		<tr>
 		  	 			<td>{$v.rid}</td>
-		  	 			<td>{$v.rnum}</td>
+		  	 			<td><if condition='$v["isok"] eq 0'><span class='blue'>{$v.rnum}</span><else/>{$v.rnum}</if></td>
 		  	 			<td><if condition='$v["isback"] eq 0'>小修<else/><span class='blue'>大修</span></if></td>
 		  	 			<td>
 		  	 				<a href="{:U('Admin/Shopleader/readrepair',array('rid'=>$v['rid'],'onum'=>$order['onum'],))}" target="opt">读取&nbsp;</a>
@@ -939,7 +964,7 @@
 		  	 		</tr>
 		  	 	</foreach>	
 		  	  </table>
-		 		<if condition='$order["goodsok"] eq 0'><if condition='$order["repairlock"] eq 1'><button class="btn btn-default" style="width:32%;margin-bottom:5px;"  data-toggle="modal" data-target="#addRepairModal">添加返修单+</button><else/>&nbsp;</if><else/>&nbsp;</if>
+		 		<if condition='($order["goodsok"] eq 0) AND ($order["inspectorverify"] eq 1) AND ($order["shopleaderverify"] eq 1)'><if condition='$order["repairlock"] eq 1'><button class="btn btn-default" style="width:32%;margin-bottom:5px;"  data-toggle="modal" data-target="#addRepairModal">添加返修单+</button><else/>&nbsp;</if><else/>&nbsp;</if><span class='red'>*完成上一条返修单才能添加*</span>
 		
 	 	 	</div>
 	 	 	
@@ -947,15 +972,17 @@
 	 	 <!-- downscale结束 --> 
 	  		  
 			  <div class="modal-footer">
-		  		   	<input type='hidden',id='sid' name='sid' value='{$sid}'>
-			  	 	<input type='hidden',id='osunum' name='osunum' value='{$osunum}'>
-			  	 	<input type='hidden',id='ossname' name='ossname' value='{$ossname}'>
-				   	 <a class="btn btn-primary" href="{:U('Admin/Shopleader/order',array('unum'=>$osunum,'sid'=>$sid,'ossname'=>$ossname))}" target="opt"><span>返回</span></a>
+		  		   	<input type='hidden' id='sid' name='sid' value='{$sid}'>
+			  	 	<input type='hidden' id='ossname' name='ossname' value='{$ossname}'>
+			  	 	
+				   	 <a class="btn btn-primary" href="{:U('Admin/Shopleader/order',array('sid'=>$sid,'ossname'=>$ossname))}" target="opt"><span>返回</span></a>
 				   	 <input type="submit" class="btn btn-primary" value="保 存" ">
 			   </div>
 		  </form>
 
 	</div>
+	
+	
 	<!-- Modal 读取流程信息开始 -->
 	<div class="modal fade" id="readExpressModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
 	   <div class="modal-dialog"  style="width:50%;">

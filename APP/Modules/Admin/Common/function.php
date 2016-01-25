@@ -146,4 +146,18 @@ function shopposess($goods,$i){
 	}
 	return $arra;
 }
-   
+function subtime($order){
+	$arra=array();
+	foreach($order as $v){
+		$sub=(time()-strtotime($v['bookdate']))-3*24*60*60;
+		if($sub>0){
+			$v['subtime']=1;
+		}
+		else 
+		$v['subtime']=0;
+		
+		$arra[]=$v;
+	}
+	
+	return $arra;
+}   

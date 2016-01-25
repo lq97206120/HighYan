@@ -30,12 +30,11 @@
 	  <tr>
 	  	<td>
 	  	<select name="searchcondition" class="form-control">
-			  <option value ="onum">订单号</option>
-			  <option value ="ispullleader">店长意见</option>
-			  <option value ="providerpull">样本收发</option>
-			  <option value ="pullok">打样状态</option>
-			  <option value ="providerok">成品收发</option>
-			  <option value ="shopok">订单最终状态</option>	
+			  <option value ="onum">合订号</option>
+			  <option value ="oscalenum">量身单号</option>
+			  <option value ="ossname">店铺名称</option>
+			  <option value ="ispull">是否打样</option>
+			
 		</select>
 	  	</td>
 	  	<td>
@@ -67,7 +66,7 @@
 		<td>{$u.onum}</td>
 		<td>{$u.oscalenum}</td>
 		<td>{$u.ossname}</td>
-		<td>{$u.bookdate|date='y-m-d H:i',###}</td>
+		<td>{$u.bookdate}</td>
 		<td>
 			<if condition='$u["ispull"] eq 1'>
 				<span class='blue'>要打样</span>

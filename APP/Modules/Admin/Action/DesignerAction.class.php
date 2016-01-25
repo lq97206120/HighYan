@@ -4,11 +4,12 @@ class DesignerAction extends CommonAction{
 	public function order(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->order('shopok')->count();
+		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum');
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
 		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=subtime($order);
 		$this->order=$order;
 		
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -33,7 +34,7 @@ class DesignerAction extends CommonAction{
 	//读取订单修改信息
 	public function readorder(){
 		
-		$order=M('order')->where(array('onum'=>$_GET['onum']))->find();
+		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
 				
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -46,7 +47,6 @@ class DesignerAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
-		$this->osunum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
@@ -225,17 +225,74 @@ class DesignerAction extends CommonAction{
 			$db=M('order');
 			$result=$db->save($receive);
 			if($result){
-				if($_POST['leaderverifystatus']=='1'){
-					$center=M('shop')->where(array('sname'=>"管理部门"))->find();
-					$mail=$center['smail'];
-					
-					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,订单号为:{$receive['onum']}.");
-					
-					
-				}
+				
 				$this->success("保存成功",U('Admin/Designer/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 			}else 
 				$this->error("保存失败",U('Admin/Designer/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 	
+	}
+	//处理读取返修单
+	public function readrepair(){
+		$repair=M('repair')->where(array('rid'=>$_GET['rid']))->find();
+		$this->sid=$_GET['sid'];
+		$this->ossname=$_GET['ossname'];
+		$this->repair=$repair;
+		$this->onum=$_GET['onum'];
+		$this->display();
+	}
+	
+		//订单查询
+	public function ordersearch(){
+		
+		$searchcondition = I ( 'searchcondition','');
+		$searchcontent = I('searchcontent','');
+		$ossname=I('ossname','');
+		if(!empty($searchcondition) && !empty($searchcontent)){
+			import ( 'ORG.Util.Page' );
+			//处理总监审核
+			if($searchcondition=="inspectorverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理店长审核
+			if($searchcondition=="shopleaderverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理是否打样
+			if($searchcondition=="ispull"){
+				if($searchcontent=="要打样")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			
+			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
+			//查询条件
+			$condition['ossname']=$ossname;
+			$count=M('order')->where($condition)->count ();
+			$page=new Page($count,10);
+			$limit=$page->firstRow . ',' . $page->listRows;
+			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=subtime($order);
+			$this->order=$order;
+			//分配商品
+				
+			$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_POST['sid']))->find();
+			$possess=$shop['goods'];
+			
+			$cloth=shopposess($possess,1);
+			$pants=shopposess($possess,2);
+			$vest=shopposess($possess,3);
+		
+			$this->sid=$_POST['sid'];
+			$this->ossname=$_POST['ossname'];
+			$this->cloth=$cloth;
+			$this->pants=$pants;
+			$this->vest=$vest;
+			$this->page = $page->show ();
+			$this->order = $order;
+			$this->display('order');
+		
+		}
 	}
 }

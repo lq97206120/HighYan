@@ -5,11 +5,12 @@ class ShopleaderAction extends CommonAction{
 	public function order(){
 		
 		import("ORG.Util.Page");
-		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->order('shopok')->count();
-		$page=new Page($count,10);
+		$count=M('order')->where(array('ossname'=>$_GET['ossname']))->count();
+		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
-		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
+		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
 		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=subtime($order);
 		$this->order=$order;
 		
 		$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_GET['sid']))->find();
@@ -22,7 +23,6 @@ class ShopleaderAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
-		$this->osunum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
@@ -305,7 +305,6 @@ class ShopleaderAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
-		$this->osunum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
@@ -408,6 +407,7 @@ class ShopleaderAction extends CommonAction{
 		$orderold=M('order')->where(array('onum'=>$_POST['onum']))->find();
 		//可以编辑量身单
 		if($orderold['repairlock']=='0'){
+			
 			//上衣西服部分
 			if($_POST['ushoulderwidth1']!=$orderold['ushoulderwidth1']){
 				$rupcloth="上衣实际肩宽".$orderold['ushoulderwidth1']."=>".$_POST['ushoulderwidth1']."\n";
@@ -488,7 +488,7 @@ class ShopleaderAction extends CommonAction{
 			if($_POST['uclothfabric']!=$orderold['uclothfabric']){
 				$rupcloth=$rupcloth."上衣布号".$orderold['uclothfabric']."=>".$_POST['uclothfabric']."\n";
 			}	
-				$rupcloth=$rupcloth."-----"."\n";	
+				
 			//上衣衬衫部分
 			if($_POST['tshoulderwidth1']!=$orderold['tshoulderwidth1']){
 				$rupcloth=$rupcloth."衬衫实际肩宽".$orderold['tshoulderwidth1']."=>".$_POST['tshoulderwidth1']."\n";
@@ -688,58 +688,10 @@ class ShopleaderAction extends CommonAction{
 			$rvest=$rvest."=========="."\n".$repairold['backremark2'];
 			$repair=array('rid'=>$orderold['repairid'],'upremark2'=>$rupcloth,'downremark2'=>$rpants,'backremark2'=>$rvest,);
 			M('repair')->save($repair);
-		}	
-				
-		$receive=array(
+			
+			//处理量身单的修改
+			$receive2=array(
 				'onum'=>$_POST['onum'],
-				'reservenum'=>$_POST['reservenum'],
-				'photocom'=>$_POST['photocom'],
-				'bookdate'=>$_POST['bookdate'],
-				'photodate'=>$_POST['photodate'],
-				'omname'=>$_POST['omname'],
-				'engagedate'=>$_POST['engagedate'],
-				'marrydate'=>$_POST['marrydate'],
-				'ommale'=>$_POST['ommale'],
-				'bookpulldate'=>$_POST['bookpulldate'],
-				'omnum'=>$_POST['omnum'],
-				'bookgetdate'=>$_POST['bookgetdate'],
-				'omphone'=>$_POST['omphone'],
-				'rentgetdate'=>$_POST['rentgetdate'],
-				'rentbackdate'=>$_POST['rentbackdate'],
-				'omaddr'=>$_POST['omaddr'],
-				'clothremark1'=>$_POST['clothremark1'],
-				'clothremark2'=>$_POST['clothremark2'],
-				'clothremark3'=>$_POST['clothremark3'],
-				'clothremark4'=>$_POST['clothremark4'],
-				'clothremark5'=>$_POST['clothremark5'],
-				'deposit'=>$_POST['deposit'],
-				'total'=>$_POST['total'],
-				'rbook'=>$rbook,
-				'rrent'=>$rrent,
-				'rsale'=>$rsale,
-				'rpacke'=>$rpacke,
-				'gather1bookmoney'=>$_POST['gather1bookmoney'],
-				'gather1sparemoney'=>$_POST['gather1sparemoney'],
-				'gather1date'=>$_POST['gather1date'],
-				'gather1user'=>$_POST['gather1user'],
-				'gather2bookmoney'=>$_POST['gather2bookmoney'],
-				'gather2sparemoney'=>$_POST['gather2sparemoney'],
-				'gather2date'=>$_POST['gather2date'],
-				'gather2user'=>$_POST['gather2user'],
-				'rcode'=>$_POST['rcode'],
-				'rsleeve'=>$_POST['rsleeve'],
-				'rneck'=>$_POST['rneck'],
-				'rwaist'=>$_POST['rwaist'],
-				'rleglength'=>$_POST['rleglength'],
-				'rshoes'=>$_POST['rshoes'],
-				'photonum'=>$_POST['photonum'],
-				'majiaprice'=>$_POST['majiaprice'],
-				'majiafabric'=>$_POST['majiafabric'],
-				'tie1'=>$_POST['tie1'],
-				'tie2'=>$_POST['tie2'],
-				'referee'=>$_POST['referee'],
-				'rremark'=>$_POST['rremark'],
-		
 				'oscalenum'=>$_POST['oscalenum'],
 				'scale'=>$_POST['scale'],
 				'ougid'=>$ougid,
@@ -835,22 +787,81 @@ class ShopleaderAction extends CommonAction{
 				'tsleevesur'=>$_POST['tsleevesur'],
 				'tcode'=>$_POST['tcode'],
 				'tclothfabric'=>$_POST['tclothfabric'],
-				'shopleaderverify'=>$_POST['shopleaderverify'],
 			);
 			$db=M('order');
-			$result=$db->save($receive);
-			if($result){
-				if($_POST['leaderverifystatus']=='1'){
-					$center=M('shop')->where(array('sname'=>"管理部门"))->find();
-					$mail=$center['smail'];
-					
-					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,订单号为:{$receive['onum']}.");
-					
-					
+			$result2=$db->save($receive2);
+		}	
+		//处理订购单		
+		$receive1=array(
+				'onum'=>$_POST['onum'],
+				'reservenum'=>$_POST['reservenum'],
+				'photocom'=>$_POST['photocom'],
+				'bookdate'=>$_POST['bookdate'],
+				'photodate'=>$_POST['photodate'],
+				'omname'=>$_POST['omname'],
+				'engagedate'=>$_POST['engagedate'],
+				'marrydate'=>$_POST['marrydate'],
+				'ommale'=>$_POST['ommale'],
+				'bookpulldate'=>$_POST['bookpulldate'],
+				'omnum'=>$_POST['omnum'],
+				'bookgetdate'=>$_POST['bookgetdate'],
+				'omphone'=>$_POST['omphone'],
+				'rentgetdate'=>$_POST['rentgetdate'],
+				'rentbackdate'=>$_POST['rentbackdate'],
+				'omaddr'=>$_POST['omaddr'],
+				'clothremark1'=>$_POST['clothremark1'],
+				'clothremark2'=>$_POST['clothremark2'],
+				'clothremark3'=>$_POST['clothremark3'],
+				'clothremark4'=>$_POST['clothremark4'],
+				'clothremark5'=>$_POST['clothremark5'],
+				'deposit'=>$_POST['deposit'],
+				'total'=>$_POST['total'],
+				'rbook'=>$rbook,
+				'rrent'=>$rrent,
+				'rsale'=>$rsale,
+				'rpacke'=>$rpacke,
+				'gather1bookmoney'=>$_POST['gather1bookmoney'],
+				'gather1sparemoney'=>$_POST['gather1sparemoney'],
+				'gather1date'=>$_POST['gather1date'],
+				'gather1user'=>$_POST['gather1user'],
+				'gather2bookmoney'=>$_POST['gather2bookmoney'],
+				'gather2sparemoney'=>$_POST['gather2sparemoney'],
+				'gather2date'=>$_POST['gather2date'],
+				'gather2user'=>$_POST['gather2user'],
+				'rcode'=>$_POST['rcode'],
+				'rsleeve'=>$_POST['rsleeve'],
+				'rneck'=>$_POST['rneck'],
+				'rwaist'=>$_POST['rwaist'],
+				'rleglength'=>$_POST['rleglength'],
+				'rshoes'=>$_POST['rshoes'],
+				'photonum'=>$_POST['photonum'],
+				'majiaprice'=>$_POST['majiaprice'],
+				'majiafabric'=>$_POST['majiafabric'],
+				'tie1'=>$_POST['tie1'],
+				'tie2'=>$_POST['tie2'],
+				'referee'=>$_POST['referee'],
+				'rremark'=>$_POST['rremark'],
+				
+			);
+			$db=M('order');
+			$result1=$db->save($receive1);
+			//处理店长审核
+			if($_POST['shopleaderverify']=='1'){
+				$receive3=array('onum'=>$_POST['onum'],'shopleaderverify'=>1,);
+				$result3=$db->save($receive3);
+				if($orderold['inspectorverify']=='1'){
+					$provider=M('shop')->where(array('sname'=>$orderold['opsname']))->find();
+					$mail=$provider['smail'];
+				
+					$r=think_send_mail("{$mail}",'海彦',"新订单","有新订单,合订号为:{$_POST['onum']}.");
 				}
-				$this->success("保存成功",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				
+			}
+			if($result1 || $result2 || $result3){
+				
+				$this->success("保存成功",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 			}else 
-				$this->error("保存失败",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->error("保存失败",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 	
 	}
 	//订单查询
@@ -861,58 +872,32 @@ class ShopleaderAction extends CommonAction{
 		$ossname=I('ossname','');
 		if(!empty($searchcondition) && !empty($searchcontent)){
 			import ( 'ORG.Util.Page' );
-			//处理审核状态
-			if($searchcondition=="leaderverifystatus"){
-				if($searchcontent=="已审核")$searchcontent=1;
+			//处理总监审核
+			if($searchcondition=="inspectorverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
 				else $searchcontent=0;
 			}
-			//处理店长意见
-			if($searchcondition=="ispullleader"){
+			//处理店长审核
+			if($searchcondition=="shopleaderverify"){
+				if($searchcontent=="已通过")$searchcontent=1;
+				else $searchcontent=0;
+			}
+			//处理是否打样
+			if($searchcondition=="ispull"){
 				if($searchcontent=="要打样")$searchcontent=1;
 				else $searchcontent=0;
 			}
-			//处理打样状态
-			if($searchcondition=="pullok"){
-				if($searchcontent=="已打样")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理完成状态
-			if($searchcondition=="shopok"){
-				if($searchcontent=="已完成")$searchcontent=1;
-				else $searchcontent=0;
-			}
-			//处理商品编号
-			if($searchcondition=="ognum"){
-				$db=M('goods');
-				$gclass=$db->where(array('gnum'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougnum";break;
-					case '2': $searchcondition="odgnum";break;
-					case '3': $searchcondition="obgnum";break;
-						
-				}
-			}
-			//处理商品名称
-			if($searchcondition=="ogname"){
-				$db=M('goods');
-				$gclass=$db->where(array('gname'=>$searchcontent))->field(array('gclass'))->find();
-				$gclass=$gclass['gclass'];
-				switch($gclass){
-					case '1': $searchcondition="ougname";break;
-					case '2': $searchcondition="odgname";break;
-					case '3': $searchcondition="obgname";break;
-						
-				}
-			}
+			
 			$condition[$searchcondition] = array('like','%'.$searchcontent.'%');
-			//员工查询编号条件
+			//查询条件
 			$condition['ossname']=$ossname;
 			$count=M('order')->where($condition)->count ();
-			$page=new Page($count,10);
+			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
-			$order=M('order')->where($condition)->limit ( $limit )->order('shopok,leaderverifystatus,ispullleader')->select ();
-			//分配商品
+			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=subtime($order);
+			$this->order=$order;//分配商品
 			$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_POST['sid']))->find();
 			$possess=$shop['goods'];
 			
@@ -921,13 +906,12 @@ class ShopleaderAction extends CommonAction{
 			$vest=shopposess($possess,3);
 		
 			$this->sid=$_POST['sid'];
-			$this->osunum=$_POST['osunum'];
-			$this->ossname=$ossname;
+			$this->ossname=$_POST['ossname'];
 			$this->cloth=$cloth;
 			$this->pants=$pants;
 			$this->vest=$vest;
 			$this->page = $page->show ();
-			$this->order = $order;
+			
 			$this->display('order');
 		
 		}
@@ -939,6 +923,19 @@ class ShopleaderAction extends CommonAction{
 			if (! empty ($onum )) {
 				$order = M ( "order" );
 				$result = $order->delete ($onum);
+				//删除关联项
+				$express=M('express_order')->where(array('order_num'=>$onum))->select();
+				foreach($express as $v){
+					M('express')->where(array('eid'=>$v['express_id']))->delete();
+				}
+				M('express_order')->where(array('order_num'=>$onum))->delete();
+				
+				$repair=M('repair_order')->where(array('order_num'=>$onum))->select();
+				foreach($repair as $u){
+					M('repair')->where(array('rid'=>$u['repair_id']))->delete();
+				}
+				M('repair_order')->where(array('order_num'=>$onum))->delete();
+				
 				if (false !== $result) {
 					
 				} else {
@@ -1112,6 +1109,71 @@ class ShopleaderAction extends CommonAction{
 		}else 
 			$this->error("删除失败！",U('Admin/Shop/index'));
 	}
+	//处理流程修改
+	public function readExpressHandle(){
+		
+		if(empty($_POST['sexpress'])){
+			$sexpress='';
+		}else{
+			$sexpress=$_POST['sexpress'];
+		}
+		if(empty($_POST['sexpressnum'])){
+			$sexpressnum='';
+		}else{
+			$sexpressnum=$_POST['sexpressnum'];
+		}
+		
+		if($_POST['sgetstatus']=='1'){
+			$reco=array('onum'=>$_POST['onum'],'pullstatus'=>'2',);
+			$order=M('order')->save($reco);
+		}
+		
+		
+		if(!empty($_POST['sexpressnum'])){
+			$reco=array('onum'=>$_POST['onum'],'pullstatus'=>'3',);
+			$order=M('order')->save($reco);
+		}
+		
+		if($_POST['eclass']=="样品"){
+			if($_POST['okstatus']=='1'){
+				$recop=array('onum'=>$_POST['onum'],'pullok'=>'1','pullstatus'=>'0','pullokdate'=>time(),);
+				$order=M('order')->save($recop);
+			}else{
+				$recop=array('onum'=>$_POST['onum'],'pullok'=>'0',);
+				$order=M('order')->save($recop);
+			}
+		}
+		else{
+			if($_POST['okstatus']=='1'){
+				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'1','goodsokdate'=>time(),);
+				$order=M('order')->save($recop);
+			}else{
+				$recop=array('onum'=>$_POST['onum'],'goodsok'=>'0',);
+				$order=M('order')->save($recop);
+			}
+			
+		}
+		$receive=array(
+			'eid'=>$_POST['eid'],
+			'sexpress'=>$sexpress,
+			'sexpressnum'=>$sexpressnum,
+			'sgetstatus'=>$_POST['sgetstatus'],
+		);
+		
+		$db=M('express');
+		$express=$db->save($receive);
+		
+		if($express || $order){
+			
+				$order=M('order')->where(array('onum'=>$_POST['onum']))->field(array('opsname'))->find();
+				$shop=M('shop')->where(array('sname'=>$order["opsname"]))->find();
+				$mail=$shop["smail"];
+				$r=think_send_mail("{$mail}",'海彦',"新物流","有新快递;快递公司:{$sexpress},物流号：{$sexpressnum},合订号为:{$_POST['onum']}.");
+				
+				$this->success("修改成功");
+			}else 
+				$this->error("未修改");
+	}	
 	//处理读取返修单
 	public function readrepair(){
 		
@@ -1131,6 +1193,7 @@ class ShopleaderAction extends CommonAction{
 			'senddate'=>$_POST['senddate'],
 			'getdate'=>$_POST['getdate'],
 			'rphoto'=>$_POST['rphoto'],
+			'isok'=>1,
 		);
 		$repair=M('repair')->save($receive);
 		if($repair){

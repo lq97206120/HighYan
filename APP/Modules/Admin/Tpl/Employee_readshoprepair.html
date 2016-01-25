@@ -55,27 +55,27 @@
 			<h2 class='head'>返修单读取修改</h2>
 			<hr/>
 			<hr/>
-	      <form id="form2" method='post' action="__URL__/readRepairHandle" class="form-horizontal">
+	      <form id="form2" method='post' action="" class="form-horizontal">
 
 			<div class="form-group">
 					<label for="usernum" class="col-sm-2 control-label">返修号</label>
 				    <div class="col-sm-3 inputpadding">
-				      <input type="text" class="form-control " id="rnum" name="rnum" value='{$repair["rnum"]}' >
+				      <input type="text" class="form-control " id="rnum" name="rnum" value='{$repair["rnum"]}' readonly='true' >
 				    </div>
 			  	   <label for="usernum" class="col-sm-2 control-label">返修类型</label>
 				   <if condition='$repair["isback"] eq 0'>
 				   		 <div class="col-sm-offset-1 col-sm-1 inputpadding">
-					      <input type="radio"  name="isback" value='1'>&nbsp;<span>大修</span>
+					      <input type="radio"  name="isback" value='1'  disabled='disabled'>&nbsp;<span>大修</span>
 					    </div>
 					    <div class="col-sm-1 inputpadding">
-					      <input type="radio"  name="isback" value='0' checked='checked'>&nbsp;<span>小修</span>
+					      <input type="radio"  name="isback" value='0' checked='checked'  disabled='disabled'>&nbsp;<span>小修</span>
 					    </div>	
 				   <else/>
 				   		 <div class="col-sm-offset-1 col-sm-1 inputpadding">
-					      <input type="radio"  name="isback" value='1' checked='checked'>&nbsp;<span>大修</span>
+					      <input type="radio"  name="isback" value='1' checked='checked'  disabled='disabled'>&nbsp;<span>大修</span>
 					    </div>
 					    <div class="col-sm-1 inputpadding">
-					      <input type="radio"  name="isback" value='0'>&nbsp;<span>小修</span>
+					      <input type="radio"  name="isback" value='0'  disabled='disabled'>&nbsp;<span>小修</span>
 					    </div>	
 				   </if>
 				 
@@ -83,11 +83,11 @@
 			<div class="form-group">
 				    <label for="usernum" class="col-sm-2 control-label">返修日期</label>
 				    <div class="col-sm-3 inputpadding">
-				      <input type="text" class="form-control " id="senddate" name="senddate" value='{$repair["senddate"]}' onClick="WdatePicker()" >
+				      <input type="text" class="form-control " id="senddate" name="senddate" readonly='true' value='{$repair["senddate"]}' onClick="WdatePicker()" >
 				    </div>
 				    <label for="usernum" class="col-sm-2 control-label">取货日期</label>
 				    <div class="col-sm-3 inputpadding">
-				      <input type="text" class="form-control " id="getdate" name="getdate" value='{$repair["getdate"]}' onClick="WdatePicker()" >
+				      <input type="text" class="form-control " id="getdate" name="getdate" readonly='true' value='{$repair["getdate"]}' onClick="WdatePicker()" >
 				    </div>
 			</div>
 			
@@ -97,13 +97,13 @@
 				    <label for="usernum" class="col-sm-offset-2 col-sm-2 control-label">背心</label>
 			</div>
 			<hr/>
-				<textarea class="form-control" id='upremark1' name='upremark1'   style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["upremark1"]}</textarea>
+				<textarea class="form-control" id='upremark1' name='upremark1'  readonly='true'  style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["upremark1"]}</textarea>
 				<textarea class="form-control" id='upremark2' name='upremark2' readonly='true' style="height:700px;width:15%;float:left;margin-right:2%;">{$repair["upremark2"]}</textarea>
 				
-				<textarea class="form-control" id='downremark1' name='downremark1'  style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["downremark1"]}</textarea>
+				<textarea class="form-control" id='downremark1' name='downremark1' readonly='true'  style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["downremark1"]}</textarea>
 				<textarea class="form-control" id='downremark2' name='downremark2' readonly='true' style="height:700px;width:15%;float:left;margin-right:2%;">{$repair["downremark2"]}</textarea>
 				
-				<textarea class="form-control" id='backremark1' name='backremark1'  style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["backremark1"]}</textarea>
+				<textarea class="form-control" id='backremark1' name='backremark1'  readonly='true' style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["backremark1"]}</textarea>
 				<textarea class="form-control" id='backremark2' name='backremark2' readonly='true' style="height:700px;width:15%;float:left;margin-right:1%;">{$repair["backremark2"]}</textarea>
 			
 			<div class="form-group"  style="clear:both;">
@@ -112,32 +112,17 @@
 				   
 			</div>
 			<div class="form-group">
-				   <textarea  id="rphoto" name="rphoto">{$repair["rphoto"]}</textarea> 
+				   <textarea  id="rphoto" name="rphoto" readonly='true'>{$repair["rphoto"]}</textarea> 
 			</div>
 			
 		  <div class="modal-footer">
-		  		<input type="hidden" name="rid" id="rid" value='{$repair["rid"]}' >
-		    	 <input type='hidden' name='onum' value="{$onum}">
-		    	 <a class="btn btn-primary"  href="{:U('Admin/Employee/readselforder',array('onum'=>$onum,'sid'=>$sid,'unum'=>$osunum,))}" target="opt"><span>返回</span></a>
-				<input type="submit" class="btn btn-primary" value="保 存" >
+		  		
+		    	 <a class="btn btn-primary"  href="{:U('Admin/Employee/readshoporder',array('sid'=>$sid,'onum'=>$onum,'ossname'=>$ossname))}" target="opt"><span>返回</span></a>
+				
 	      </div>
 		  </form>
 	</div>
 	<!--Repair 信息结束 -->
-	<script>
 	
-		if({$repair['isok']}=='1'){
-			var x=document.getElementById('container').getElementsByTagName('input');
-			for(var i=0;i<x.length;i++){
-					x[i].setAttribute('disabled','disabled');	
-			}
-			
-			var z=document.getElementById('container').getElementsByTagName('textarea');
-			for(var i=0;i<z.length;i++){
-					z[i].setAttribute('disabled','disabled');	
-			}
-		}
-		
-	</script>
 </body>
 </html>
