@@ -862,6 +862,25 @@ class EmployeeAction extends CommonAction{
 				$this->error("添加失败",U('Admin/Employee/memb'));
 
 	}	
+//修改会员信息
+	public function updatememb(){
+		$receive=array(
+			'mnum'=>$_POST['mnum'],
+			'mname'=>$_POST['mname'],
+			'mmale'=>$_POST['mmale'],
+			'mdate'=>$_POST['mdate'],
+			'mphone'=>$_POST['mphone'],
+			'mpoints'=>$_POST['mpoints'],
+			'mstatus'=>'1',
+			);
+		
+			$memb=M('memb')->save($receive);
+			if($memb){
+				$this->success("修改成功");
+			}else 
+				$this->error("修改失败");
+		
+	}
 	//会员查询
 	public function searchmemb(){
 	
@@ -890,6 +909,7 @@ class EmployeeAction extends CommonAction{
 		
 		}
 	}
+	
 	//处理流程修改
 	public function readExpressHandle(){
 		
@@ -1018,4 +1038,5 @@ class EmployeeAction extends CommonAction{
 			}else 
 				$this->error("修改失败");
 	}
+	
 }

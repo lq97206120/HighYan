@@ -15,7 +15,7 @@
 </head>
 <body style="padding:20px 20px 0px 20px">
 	<h2 align="center">会员信息列表</h2>
-	<form id="searchform" method='post' action="__URL__/searchmemb" class="form-horizontal">
+	<form id="searchform" method='post' action="{:U(GROUP_NAME.'/Employee/searchmemb')}" class="form-horizontal">
 	<table id = "search" >
 	  <tr>
 	  	<td>
@@ -128,7 +128,7 @@
 	        <h4 class="modal-title" id="myModalLabel">修改会员信息</h4>
 	      </div>
 	      <div class="modal-body">
-	      <form id="form2" method='post' action="__URL__/updatememb" class="form-horizontal">
+	      <form id="form2" method='post' action="{:U(GROUP_NAME.'/Employee/updatememb')}" class="form-horizontal">
 
 		   <div class="form-group">
 			    <label for="usernum" class="col-sm-2 control-label">帐号</label>
@@ -140,42 +140,42 @@
 		  <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">姓名</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="username" name="mname" disabled='disabled'>
+			      <input type="text" class="form-control" id="username" name="mname" >
 			    </div>
 		  </div>
 		  
 		   <div class="form-group">
 			    <label for="usersex" class="col-sm-2 control-label">性别</label>
 			    <div class="col-sm-10">
-		     	    <input type="radio"  name="mmale" value='1' disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio"   name="mmale" value='0' disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;女
+		     	    <input type="radio"  name="mmale" value='1'  checked="checked" style="width: 50px"/>&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio"   name="mmale" value='0'  style="width: 50px"/>&nbsp;&nbsp;女
 			    </div>
 		  </div>
 		  	  
 		  <div class="form-group">
 			    <label for="userstarttime" class="col-sm-2 control-label">注册日期</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" onClick="WdatePicker()" disabled='disabled' id="userstarttime" name="mdate"  placeholder="注册日期">
+			      <input type="text" class="form-control" onClick="WdatePicker()"  id="userstarttime" name="mdate"  placeholder="注册日期">
 			    </div>
 		  </div>
 
 		  <div class="form-group">
 			    <label for="usertel" class="col-sm-2 control-label">联系电话</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="usertel" name="mphone" disabled='disabled'>
+			      <input type="text" class="form-control" id="usertel" name="mphone" >
 			    </div>
 		  </div>
 		  <div class="form-group">
 			    <label for="usersex" class="col-sm-2 control-label">状态</label>
 			    <div class="col-sm-10">
-			      	<input type="radio"   name="mstatus" value='1' disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;开启&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="radio"   name="mstatus" value='0' disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;关闭
+			      	<input type="radio"   name="mstatus" value='1'  checked="checked" style="width: 50px"/>&nbsp;&nbsp;开启&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio"   name="mstatus" value='0'  style="width: 50px"/>&nbsp;&nbsp;关闭
 			    </div>
 		  </div> 
 		  <div class="form-group">
 			    <label for="usertel" class="col-sm-2 control-label">会员积分</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" id="userpoints" name="mpoints" disabled='disabled'>
+			      <input type="text" class="form-control" id="userpoints" name="mpoints" >
 			    </div>
 		  </div>
 		  
@@ -300,7 +300,7 @@
 					else $("#edituserModal input[name='mmale'][value=0]").attr("checked",true);
 				if(row.mstatus=="开启")$("#edituserModal input[name='mstatus'][value=1]").attr("checked",true);
 				else $("#edituserModal input[name='mstatus'][value=0]").attr("checked",true);
-				$('#edituserModal #userstarttime').val(row.umdate);
+				$('#edituserModal #userstarttime').val(row.mdate);
 				$('#edituserModal #usertel').val(row.mphone);
 				$('#edituserModal #userpoints').val(row.mpoints);
 				$('#edituserModal').modal();

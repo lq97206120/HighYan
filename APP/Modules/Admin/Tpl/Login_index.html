@@ -15,8 +15,11 @@
    			var indexUrl='{:U("Admin/Index/index",'','')}';
            
     </script>
+  <style>
+  	.loginbtn{float:right;}
+  </style>  
 </head>
-<body>
+<body onkeydown='onEnterDown();'>
    	<div id="header">
         <div id="login_top">海彦后台管理系统<span id="version">1.0</span></div>
         <div id = "login_welcome"><i class="icon-chevron-left"></i>欢迎使用 </div>
@@ -65,21 +68,29 @@
                     </tr>
                 <tr id="login">
                 	<td>
-                    <input type="checkbox" name="remember" id="remember" />&nbsp;&nbsp;&nbsp;记住我&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="checklogin()" type="button" tabindex="3" class="btn btn-info"><i class="icon-edit icon-white"></i>&nbsp;&nbsp;登录</button>
-            	</td>
+                		<div class='loginbtn'>
+                				 <button onclick="checklogin()" type="button" tabindex="3" class="btn btn-info"><i class="icon-edit icon-white"></i>&nbsp;&nbsp;登录</button>
+            			</div>
+                   </td>
                 </tr>
                 </table>
             <!--</form>-->
         </span>
     </div>
     <script type="text/javascript">
+   
     //登录页面,验证码
     function change_code(){
     	$('#verify_code').attr("src",verifyUrl+'/'+Math.random());
     	return false;
     }
-    $('#name').focus();  
+    $('#name').focus(); 
+    //enter响应
+    function onEnterDown(){
+		if(window.event.keyCode==13){
+				checklogin();
+			}
+        } 
     </script>
 </body>
 </html>
