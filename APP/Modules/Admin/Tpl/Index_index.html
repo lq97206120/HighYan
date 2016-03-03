@@ -113,7 +113,7 @@
 						            <ul class="son">
 						           		<li><a href="{:U('Admin/Employee/book',array('uid'=>$us['uid'],'uname'=>$us['uname'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;预约查询</a></li>
 						           		<li><a href="{:U('Admin/Employee/selforder',array('unum'=>$us['unum'],'sid'=>$us['shop']))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;个人订单查询</a></li>
-						           		<li><a href="{:U('Admin/Employee/shoporder',array('ossname'=>$us['shopsname'],))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店铺订单查询</a></li>
+						           		<li><a href="{:U('Admin/Employee/shoporder',array('ossname'=>$us['shopsname'],'sid'=>$us['shop'],))}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;店铺订单查询</a></li>
 						           		<li><a href="{:U('Admin/Employee/memb')}" target="opt"><i class="icon-fixed-width icon-pencil"></i>&nbsp;&nbsp;会员查询</a></li>
 						           </ul>
 							 </case>

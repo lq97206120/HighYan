@@ -76,7 +76,7 @@
 				    </div>
 				     <label for="usernum" class="col-sm-1 control-label" >订单日:</label>
 				    <div class="col-sm-2 inputpadding">
-				      <input type="text" class="form-control" id="bookdate" name="bookdate" onClick="WdatePicker()" value='{$order["bookdate"]}'>
+				      <input type="text" class="form-control" id="bookdate" name="bookdate"  value='{$order["bookdate"]}' readonly='true'>
 				    </div>
 				     <label for="username" class="col-sm-1 control-label" >拍照日:</label>
 				    <div class="col-sm-2 inputpadding">
@@ -319,15 +319,15 @@
 			  	
 			  	<div class="form-group">
 				    
-				    <label for="username" class="col-sm-1 control-label">马甲价格：</label>
-				      	<div class="col-sm-1 inputpadding">
-				      		<input type="text" class="form-control " id="majiaprice" name="majiaprice" value='{$order["majiaprice"]}' >
-				    	</div>
-				     <label for="username" class="col-sm-1 control-label">马甲面料：</label>
-				     	<div class="col-sm-1 inputpadding">
-				      		<input type="text" class="form-control " id="majiafabric" name="majiafabric" value='{$order["majiafabric"]}' >
-				    	</div>
-				    	<label for="username" class="col-sm-offset-1 col-sm-1 control-label">领带：</label>
+				  
+			      	<div class="col-sm-1 inputpadding">
+			      		<input type="hidden" class="form-control " id="majiaprice" name="majiaprice" value='{$order["majiaprice"]}' >
+			    	</div>
+			    
+			     	<div class="col-sm-1 inputpadding">
+			      		<input type="hidden" class="form-control " id="majiafabric" name="majiafabric" value='{$order["majiafabric"]}' >
+			    	</div>
+				    	<label for="username" class="col-sm-offset-3 col-sm-1 control-label">领带：</label>
 				     	<div class="col-sm-1 inputpadding">
 				      		<input type="text" class="form-control " id="tie1" name="tie1" value='{$order["tie1"]}' >
 				    	</div>

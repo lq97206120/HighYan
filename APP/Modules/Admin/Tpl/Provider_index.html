@@ -183,7 +183,12 @@
 				rownumbers:true,
 				singleSelect:true,
 				autoRowHeight:false,
-				
+				onDblClickRow: function (rowIndex, rowData){ var row = $('#dg').datagrid('getSelected');
+				var opsname="{$opsname}";
+				var onum=row.onum;
+				var orderUrl="{:U('Admin/Provider/readorder')}?opsname="+opsname+"&onum="+onum;
+				window.location.href=orderUrl;
+			},
 			  columns:[[
 	           
 	          	{field:'onum',title:"合订号",width:50},

@@ -9,7 +9,7 @@ class ShopleaderAction extends CommonAction{
 		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 		$order=subtime($order);
 		$this->order=$order;
 		
@@ -23,10 +23,12 @@ class ShopleaderAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
+		$this->unum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
 		$this->vest=$vest;
+		$this->time=time();
 		$this->page = $page->show ();
 		$this->display();
 	}
@@ -276,15 +278,15 @@ class ShopleaderAction extends CommonAction{
 				'ossname'=>$shop['sname'],
 				
 				'ossmail'=>$shop['smail'],
-				'osunum'=>$_POST['osunum'],
+				'osunum'=>$_POST['unum'],
 				
 			);	
 			$db=M('order');
 			$result=$db->add($receive);
 			if($result){
-				$this->success("添加成功",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->success("添加成功",U('Admin/Shopleader/order',array('unum'=>$_POST['unum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 			}else 
-				$this->error("添加失败",U('Admin/Shopleader/order',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->error("添加失败",U('Admin/Shopleader/order',array('unum'=>$_POST['unum'],'sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
 			
 		
 
@@ -305,6 +307,7 @@ class ShopleaderAction extends CommonAction{
 //		p($pants);
 //		p($vest);
 		$this->sid=$_GET['sid'];
+		$this->unum=$_GET['unum'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
 		$this->pants=$pants;
@@ -859,9 +862,9 @@ class ShopleaderAction extends CommonAction{
 			}
 			if($result1 || $result2 || $result3){
 				
-				$this->success("保存成功",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->success("保存成功",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],'unum'=>$_POST['unum'],)));
 			}else 
-				$this->error("保存失败",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],)));
+				$this->error("保存失败",U('Admin/Shopleader/order',array('sid'=>$_POST['sid'],'ossname'=>$_POST['ossname'],'unum'=>$_POST['unum'],)));
 	
 	}
 	//订单查询
@@ -895,7 +898,7 @@ class ShopleaderAction extends CommonAction{
 			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
 			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 			$order=subtime($order);
 			$this->order=$order;//分配商品
 			$shop=D('ShopRelation')->relation('goods')->where(array('sid'=>$_POST['sid']))->find();
@@ -906,10 +909,12 @@ class ShopleaderAction extends CommonAction{
 			$vest=shopposess($possess,3);
 		
 			$this->sid=$_POST['sid'];
+			$this->unum=$_GET['unum'];
 			$this->ossname=$_POST['ossname'];
 			$this->cloth=$cloth;
 			$this->pants=$pants;
 			$this->vest=$vest;
+			$this->time=time();
 			$this->page = $page->show ();
 			
 			$this->display('order');

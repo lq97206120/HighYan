@@ -17,6 +17,7 @@ class ProviderAction extends CommonAction{
 	}
 	//读取订单信息
 	public function readorder(){
+		
 		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		
 		$this->opsname=$_GET['opsname'];

@@ -8,7 +8,7 @@ class DesignerAction extends CommonAction{
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
-		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 		$order=subtime($order);
 		$this->order=$order;
 		
@@ -272,7 +272,7 @@ class DesignerAction extends CommonAction{
 			$page=new Page($count,10);
 			$limit=$page->firstRow . ',' . $page->listRows;
 			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate');
-			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 			$order=subtime($order);
 			$this->order=$order;
 			//分配商品

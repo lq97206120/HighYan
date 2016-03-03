@@ -21,6 +21,7 @@
 		.pantssize{font-size:14px;}
 		.back{position:absolute;right:10px;top:10px;}
 	</style>
+	
 </head>
 <body style="padding:20px 20px 0px 20px">
 	<h2 align="center">订单列表</h2>
@@ -70,7 +71,8 @@
 	<table id="dg" title="订单信息列表" style="width:1360px;height:380px" >
 	<foreach name='order' item='u'>
 	<tr>
-		<td><if condition='$u["subtime"] eq 1'><if condition="($u['inspectorverify'] eq 0) AND ($u['shopleaderverify'] eq 0)"><span class='blue'>{$u.onum}</span><else/>{$u.onum}</if><else/>{$u.onum}</if></td>
+		<td>{$u.onum}</td>
+		<td><if condition='$u["subtime"] eq 1'><if condition="($u['inspectorverify'] eq 0) AND ($u['shopleaderverify'] eq 0)"><span class='blue'>{$u.bookdate}</span><else/>{$u.bookdate}</if><else/>{$u.bookdate}</if></td>
 		<td>{$u.reservenum}</td>
 		<td><if condition='$u["repairlock"] eq 0'><span class='blue'>{$u.oscalenum}</span><else/>{$u.oscalenum}</if></td>
 		<td>{$u.omname}</td>
@@ -82,7 +84,6 @@
 			</if>
 		</td>
 		<td>{$u.omphone}</td>
-		<td>{$u.bookdate}</td>
 		<td>{$u.bookpulldate}</td>
 		<td>{$u.bookgetdate}</td>
 		<td>{$u.total}</td>
@@ -141,7 +142,7 @@
 		</td>
 		<td><if condition='$u["goodsok"] eq 0'>&nbsp;<else/>{$u.goodsokdate|date='y-m-d',###}</if></td>
 		<td>
-			<a href="{:U('Admin/Employee/readselforder',array('unum'=>$osunum,'sid'=>$sid,'onum'=>$u['onum'],'ossname'=>$ossname))}" target="opt">读取&nbsp;</a>
+			<a href="{:U('Admin/Employee/readselforder',array('unum'=>$osunum,'sid'=>$sid,'onum'=>$u['onum'],))}" target="opt">读取&nbsp;</a>
 			<if condition="($u['inspectorverify'] eq 0) AND ($u['shopleaderverify'] eq 0)"><a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a></if>
 			
 		</td>
@@ -184,7 +185,7 @@
 			    </div>
 			     <label for="usernum" class="col-sm-1 control-label" >订单日:</label>
 			    <div class="col-sm-2 inputpadding">
-			      <input type="text" class="form-control" id="bookdate" name="bookdate" onClick="WdatePicker()" placeholder="不能为空">
+			      <input type="text" class="form-control" id="bookdate" name="bookdate" value='{$time|date='y-m-d',###}' readonly='true'>
 			    </div>
 			     <label for="username" class="col-sm-1 control-label" >拍照日:</label>
 			    <div class="col-sm-2 inputpadding">
@@ -404,15 +405,15 @@
 		  
 		  <div class="form-group">
 			    
-			    <label for="username" class="col-sm-1 control-label">马甲价格：</label>
+			   
 			      	<div class="col-sm-1 inputpadding">
-			      		<input type="text" class="form-control " id="majiaprice" name="majiaprice"  >
+			      		<input type="hidden" class="form-control " id="majiaprice" name="majiaprice"  >
 			    	</div>
-			     <label for="username" class="col-sm-1 control-label">马甲面料：</label>
+			    
 			     	<div class="col-sm-1 inputpadding">
-			      		<input type="text" class="form-control " id="majiafabric" name="majiafabric"  >
+			      		<input type="hidden" class="form-control " id="majiafabric" name="majiafabric"  >
 			    	</div>
-			    	<label for="username" class="col-sm-offset-1 col-sm-1 control-label">领带：</label>
+			    	<label for="username" class="col-sm-offset-3 col-sm-1 control-label">领带：</label>
 			     	<div class="col-sm-1 inputpadding">
 			      		<input type="text" class="form-control " id="tie1" name="tie1"  >
 			    	</div>
@@ -1037,7 +1038,7 @@
 		});
 			$('#adduserbtn').click(function(){
 								
-				if($('#adduserModal #reservenum').val() == ''||$('#adduserModal #oscalenum').val() == ''||$('#adduserModal #omname').val() == ''||$('#adduserModal #omphone').val() == ''||$('#adduserModal #bookdate').val() == ''){
+				if($('#adduserModal #reservenum').val() == ''||$('#adduserModal #oscalenum').val() == ''||$('#adduserModal #omname').val() == ''||$('#adduserModal #omphone').val() == ''){
 					alert('缺少必填项！');
 					return false;
 				}
@@ -1060,16 +1061,22 @@
 				rownumbers:true,
 				singleSelect:true,
 				autoRowHeight:false,
-				
+				onDblClickRow: function (rowIndex, rowData){ var row = $('#dg').datagrid('getSelected');
+					var osunum={$osunum};
+					var sid={$sid};
+					var onum=row.onum;
+					var orderUrl="{:U('Admin/Employee/readselforder')}?unum="+osunum+"&sid="+sid+"&onum="+onum;
+					window.location.href=orderUrl;
+				},
 			  columns:[[
 	           
 			{field:'onum',title:"合订号",width:40},
+			{field:'bookdate',title:"订单日",width:35},
 			{field:'reservenum',title:'订购单号',width:35},
 			{field:'oscalenum',title:'量身单号',width:35},
 			{field:'omname',title:'姓名',width:28}, 
 			{field:'ommale',title:'性别',width:15},
 			{field:'omphone',title:'电话',width:43},
-			{field:'bookdate',title:"订单日",width:35},
 			{field:'bookpulldate',title:'定做试版日',width:35},
 			{field:'bookgetdate',title:'取件日',width:35},
 			{field:'total',title:'总价格',width:25},
@@ -1083,6 +1090,8 @@
 	        {field:'goodsokdate',title:"成品完成时间",width:35},
 			{field:'ss',title:'操作',width:30},
 		   	  ]]
+
+		   	  
 			});
 		});
 	</script>

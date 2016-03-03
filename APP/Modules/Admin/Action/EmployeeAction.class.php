@@ -73,7 +73,7 @@ class EmployeeAction extends CommonAction{
 		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-		$order=M('order')->where(array('osunum'=>$_GET['unum']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=M('order')->where(array('osunum'=>$_GET['unum']))->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 		$order=subtime($order);
 		$this->order=$order;
 		
@@ -92,6 +92,7 @@ class EmployeeAction extends CommonAction{
 		$this->pants=$pants;
 		$this->vest=$vest;
 		$this->page = $page->show ();
+		$this->time=time();
 		$this->display();
 	}
 // 添加订单
@@ -354,6 +355,7 @@ class EmployeeAction extends CommonAction{
 	}
 	//读取修改订单
 	public function readselforder(){
+		
 		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
 				
@@ -366,6 +368,7 @@ class EmployeeAction extends CommonAction{
 //		p($cloth);
 //		p($pants);
 //		p($vest);
+		
 		$this->sid=$_GET['sid'];
 		$this->osunum=$_GET['unum'];
 		$this->cloth=$cloth;
@@ -630,9 +633,9 @@ class EmployeeAction extends CommonAction{
 				
 			}
 			if($result1 || $result2){
-				$this->success("添加成功",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
+				$this->success("修改成功",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
 			}else 
-				$this->error("添加失败",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
+				$this->error("修改失败",U('Admin/Employee/selforder',array('unum'=>$_POST['osunum'],'sid'=>$_POST['sid'])));
 	
 		}
 	
@@ -667,7 +670,7 @@ class EmployeeAction extends CommonAction{
 			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
 			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-			$order=M('order')->where($condition)->limit ( $limit )->order('bookdate desc')->select ();
+			$order=M('order')->where($condition)->limit ( $limit )->order('bookdate desc,inspectorverify,shopleaderverify')->select ();
 			$order=subtime($order);	
 			//分配商品
 				
@@ -685,6 +688,7 @@ class EmployeeAction extends CommonAction{
 			$this->vest=$vest;
 			$this->page = $page->show ();
 			$this->order = $order;
+			$this->time=time();
 			$this->display('selforder');
 		
 		}
@@ -714,7 +718,7 @@ class EmployeeAction extends CommonAction{
 		$page=new Page($count,12);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc')->select();
+		$order=M('order')->where(array('ossname'=>$_GET['ossname']))->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 		$order=subtime($order);
 		$this->order=$order;
 		
@@ -727,6 +731,7 @@ class EmployeeAction extends CommonAction{
 //		p($cloth);
 //		p($pants);
 //		p($vest);
+		
 		$this->sid=$_GET['sid'];
 		$this->ossname=$_GET['ossname'];
 		$this->cloth=$cloth;
@@ -737,7 +742,6 @@ class EmployeeAction extends CommonAction{
 	}
 	//店铺订单读取
 	public function readshoporder(){
-		
 		$order=D('OrderRelation')->relation(true)->where(array('onum'=>$_GET['onum']))->find();
 		$this->order=$order;
 		$this->ossname=$_GET['ossname'];
@@ -782,7 +786,7 @@ class EmployeeAction extends CommonAction{
 			$page=new Page($count,12);
 			$limit=$page->firstRow . ',' . $page->listRows;
 			$field=array('onum','reservenum','oscalenum','omname','ommale','omphone','bookdate','bookpulldate','bookgetdate','total','osunum','ispull','inspectorverify','shopleaderverify','opsname','pullok','pullstatus','goodsok','pullokdate','goodsokdate','repairlock');
-			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc')->select();
+			$order=M('order')->where($condition)->limit($limit)->field($field)->order('bookdate desc,inspectorverify,shopleaderverify')->select();
 			$order=subtime($order);
 			$this->order=$order;//分配商品
 			
