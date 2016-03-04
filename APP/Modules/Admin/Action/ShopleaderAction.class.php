@@ -686,9 +686,10 @@ class ShopleaderAction extends CommonAction{
 			}
 			//记录结束
 			$repairold=M('repair')->where(array('rid'=>$orderold['repairid']))->find();
-			$rupcloth=$rupcloth."=========="."\n".$repairold['upremark2'];
-			$rpants=$rpants."=========="."\n".$repairold['downremark2'];
-			$rvest=$rvest."=========="."\n".$repairold['backremark2'];
+			
+			$rupcloth=$repairold['upremark2']."\n"."修改人工号：".$_POST['unum']."\n".$rupcloth."=========="."\n";
+			$rpants=$repairold['downremark2']."\n"."修改人工号：".$_POST['unum']."\n".$rpants."=========="."\n";
+			$rvest=$repairold['backremark2']."\n"."修改人工号：".$_POST['unum']."\n".$rvest."=========="."\n";
 			$repair=array('rid'=>$orderold['repairid'],'upremark2'=>$rupcloth,'downremark2'=>$rpants,'backremark2'=>$rvest,);
 			M('repair')->save($repair);
 			
@@ -793,6 +794,7 @@ class ShopleaderAction extends CommonAction{
 			);
 			$db=M('order');
 			$result2=$db->save($receive2);
+			
 		}	
 		//处理订购单		
 		$receive1=array(

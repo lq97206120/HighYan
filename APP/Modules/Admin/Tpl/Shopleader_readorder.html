@@ -974,7 +974,7 @@
 			  	 	<input type='hidden' id='ossname' name='ossname' value='{$ossname}'>
 			  	 	<input type='hidden' id='unum' name='unum' value='{$unum}'>
 				   	 <a class="btn btn-primary" href="{:U('Admin/Shopleader/order',array('sid'=>$sid,'ossname'=>$ossname,'unum'=>$unum))}" target="opt"><span>返回</span></a>
-				   	 <input type="submit" class="btn btn-primary" value="保 存" ">
+				   	 <input type="submit" class="btn btn-primary" value="保 存" id="updatebtn" >
 			   </div>
 		  </form>
 
@@ -1182,8 +1182,21 @@
 				return false;
 			}
 			
+				
 									
 		});
+
+		//处理返修时参数的修改后的提示
+		$('#updatebtn').click(function(){
+			
+			if({$order['repairlock']}=='0'){
+				alert('参数修改完成后一定要去返修单确认,使返修单生效！');
+			}
+			
+									
+		});
+
+		
 		$('#readexpress').click(function(){
 			var row = $('#dg').datagrid('getSelected');
 			

@@ -334,11 +334,11 @@
 					     <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'>是否打样</span></label>
 							<div class="col-sm-2 inputpadding">
 						    	<if condition='$order["ispull"] eq 1'>
-					    		  <input type="radio"   name="ispull" value='1'   checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-						 		  <input type="radio"   name="ispull" value='0' style="width: 50px"/>&nbsp;&nbsp;否
+					    		  <input type="radio"   name="ispull" value='1' id='ispull1'  checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+						 		  <input type="radio"   name="ispull" value='0' id='ispull0' style="width: 50px"/>&nbsp;&nbsp;否
 					    		<else/>
-					    		 <input type="radio"   name="ispull" value='1'   style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-						 		  <input type="radio"   name="ispull" value='0' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+					    		 <input type="radio"   name="ispull" value='1'  id='ispull1' style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+						 		  <input type="radio"   name="ispull" value='0' id='ispull0' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
 					    		</if>
 					    	</div>
 
@@ -367,11 +367,11 @@
 						<label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'>总监审核</span></label>
 						<div class="col-sm-2 inputpadding">
 					    	<if condition='$order["inspectorverify"] eq 1'>
-				    		  <input type="radio"   name="inspectorverify" value='1'   checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-					 		  <input type="radio"   name="inspectorverify" value='0' style="width: 50px"/>&nbsp;&nbsp;否
+				    		  <input type="radio"   name="inspectorverify" value='1'  id='inspectorverify1' checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+					 		  <input type="radio"   name="inspectorverify" value='0'  id='inspectorverify0' style="width: 50px"/>&nbsp;&nbsp;否
 				    		<else/>
-				    		 <input type="radio"   name="inspectorverify" value='1'   style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-					 		  <input type="radio"   name="inspectorverify" value='0' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+				    		 <input type="radio"   name="inspectorverify" value='1'   id='inspectorverify1'  style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+					 		  <input type="radio"   name="inspectorverify" value='0'  id='inspectorverify0' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
 				    		</if>
 				    	</div>    
 					     
@@ -709,11 +709,8 @@
 			  	 	<input type='hidden',id='ossname' name='ossname' value='{$ossname}'>
 			  	 	<input type='hidden', name='shopleaderverify' value='{$order["shopleaderverify"]}'>
 				   	 <a class="btn btn-primary" href="{:U('Admin/Inspector/order',array('unum'=>$osunum,'sid'=>$sid,'ossname'=>$ossname))}" target="opt"><span>返回</span></a><span class='red'>*审核通过后参数不可更改*</span>
-				   	 <if condition='$order["inspectorverify"] eq 0'>
-				   	 	<input type="button" class="btn btn-primary" value="保 存" onclick='referpro()'>
-				   	 <else/>
-				   	 </if>
-			   </div>
+				   	 	<input type="button" class="btn btn-primary" value="保 存" onclick='referpro()' id="updatebtn">
+			</div>
 		  </form>
 
 	</div>
@@ -806,8 +803,42 @@
 	
 	<script>
 
-		//量身单通过后不可更改
+		//量身单审核通过后不可该的
 		if({$order["inspectorverify"]}=='1'){
+			var z=document.getElementById('chinascale');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('enscale');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('cloth');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('pants');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('vest');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('tcloth');
+			z.setAttribute('disabled','disabled');
+	
+			var z=document.getElementById('uremark');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('dremark');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('tremark');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('provider');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('ispull1');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('ispull0');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('inspectorverify1');
+			z.setAttribute('disabled','disabled');
+			var z=document.getElementById('inspectorverify0');
+			z.setAttribute('disabled','disabled');
+			}
+		
+	
+		//量身单返修完成后不可更改
+		if(({$order["inspectorverify"]}=='1' && {$order['repairlock']}=='1') || {$order["goodsok"]}=='1'){
 			var x=document.getElementById('upscale').getElementsByTagName('input');
 			for(var i=0;i<x.length;i++){
 					x[i].setAttribute('disabled','disabled');	
@@ -834,11 +865,26 @@
 			for(var i=0;i<z.length;i++){
 					z[i].setAttribute('disabled','disabled');	
 				}
+			var z=document.getElementById('updatebtn');
+			z.setAttribute('disabled','disabled');
+			
 			}
+
+		
+		
 		
 		//处理流程和返修添加与读取
-	
 		$(function(){
+
+			//处理返修时参数的修改后的提示
+			$('#updatebtn').click(function(){
+				
+				if({$order['repairlock']}=='0'){
+					alert('参数修改完成后一定要去返修单确认,使返修单生效！');
+				}
+				
+										
+			});
 			
 			//处理流程添加与读取
 			
