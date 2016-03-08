@@ -24,7 +24,7 @@ return array(
         'SMTP_HOST'   => 'smtp.163.com', //SMTP服务器
         'SMTP_PORT'   => '465', //SMTP服务器端口
         'SMTP_USER'   => '18702111889@163.com', //SMTP服务器用户名
-        'SMTP_PASS'   => 'highyan', //SMTP服务器密码
+        'SMTP_PASS'   => 'highyan123', //SMTP服务器密码
         'FROM_EMAIL'  => '18702111889@163.com', //发件人EMAIL
         'FROM_NAME'   => '海彦', //发件人名称
         'REPLY_EMAIL' => '', //回复EMAIL（留空则为发件人EMAIL）
