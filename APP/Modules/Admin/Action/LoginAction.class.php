@@ -63,7 +63,7 @@ class LoginAction extends Action{
 					//读取用户权限
 					import('ORG.Util.RBAC');
 					RBAC::saveAccessList();
-			
+					
 					$this->ajaxReturn ( array ('status' => 3), 'json' );
 				} 
 				

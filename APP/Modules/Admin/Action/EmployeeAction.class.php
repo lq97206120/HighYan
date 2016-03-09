@@ -855,7 +855,12 @@ class EmployeeAction extends CommonAction{
 			'mname'=>$_POST['mname'],
 			'mmale'=>$_POST['mmale'],
 			'mdate'=>$_POST['mdate'],
+			'mmarrydate'=>$_POST['mmarrydate'],
 			'mphone'=>$_POST['mphone'],
+			'mhigh'=>$_POST['mhigh'],
+			'mweight'=>$_POST['mweight'],
+			'mmail'=>$_POST['mmail'],
+			'mwechat'=>$_POST['mwechat'],
 			'mstatus'=>'1',
 			);
 		
@@ -872,10 +877,15 @@ class EmployeeAction extends CommonAction{
 			'mnum'=>$_POST['mnum'],
 			'mname'=>$_POST['mname'],
 			'mmale'=>$_POST['mmale'],
+			'mstatus'=>$_POST['mstatus'],
+			'mpoints'=>$_POST['mpoints'],
 			'mdate'=>$_POST['mdate'],
 			'mphone'=>$_POST['mphone'],
-			'mpoints'=>$_POST['mpoints'],
-			'mstatus'=>'1',
+			'mmarrydate'=>$_POST['mmarrydate'],
+			'mhigh'=>$_POST['mhigh'],
+			'mweight'=>$_POST['mweight'],
+			'mmail'=>$_POST['mmail'],
+			'mwechat'=>$_POST['mwechat'],
 			);
 		
 			$memb=M('memb')->save($receive);

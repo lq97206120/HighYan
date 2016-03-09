@@ -59,6 +59,11 @@
 		<td><if condition="$u['mstatus'] eq 1">开启<else/>关闭</if></td>
 		<td>{$u.mphone}</td>
 		<td>{$u.mdate}</td>
+		<td>{$u.mmarrydate}</td>
+		<td>{$u.mhigh}</td>
+		<td>{$u.mweight}</td>
+		<td>{$u.mmail}</td>
+		<td>{$u.mwechat}</td>
 		<td>{$u.mpoints}</td>
 		<td>
 			<a href="javascript:void(0)" onclick="deleteuser({$u.mnum})">删除</a>
@@ -95,16 +100,47 @@
 			    </div>
 		  </div>
 		  <div class="form-group">
-			    <label for="userstarttime" class="col-sm-2 control-label">注册日期</label>
+			    <label for="userstarttime" class="col-sm-2 control-label">出生日期</label>
 			    <div class="col-sm-10">
-			     <input type="text" class="form-control" onClick="WdatePicker()" id="userdate" name="mdate"  placeholder="注册日期">
+			     <input type="text" class="form-control" onClick="WdatePicker()" id="userdate" name="mdate"  placeholder="出生日期">
 			    </div>
 		  </div>
-
-		   <div class="form-group">
+		<div class="form-group">
+			    <label for="userstarttime" class="col-sm-2 control-label">结婚日期</label>
+			    <div class="col-sm-10">
+			     <input type="text" class="form-control" onClick="WdatePicker()" id="mmarrydate" name="mmarrydate"  placeholder="结婚日期">
+			    </div>
+		  </div>
+ 		<div class="form-group">
 			    <label for="usertel" class="col-sm-2 control-label">联系电话</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="usertel" name="mphone"  placeholder="联系电话">
+			    </div>
+		  </div>
+		   <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">身高</label>
+			    <div class="col-sm-5">
+			      <input type="text" class="form-control" id="mhigh" name="mhigh"  placeholder="身高">
+			    </div>
+			     <label for="usertel" class="col-sm-1 control-label">cm</label>
+		  </div>
+		   <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">体重</label>
+			    <div class="col-sm-5">
+			      <input type="text" class="form-control" id="mweight" name="mweight"  placeholder="体重">
+			    </div>
+			     <label for="usertel" class="col-sm-1 control-label">kg</label>
+		  </div>
+		  <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">邮箱</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="mmail" name="mmail"  placeholder="邮箱">
+			    </div>
+		  </div>
+		  <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">微信号</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="mwechat" name="mwechat"  placeholder="微信号">
 			    </div>
 		  </div>
 		  <div class="modal-footer">
@@ -153,9 +189,15 @@
 		  </div>
 		  	  
 		  <div class="form-group">
-			    <label for="userstarttime" class="col-sm-2 control-label">注册日期</label>
+			    <label for="userstarttime" class="col-sm-2 control-label">出身日期</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="form-control" onClick="WdatePicker()" id="userstarttime" name="mdate"  placeholder="注册日期">
+			      <input type="text" class="form-control" onClick="WdatePicker()" id="userstarttime" name="mdate" >
+			    </div>
+		  </div>
+		<div class="form-group">
+			    <label for="userstarttime" class="col-sm-2 control-label">结婚日期</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" onClick="WdatePicker()" id="mmarrydate" name="mmarrydate" >
 			    </div>
 		  </div>
 
@@ -163,6 +205,32 @@
 			    <label for="usertel" class="col-sm-2 control-label">联系电话</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="usertel" name="mphone">
+			    </div>
+		  </div>
+		    <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">身高</label>
+			    <div class="col-sm-5">
+			      <input type="text" class="form-control" id="mhigh" name="mhigh"  placeholder="身高">
+			    </div>
+			     <label for="usertel" class="col-sm-1 control-label">cm</label>
+		  </div>
+		   <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">体重</label>
+			    <div class="col-sm-5">
+			      <input type="text" class="form-control" id="mweight" name="mweight"  placeholder="体重">
+			    </div>
+			     <label for="usertel" class="col-sm-1 control-label">kg</label>
+		  </div>
+		  <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">邮箱</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="mmail" name="mmail"  placeholder="邮箱">
+			    </div>
+		  </div>
+		  <div class="form-group">
+			    <label for="usertel" class="col-sm-2 control-label">微信号</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="mwechat" name="mwechat"  placeholder="微信号">
 			    </div>
 		  </div>
 		  <div class="form-group">
@@ -300,8 +368,13 @@
 					else $("#edituserModal input[name='mmale'][value=0]").attr("checked",true);
 				if(row.mstatus=="开启")$("#edituserModal input[name='mstatus'][value=1]").attr("checked",true);
 				else $("#edituserModal input[name='mstatus'][value=0]").attr("checked",true);
-				$('#edituserModal #userstarttime').val(row.umdate);
+				$('#edituserModal #userstarttime').val(row.mdate);
 				$('#edituserModal #usertel').val(row.mphone);
+				$('#edituserModal #mmarrydate').val(row.mmarrydate);
+				$('#edituserModal #mhigh').val(row.mhigh);
+				$('#edituserModal #mweight').val(row.mweight);
+				$('#edituserModal #mmail').val(row.mmail);
+				$('#edituserModal #mwechat').val(row.mwechat);
 				$('#edituserModal #userpoints').val(row.mpoints);
 				$('#edituserModal').modal();
 			});
@@ -319,7 +392,12 @@
 		        {field:'mmale',title:"性别",width:40},
 		        {field:'mstatus',title:"状态",width:40},
 		        {field:'mphone',title:"联系电话",width:100},
-		        {field:'mdate',title:'注册时间日期',width:100}, 
+		        {field:'mdate',title:"出生日期",width:100},
+		        {field:'mmarrydate',title:"结婚日期",width:100},
+		        {field:'mhigh',title:"身高",width:100},
+		        {field:'mweight',title:"体重",width:100},
+		        {field:'mmail',title:"邮箱",width:100},
+		        {field:'mwechat',title:"微信号",width:100},
 		        {field:'mpoints',title:'积分',width:80},
 		        {field:'ss',title:'操作',width:60},
 		       
