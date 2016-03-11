@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.css">
+<style>
+ 	.center{text-align:center;}
+ 	.red{color:red;}
+ </style>
+<title>编辑案例</title>
+<script>
+	window.UEDITOR_HOME_URL='__ROOT__/Data/Ueditor/';
+	window.onload=function(){
+			window.UEDITOR_CONFIG.initialFrameHeight=260;
+			//window.UEDITOR_CONFIG.getActionUrl = "{:U(GROUP_NAME.'/Blog/upload')}"; //提交页面
+			//window.UEDITOR_CONFIG.imagePath = URL + "php/";
+			//UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+			//UE.Editor.prototype.getActionUrl = function(action){
+			//if(action == 'uploadimage') {
+			//return '{:U(GROUP_NAME.'/Blog/upload')}';
+			//}
+			//return this._bkGetActionUrl(action);
+			//}
+			//window.UEDITOR_CONFIG.imageUrl='{:U(GROUP_NAME.'/Blog/upload')}';
+			//window.UEDITOR_CONFIG.imagePath=URL+"php/";
+			//上传文件的保存路径的修改再config.json里
+			UE.getEditor('ehead');
+			UE.getEditor('ephoto1');
+			UE.getEditor('ephoto2');
+			UE.getEditor('ephoto3');
+			UE.getEditor('ephoto4');
+		}
+</script>
+
+<js file='__ROOT__/Data/Ueditor/ueditor.config.js' />
+<js file='__ROOT__/Data/Ueditor/ueditor.all.min.js' />
+
+</head>
+<body>
+	<div class='container'>
+		<h2 class='center'>编辑案例</h2>
+		<hr/>
+		 <form id="form2" method='post' action="__URL__/editexamplehandle" class="form-horizontal">
+				
+				 <div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">ID:</label>
+				    <div class="col-sm-2 inputpadding">
+				      <input type="text" class="form-control " id="eid" name="eid" value="{$singlexample['eid']}" readonly='true' >
+				    </div>
+				    
+				</div>
+			 	
+			  	<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">用户名:</label>
+				    <div class="col-sm-2 inputpadding">
+				      <input type="text" class="form-control " id="ename" name="ename" value="{$singlexample['ename']}" >
+				    </div>
+				    
+				</div>
+				<div class="form-group">
+					<span class='red col-sm-offset-2'>*每个选项只能上传一张图片，请不要上传多张*</span>
+				</div>
+				<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">头像:</label>
+				    <div class="col-sm-6">
+				    	<textarea   id="ehead" name="ehead">{$singlexample['ehead']}</textarea>
+				    </div>
+			   
+				</div>
+				
+				<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">婚礼类型:</label>
+				    <div class="col-sm-2 inputpadding">
+				      <input type="text" class="form-control " id="emarryclass" name="emarryclass"  value="{$singlexample['emarryclass']}">
+				    </div>
+				</div>
+				
+				<hr/>
+				<hr/>
+			  	<div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">图片一:</label>
+				    <div class="col-sm-6">
+				    	<textarea   id="ephoto1" name="ephoto1">{$singlexample['ephoto1']}</textarea>
+				    </div>
+			   
+				</div>
+			     <div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">图片二:</label>
+				    <div class="col-sm-6">
+				    	<textarea   id="ephoto2" name="ephoto2">{$singlexample['ephoto2']}</textarea>
+				    </div>
+			   
+				</div>
+			  <div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">图片三:</label>
+				    <div class="col-sm-6">
+				    	<textarea   id="ephoto3" name="ephoto3">{$singlexample['ephoto3']}</textarea>
+				    </div>
+			   
+				</div>
+			  <div class="form-group">
+				    <label for="usernum" class="col-sm-2 control-label">图片四:</label>
+				    <div class="col-sm-6">
+				    	<textarea   id="ephoto4" name="ephoto4">{$singlexample['ephoto4']}</textarea>
+				    </div>
+			   
+				</div>
+			   
+				<div class="modal-footer">
+			  		
+				   	 <a class="btn btn-primary" href="{:U('Admin/Front/example')}" target="opt"><span>返 回</span></a>
+				   	 <input type="submit" class="btn btn-primary" value="保 存" ">
+				   </div>
+			  </form>
+	  </div>
+</body>
+</html>

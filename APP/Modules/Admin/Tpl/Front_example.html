@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="stylesheet" type="text/css" href="__PUBLIC__/bootstrap/bootstrap.css">
+ <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
+ <style>
+ 	.center{text-align:center;}
+ </style>
+</head>
+<body>
+	<div class='container'>
+		<h2 class='center'>优秀案例</h2>
+		<hr/>
+		<a  class='btn btn-default' href="{:U('Admin/Front/addexample')}">添加案例</a>
+		<hr/>
+		<table class="table table-bordered table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>顺序</th>
+					<th>用户名</th>
+					<th>婚礼类型</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name='example' item='v'>
+					<tr>
+						<td>{$v.eid}</td>	
+						<td>{$v.ename}</td>	
+						<td>{$v.emarryclass}</td>
+						<td>
+							<a href="{:U('Admin/Front/editexample',array('eid'=>$v['eid']))}">编辑</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="javascript:void(0)" onclick="deleteexample({$v.eid})">删除</a>
+						</td>	
+						
+					</tr>
+				</foreach>
+			</tbody>
+		</table>
+	</div>
+	
+<script>
+	function deleteexample(eid){
+		if(confirm("确认删除")){
+		$.ajax({
+			type:"POST",
+			url:"__URL__/deleteexample/eid/"+eid,
+			success:function(data,textStatus,jqXHR){
+			alert("删除成功");
+				window.location.reload();
+	
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				alert("删除失败");
+			}
+		})
+			
+		}
+		else{
+		
+			return;
+		}	
+	}
+</script>
+</body>
+</html>
