@@ -142,7 +142,7 @@
 		<td><if condition='$u["goodsok"] eq 0'>&nbsp;<else/>{$u.goodsokdate|date='y-m-d',###}</if></td>
 		<td>
 			<a href="{:U('Admin/Shopleader/readorder',array('sid'=>$sid,'onum'=>$u['onum'],'ossname'=>$ossname,'unum'=>$unum))}" target="opt">读取&nbsp;</a>
-			<if condition="$u['goodsok'] eq 1"><a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a></if>
+			<a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a>
 			
 		</td>
 				
