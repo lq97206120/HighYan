@@ -31,38 +31,38 @@
 	<hr/>
 	 <form id="form2" method='post'  class="form-horizontal">
 	 <!-- 量身单上部结束 -->
-	 	<div id='upscale'>
+	 	<div >
 			<div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">合订号:</label>
 			    <div class="col-sm-2 inputpadding">
-			      <input type="text" class="form-control " id="onum" name="onum"  value='{$order["onum"]}' >
+			      <input type="text" class="form-control " id="onum" name="onum"  value='{$order["onum"]}' disabled='disabled'>
 			    </div>
 			    
 		    	<label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'>是否打样</span></label>
 				<div class="col-sm-2 inputpadding">
 			    	<if condition='$order["ispull"] eq 1'>
-		    		  <input type="radio"   name="ispull" value='1'   checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-			 		  <input type="radio"   name="ispull" value='0' style="width: 50px"/>&nbsp;&nbsp;否
+		    		  <input type="radio"   name="ispull" value='1'  disabled='disabled' checked="checked" style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+			 		  <input type="radio"   name="ispull" value='0' disabled='disabled' style="width: 50px"/>&nbsp;&nbsp;否
 		    		<else/>
-		    		 <input type="radio"   name="ispull" value='1'   style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
-			 		  <input type="radio"   name="ispull" value='0' checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
+		    		 <input type="radio"   name="ispull" value='1'  disabled='disabled'  style="width: 50px"/>&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;
+			 		  <input type="radio"   name="ispull" value='0' disabled='disabled'  checked="checked" style="width: 50px"/>&nbsp;&nbsp;否
 		    		</if>
 			    </div>
 			    
 			    <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label"><span class='blue'>单位</span></label>
 				    <if condition='$order["scale"] eq 1'>
 				    	<div class="col-sm-1 inputpadding">
-					      <input type="radio"  id='chinascale' name="scale" value='1' checked='checked'>&nbsp;<span>公制</span>
+					      <input type="radio"  id='chinascale' name="scale" value='1' disabled='disabled' checked='checked'>&nbsp;<span>公制</span>
 					    </div>
 					    <div class="col-sm-1 inputpadding">
-					      <input type="radio" id='enscale'  name="scale" value='0'>&nbsp;<span>英制</span>
+					      <input type="radio" id='enscale'  name="scale" disabled='disabled' value='0'>&nbsp;<span>英制</span>
 					    </div>
 				    <else/>
 					    <div class="col-sm-1 inputpadding">
-					      <input type="radio"  id='chinascale' name="scale" value='1'>&nbsp;<span>公制</span>
+					      <input type="radio"  id='chinascale' name="scale" disabled='disabled' value='1'>&nbsp;<span>公制</span>
 					    </div>
 					    <div class="col-sm-1 inputpadding">
-					      <input type="radio" id='enscale'  name="scale" value='0' checked='checked'>&nbsp;<span>英制</span>
+					      <input type="radio" id='enscale'  name="scale" value='0' disabled='disabled' checked='checked'>&nbsp;<span>英制</span>
 					    </div>
 				    </if>
 		  </div>
@@ -73,7 +73,7 @@
 			  <div class="form-group">
 				    <label for="usernum" class="col-sm-1 control-label">量身单号:</label>
 				    <div class="col-sm-2 inputpadding">
-				      <input type="text" class="form-control " id="oscalenum" name="oscalenum"  value='{$order["oscalenum"]}'>
+				      <input type="text" class="form-control " id="oscalenum" name="oscalenum"  value='{$order["oscalenum"]}' readonly='true'>
 				    </div>
 			  	   	
 				   
@@ -83,7 +83,8 @@
 				    </div>
 			  </div>
 		<!-- 西服部分 -->
-		<div id='firstprovider'>	  
+		<div id='upscale'>	
+			
 		 	<if condition='$order["ougnum"] neq ""'>
 		 		 <div class="form-group">
 					    <label for="usernum" class="col-sm-1 control-label">上衣款式:</label>
@@ -418,159 +419,160 @@
 		  <div style='height:800px;'>
 	  		
 		  	<div class='col-sm-6' id='downscale'>
-			  <!-- 右下左开始 -->	
-			  <hr/>	
-			  <if condition='$order["otgnum"] neq ""'>
-			    <div class="form-group">
-				    <label for="usernum" class="col-sm-2 control-label">衬衫款式</label>
-	 					<div class="col-sm-4 inputpadding">
-				   			<input  type="text" class="form-control" value='{$order["otgnum"]}({$order["otgname"]})'>
-				    	</div>
-				   		  
-			  	</div>
-			 
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-1 control-label"></label>
-					    <div class="col-sm-offset-1 col-sm-2 inputpadding">
-					      实际尺寸
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      完成尺寸
-					    </div>
-				    
-				     
-				     
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">肩宽</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tshoulderwidth1" name="tshoulderwidth1" value='{$order["tshoulderwidth1"]}' >
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tshoulderwidth2" name="tshoulderwidth2" value='{$order["tshoulderwidth2"]}'>
-					    </div>
-					   
-					    <div class='col-sm-2'>
-					    	<textarea class="form-control" id='tremark' name='tremark' style="height:375px;position:absolute;">{$order['tremark']} </textarea>
-					    </div>
-					   
-				     
-			  </div>
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">袖长</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tsleevewidth1" name="tsleevewidth1"  value='{$order["tsleevewidth1"]}'>
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tsleevewidth2" name="tsleevewidth2" value='{$order["tsleevewidth2"]}'>
-					    </div>
-				    
-			  </div>
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">衣长</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tclothlength1" name="tclothlength1" value='{$order["tclothlength1"]}' >
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tclothlength2" name="tclothlength2" value='{$order["tclothlength2"]}' >
-					    </div>
-				    
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">胸围</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbreathsur1" name="tbreathsur1"  value='{$order["tbreathsur1"]}'>
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbreathsur2" name="tbreathsur2" value='{$order["tbreathsur2"]}'>
-					    </div>
-				     
-			  </div>
-	
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">腰围</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="twaistsur1" name="twaistsur1" value='{$order["twaistsur1"]}' >
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="twaistsur2" name="twaistsur2" value='{$order["twaistsur2"]}' >
-					    </div>
-				    
-			  </div>
+				  <!-- 右下左开始 -->	
+				  <hr/>	
 				
-		    <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">臀围</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="thipsur1" name="thipsur1" value='{$order["thipsur1"]}' >
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="thipsur2" name="thipsur2" value='{$order["thipsur2"]}'>
-					    </div>
-				    
-			  </div>
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">胸宽</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbreathwidth1" name="tbreathwidth1" value='{$order["tbreathwidth1"]}' >
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbreathwidth2" name="tbreathwidth2" value='{$order["tbreathwidth2"]}'>
-					    </div>
-				
-			  </div>
-			  <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">背宽</label>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbackwidth1" name="tbackwidth1"  value='{$order["tbackwidth1"]}'>
-					    </div>
-					    <div class="col-sm-2 inputpadding">
-					      <input type="text" class="form-control " id="tbackwidth2" name="tbackwidth2" value='{$order["tbackwidth2"]}'>
-					    </div>
-				     
-			  </div>
-			<div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">领围</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control " id="tnecksur" name="tnecksur"  value='{$order["tnecksur"]}'>
-					    </div>
-					
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">领型</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control " id="tneckstyle" name="tneckstyle" value='{$order["tneckstyle"]}' >
-					    </div>
+				  <if condition='$order["otgnum"] neq ""'>
+				   		 <div class="form-group">
+							    <label for="usernum" class="col-sm-2 control-label">衬衫款式</label>
+				 					<div class="col-sm-4 inputpadding">
+							   			<input  type="text" class="form-control" value='{$order["otgnum"]}({$order["otgname"]})'>
+							    	</div>
+							   		  
+						  	</div>
+						 
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-1 control-label"></label>
+								    <div class="col-sm-offset-1 col-sm-2 inputpadding">
+								      实际尺寸
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      完成尺寸
+								    </div>
+							    
+							     
+							     
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">肩宽</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tshoulderwidth1" name="tshoulderwidth1" value='{$order["tshoulderwidth1"]}' >
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tshoulderwidth2" name="tshoulderwidth2" value='{$order["tshoulderwidth2"]}'>
+								    </div>
 								   
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">前襟</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control " id="tbosom" name="tbosom"  value='{$order["tbosom"]}'>
-					    </div>
-					
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">袖口</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control " id="tsleevesur" name="tsleevesur" value='{$order["tsleevesur"]}' >
-					    </div>
-				     
-			  </div>
-			 <div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">码数</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control" id="tcode" name="tcode"  value='{$order["tcode"]}'>
-					    </div>
+								    <div class='col-sm-2'>
+								    	<textarea class="form-control" id='tremark' name='tremark' style="height:375px;position:absolute;">{$order['tremark']} </textarea>
+								    </div>
+								   
+							     
+						  </div>
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">袖长</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tsleevewidth1" name="tsleevewidth1"  value='{$order["tsleevewidth1"]}'>
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tsleevewidth2" name="tsleevewidth2" value='{$order["tsleevewidth2"]}'>
+								    </div>
+							    
+						  </div>
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">衣长</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tclothlength1" name="tclothlength1" value='{$order["tclothlength1"]}' >
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tclothlength2" name="tclothlength2" value='{$order["tclothlength2"]}' >
+								    </div>
+							    
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">胸围</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbreathsur1" name="tbreathsur1"  value='{$order["tbreathsur1"]}'>
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbreathsur2" name="tbreathsur2" value='{$order["tbreathsur2"]}'>
+								    </div>
+							     
+						  </div>
 				
-			  </div>
-			<div class="form-group">
-				     <label for="usernum" class="col-sm-2 control-label">布号</label>
-					    <div class="col-sm-4 inputpadding">
-					      <input type="text" class="form-control " id="tclothfabric" name="tclothfabric" value='{$order["tclothfabric"]}' >
-					    </div>
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">腰围</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="twaistsur1" name="twaistsur1" value='{$order["twaistsur1"]}' >
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="twaistsur2" name="twaistsur2" value='{$order["twaistsur2"]}' >
+								    </div>
+							    
+						  </div>
+							
+					    <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">臀围</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="thipsur1" name="thipsur1" value='{$order["thipsur1"]}' >
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="thipsur2" name="thipsur2" value='{$order["thipsur2"]}'>
+								    </div>
+							    
+						  </div>
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">胸宽</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbreathwidth1" name="tbreathwidth1" value='{$order["tbreathwidth1"]}' >
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbreathwidth2" name="tbreathwidth2" value='{$order["tbreathwidth2"]}'>
+								    </div>
+							
+						  </div>
+						  <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">背宽</label>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbackwidth1" name="tbackwidth1"  value='{$order["tbackwidth1"]}'>
+								    </div>
+								    <div class="col-sm-2 inputpadding">
+								      <input type="text" class="form-control " id="tbackwidth2" name="tbackwidth2" value='{$order["tbackwidth2"]}'>
+								    </div>
+							     
+						  </div>
+						<div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">领围</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control " id="tnecksur" name="tnecksur"  value='{$order["tnecksur"]}'>
+								    </div>
+								
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">领型</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control " id="tneckstyle" name="tneckstyle" value='{$order["tneckstyle"]}' >
+								    </div>
+											   
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">前襟</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control " id="tbosom" name="tbosom"  value='{$order["tbosom"]}'>
+								    </div>
+								
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">袖口</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control " id="tsleevesur" name="tsleevesur" value='{$order["tsleevesur"]}' >
+								    </div>
+							     
+						  </div>
+						 <div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">码数</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control" id="tcode" name="tcode"  value='{$order["tcode"]}'>
+								    </div>
+							
+						  </div>
+						<div class="form-group">
+							     <label for="usernum" class="col-sm-2 control-label">布号</label>
+								    <div class="col-sm-4 inputpadding">
+								      <input type="text" class="form-control " id="tclothfabric" name="tclothfabric" value='{$order["tclothfabric"]}' >
+								    </div>
+						</div>
+				  </if>
 			</div>
-		</if>
-		</div>
 			
 			  <!-- 右下左结束 -->		
 	  	  <div  class='col-sm-3'>
@@ -598,29 +600,29 @@
 		 		<if condition='$order["goodsok"] eq 0'><if condition='$order["expresslock"] eq 1'><button class="btn btn-default" style="width:30%;margin-bottom:5px;"  data-toggle="modal" data-target="#addExpressModal">添加流程+</button><else/></if><else/>&nbsp;</if><span class='red'>*完成上一轮流程才能添加*</span>
 		 </div>
 	 	  <div  class='col-sm-3'>
-	 	<hr/>
-	  	  <div class="form-group" style="height:34px;">
-		  	  <label class="col-sm-3 control-label">&nbsp;</label> 
-   		   </div>
-	  	  <hr/>
-	  	  	  	<h3>返修单</h3>
-	  	  <hr/>
-	 	 	  <table id="dgr" style="width:300px;height:380px" >
-		  	 	<foreach name='order.repair' item='v'>
-		  	 		<if condition='($v["isback"] eq 1) AND ($v["isok"] eq 1)'>
-		  	 			<tr>
-			  	 			<td>{$v.rid}</td>
-			  	 			<td>{$v.rnum}</td>
-			  	 			<td><if condition='$v["isback"] eq 0'>小修<else/><span class='blue'>大修</span></if></td>
-			  	 			<td>
-			  	 				<a href="{:U('Admin/Provider/readrepair',array('rid'=>$v['rid'],'onum'=>$order['onum'],'opsname'=>$opsname,))}" target="opt">读取&nbsp;</a>
-				 			</td>
-			  	 			
-			  	 		</tr>
-		  	 		<else/>
-		  	 		</if>
-		  	 	</foreach>	
-		  	  </table>
+			 	<hr/>
+			  	  <div class="form-group" style="height:34px;">
+				  	  <label class="col-sm-3 control-label">&nbsp;</label> 
+		   		   </div>
+			  	  <hr/>
+			  	  	  	<h3>返修单</h3>
+			  	  <hr/>
+			 	 	  <table id="dgr" style="width:300px;height:380px" >
+				  	 	<foreach name='order.repair' item='v'>
+				  	 		<if condition='($v["isback"] eq 1) AND ($v["isok"] eq 1)'>
+				  	 			<tr>
+					  	 			<td>{$v.rid}</td>
+					  	 			<td>{$v.rnum}</td>
+					  	 			<td><if condition='$v["isback"] eq 0'>小修<else/><span class='blue'>大修</span></if></td>
+					  	 			<td>
+					  	 				<a href="{:U('Admin/Provider/readrepair',array('rid'=>$v['rid'],'onum'=>$order['onum'],'opsname'=>$opsname,))}" target="opt">读取&nbsp;</a>
+						 			</td>
+					  	 			
+					  	 		</tr>
+				  	 		<else/>
+				  	 		</if>
+				  	 	</foreach>	
+				  	  </table>
 		 		<if condition='($order["goodsok"] eq 0) AND ($order["inspectorverify"] eq 1) AND ($order["shopleaderrverify"] eq 1)'><if condition='$order["repairlock"] eq 1'><button class="btn btn-default" style="width:32%;margin-bottom:5px;"  data-toggle="modal" data-target="#addRepairModal">添加返修单+</button><else/>&nbsp;</if><else/>&nbsp;</if>
 		
 	 	 	</div>

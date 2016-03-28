@@ -199,6 +199,19 @@ class OrderAction extends CommonAction{
 			if (! empty ($onum )) {
 				$order = M ( "order" );
 				$result = $order->delete ($onum);
+				//删除关联项
+				$express=M('express_order')->where(array('order_num'=>$onum))->select();
+				foreach($express as $v){
+					M('express')->where(array('eid'=>$v['express_id']))->delete();
+				}
+				M('express_order')->where(array('order_num'=>$onum))->delete();
+				
+				$repair=M('repair_order')->where(array('order_num'=>$onum))->select();
+				foreach($repair as $u){
+					M('repair')->where(array('rid'=>$u['repair_id']))->delete();
+				}
+				M('repair_order')->where(array('order_num'=>$onum))->delete();
+				
 				if (false !== $result) {
 					
 				} else {

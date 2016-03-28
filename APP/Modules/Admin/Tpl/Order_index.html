@@ -133,6 +133,7 @@
 		<td><if condition='$u["goodsok"] eq 0'>&nbsp;<else/>{$u.goodsokdate|date='y-m-d',###}</if></td>
 		<td>
 			<a href="{:U('Admin/Order/readorder',array('onum'=>$u['onum']))}" target="opt">读取&nbsp;</a>
+			<a href="javascript:void(0)" onclick="deleteorder({$u.onum})">删除</a>
 			
 		</td>
 				
@@ -1080,7 +1081,7 @@
 					{field:'pullokdate',title:"打样完成时间",width:33},
 					{field:'goodstatus',title:"成品状态",width:40},
 					{field:'goodsokdate',title:"成品完成时间",width:33},
-					{field:'ss',title:'操作',width:15},
+					{field:'ss',title:'操作',width:30},
 		   	  ]]
 			});
 		});

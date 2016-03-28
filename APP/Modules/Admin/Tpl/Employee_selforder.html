@@ -447,7 +447,7 @@
 		  <div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">上衣款式:</label>
 			    <div class="col-sm-2 inputpadding">
-			     <select id="rolelimits" name="cloth" class="form-control">
+			     <select id="cloth" name="cloth" class="form-control">
 						<option value='0'>请选择款式==</option>
 						<foreach name='cloth' item='v'>
 						<option value='{$v['gid']}'>{$v.gnum}({$v.gname})</option>
@@ -456,7 +456,7 @@
 			    </div>
 			     <label for="usernum" class="col-sm-offset-1 col-sm-1 control-label">裤子款式:</label>
 			    <div class="col-sm-2 inputpadding">
-			     	<select id="rolelimits" name="pants" class="form-control">
+			     	<select id="pants" name="pants" class="form-control">
 						<option value='0'>请选择款式==</option>
 						<foreach name='pants' item='v'>
 						<option value='{$v['gid']}'>{$v.gnum}({$v.gname})</option>
@@ -465,7 +465,7 @@
 			    </div>
 			     <label for="username" class="col-sm-offset-1 col-sm-1 control-label">背心款式:</label>
 			    <div class="col-sm-2 inputpadding">
-			      	<select id="rolelimits" name="vest" class="form-control">
+			      	<select id="vest" name="vest" class="form-control">
 						<option value='0'>请选择款式==</option>
 						<foreach name='vest' item='v'>
 						<option value='{$v['gid']}'>{$v.gnum}({$v.gname})</option>
@@ -759,7 +759,7 @@
 		    <div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">衬衫款式:</label>
 			    <div class="col-sm-2 inputpadding">
-			     <select id="rolelimits" name="tcloth" class="form-control">
+			     <select id="tcloth" name="tcloth" class="form-control">
 						<option value='0'>请选择款式==</option>
 						<foreach name='cloth' item='v'>
 						<option value='{$v['gid']}'>{$v.gnum}({$v.gname})</option>
@@ -1042,7 +1042,10 @@
 					alert('缺少必填项！');
 					return false;
 				}
-							
+				if($('#adduserModal #cloth').val() =='0' && $('#adduserModal #tcloth').val() =='0' ){
+					alert("西服衬衫至少选择一个");
+					return false;
+				}				
 				if(!(document.getElementById('chinascale').checked||document.getElementById('enscale').checked)){
 					alert('请选择单位！');
 					return false;
