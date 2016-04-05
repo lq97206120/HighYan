@@ -2,16 +2,17 @@
 class ProviderAction extends CommonAction{
 	//订单查询
 	public function index(){
-		
 		import("ORG.Util.Page");
 		$count=M('order')->where(array('inspectorverify'=>'1','shopleaderverify'=>'1','opsname'=>$_GET['opsname']))->count();
 		$page=new Page($count,10);
 		$limit = $page->firstRow . ',' . $page->listRows;
 		$field=array('onum','oscalenum','ossname','bookdate','ispull','pullstatus','pullok','goodsok','pullokdate','goodsokdate');
+		
 		$order=M('order')->limit($limit)->where(array('inspectorverify'=>'1','shopleaderverify'=>'1','opsname'=>$_GET['opsname']))->field($field)->order('bookdate desc')->select();
 		
 		$this->opsname=$_GET['opsname'];
 		$this->order=$order;
+		
 		$this->page = $page->show ();
 		$this->display();
 	}
@@ -22,7 +23,7 @@ class ProviderAction extends CommonAction{
 		
 		$this->opsname=$_GET['opsname'];
 		$this->order=$order;
-		//p($order);
+		
 		$this->display();
 	}
 	//查询订单

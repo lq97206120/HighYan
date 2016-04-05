@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/bootstrap/bootstrap.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
-
+	
 <style>
 	.head{text-align:center;}
 		.container{width:1360px;}
@@ -29,9 +29,12 @@
 	<div class='container'>
 	<h2 class='head'>订单读取</h2>
 	<hr/>
-	 <form id="form2" method='post'  class="form-horizontal">
-	 <!-- 量身单上部结束 -->
+<!--startprint-->
+	 <form id="printform" method='post'  class="form-horizontal">
+	 <!-- 量身单上部开始 -->
 	 	<div >
+	 		
+	 		
 			<div class="form-group">
 			    <label for="usernum" class="col-sm-1 control-label">合订号:</label>
 			    <div class="col-sm-2 inputpadding">
@@ -411,9 +414,10 @@
 					  </div>
 				 </div>	  
 		 	</if>
-		<!-- 媳妇结束 -->
+		
 		 
-	</div>	  
+	</div>	
+	<!-- 西服结束 -->  
 		  	<!-- 量身单上部结束 -->
 			<!-- 量身单下部开始 -->
 		  <div style='height:800px;'>
@@ -631,8 +635,9 @@
 	 	  <div class="modal-footer">
 			   	 <a class="btn btn-primary" href="{:U('Admin/Provider/index',array('opsname'=>$opsname))}" target="opt"><span >返回</span></a>
 		   </div>
-		  </form>
-		  
+	</form>
+<!--endprint-->	
+	<!-- 打印form结束 -->	  
 		<!-- Modal 添加信息-->
 	<div class="modal fade" id="addExpressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  >
 	  <div class="modal-dialog" style="width:50%;">
@@ -673,6 +678,7 @@
 		   		 <input type='hidden' name='pullok' value="{$order['pullok']}">
 		   		  <input type='hidden' name='goodsok' value="{$order['goodsok']}">
 		   		 <input type='hidden' name='opsname' value="{$opsname}">
+		   		 	<span class='blue'>*发送中，请等待一会儿*</span>
 		   		<input type="submit" class="btn btn-primary" value="保 存" id="addexpressbtn" name="addexpressbtn" >
 	      </div>
 		  
@@ -692,7 +698,7 @@
 	        <h4 class="modal-title" id="myModalLabel">流程信息</h4>
 	      </div>
 	      <div class="modal-body">
-	      <form id="form2" method='post' action="__URL__/readExpressHandle" class="form-horizontal">
+	      <form id="expressform" method='post' action="__URL__/readExpressHandle" class="form-horizontal">
 
 			<div class="form-group">
 			    <label for="usernum" class="col-sm-3 control-label">种类</label>
@@ -757,6 +763,7 @@
 		  		<input type="hidden" name="eid" id="eid">
 		    	 <input type='hidden' name='onum' value="{$order['onum']}">
 		    	  <input type='hidden' name='pullok' value="{$order['pullok']}">
+	       	
 	       		<input type="submit" class="btn btn-primary" value="保 存" >
 	      </div>
 		  </form>
@@ -795,7 +802,34 @@
 	for(var i=0;i<z.length;i++){
 	   z[i].setAttribute('disabled','disabled');
 	}
-	//处理流程添加与读取
+	//处理打印
+	  var LODOP; //声明为全局变量 
+    function prn1_preview() {    
+	        CreateOneFormPage();    
+	        LODOP.PREVIEW();    
+	    };
+	    function prn1_print() {        
+	        //CreateOneFormPage();
+	       // LODOP.PRINT();  
+		    //   window.print();  
+	    	 bdhtml=window.document.body.innerHTML;    
+	         sprnstr="<!--startprint-->";    
+	         eprnstr="<!--endprint-->";    
+	         prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+17);    
+	         prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));    
+	         window.document.body.innerHTML=prnhtml;    
+	         window.print();
+	    };
+	    function CreateOneFormPage(){
+	        LODOP=getLodop();  
+	       // LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+	       LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4");
+	       //
+	        //LODOP.SET_PRINT_STYLE("FontSize",1);
+	      //  LODOP.SET_PRINT_STYLE("Bold",1);
+	       //LODOP.ADD_PRINT_TEXT(0,0,"100%","100%",document.getElementById("printform").innerHTML);
+	        LODOP.ADD_PRINT_HTM(0,0,"100%","100%",document.getElementById("printform").innerHTML);
+	    };
 	
 	$(function(){
 		$('#addexpressbtn').click(function(){

@@ -54,13 +54,14 @@
 	<hr/>
 	 <form id="form2" method='post' action="__URL__/orderupdate" class="form-horizontal">
 	 	<!-- 订购单开始 -->
-	 	<div id='reserve'>
-			<div class="form-group">
+	 		<div class="form-group">
 				    <label for="usernum" class="col-sm-1 control-label">合订号:</label>
 				    <div class="col-sm-2 inputpadding">
 				      <input type="text" class="form-control " id="onum" name="onum"  value='{$order["onum"]}' readonly='true'>
 				    </div>
 			  </div>
+	 	<div id='reserve'>
+			
 			 <div class="form-group">
 					    <label for="usernum" class="col-sm-1 control-label">订购单号:</label>
 					    <div class="col-sm-2 inputpadding">
@@ -974,10 +975,7 @@
 			  		<input type='hidden' name='shopleaderverify' value="{$order['shopleaderverify']}">
 		  		 	<input type='hidden' name='inspectorverify' value="{$order['inspectorverify']}">
 				   	 <a class="btn btn-primary" href="{:U('Admin/Employee/selforder',array('unum'=>$osunum,'sid'=>$sid))}" target="opt"><span>返回</span></a>
-				   	 <if condition='($order["inspectorverify"] eq 1) AND ($order["shopleaderverify"] eq 1)'>
-				   	 <else/>
-				   	 	<input type="submit" class="btn btn-primary" value="保 存" >
-				   	 </if>
+				   	 <input type="submit" class="btn btn-primary" value="保 存" >
 			   </div>
 		  </form>
 		  
@@ -1059,6 +1057,7 @@
 		  <div class="modal-footer">
 		  		<input type="hidden" name="eid" id="eid">
 		    	 <input type='hidden' name='onum' value="{$order['onum']}">
+		    	 <span class='blue'>*发送中，请等待一会儿*</span>
 	       		<input type="submit" class="btn btn-primary" value="保 存" >
 	      </div>
 		  </form>
@@ -1157,39 +1156,64 @@
 				z[i].setAttribute('disabled','disabled');	
 			}
 		
-		
-		
+		}
+	
+	//量身单审核通过后不可该的
+	if({$order["inspectorverify"]}=='1'){
+		var z=document.getElementById('chinascale');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('enscale');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('cloth');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('pants');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('vest');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('tcloth');
+		z.setAttribute('disabled','disabled');
+
+		var z=document.getElementById('uremark');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('dremark');
+		z.setAttribute('disabled','disabled');
+		var z=document.getElementById('tremark');
+		z.setAttribute('disabled','disabled');
 		
 		}
-		//量身单通过后不可更改
-		if({$order["inspectorverify"]}=='1'){
-			
-			var x=document.getElementById('upscale').getElementsByTagName('input');
-			for(var i=0;i<x.length;i++){
-					x[i].setAttribute('disabled','disabled');	
-				}
-			var y=document.getElementById('upscale').getElementsByTagName('select');
-			for(var i=0;i<y.length;i++){
-					y[i].setAttribute('disabled','disabled');	
-				}
-			var z=document.getElementById('upscale').getElementsByTagName('textarea');
-			for(var i=0;i<z.length;i++){
-					z[i].setAttribute('disabled','disabled');	
-				}
-			var x=document.getElementById('downscale').getElementsByTagName('input');
-			for(var i=0;i<x.length;i++){
-					x[i].setAttribute('disabled','disabled');	
-				}
-			
-			var y=document.getElementById('downscale').getElementsByTagName('select');
-			for(var i=0;i<y.length;i++){
-					y[i].setAttribute('disabled','disabled');	
-				}
-			var z=document.getElementById('downscale').getElementsByTagName('textarea');
-			for(var i=0;i<z.length;i++){
-					z[i].setAttribute('disabled','disabled');	
-				}
+	
+
+	//量身单返修完成后不可更改
+	if(({$order["inspectorverify"]}=='1' && {$order['repairlock']}=='1') || {$order["goodsok"]}=='1'){
+		var x=document.getElementById('upscale').getElementsByTagName('input');
+		for(var i=0;i<x.length;i++){
+				x[i].setAttribute('disabled','disabled');	
 			}
+		
+		var y=document.getElementById('upscale').getElementsByTagName('select');
+		for(var i=0;i<y.length;i++){
+				y[i].setAttribute('disabled','disabled');	
+			}
+		var z=document.getElementById('upscale').getElementsByTagName('textarea');
+		for(var i=0;i<z.length;i++){
+				z[i].setAttribute('disabled','disabled');	
+			}
+		var x=document.getElementById('downscale').getElementsByTagName('input');
+		for(var i=0;i<x.length;i++){
+				x[i].setAttribute('disabled','disabled');	
+			}
+		
+		var y=document.getElementById('downscale').getElementsByTagName('select');
+		for(var i=0;i<y.length;i++){
+				y[i].setAttribute('disabled','disabled');	
+			}
+		var z=document.getElementById('downscale').getElementsByTagName('textarea');
+		for(var i=0;i<z.length;i++){
+				z[i].setAttribute('disabled','disabled');	
+			}
+		
+		}
+
 		//处理流程和返修添加与读取
 	
 		$(function(){

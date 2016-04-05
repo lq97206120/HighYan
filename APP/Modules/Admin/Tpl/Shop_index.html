@@ -12,6 +12,9 @@
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/bootstrap/bootstrap.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
+	<style>
+		.red{color:red;}
+	</style>
 </head>
 <body style="padding:20px 20px 0px 20px">
 	<h2 align="center">部门列表</h2>
@@ -87,6 +90,11 @@
 			    <label for="usernum" class="col-sm-2 control-label">部门名称</label>
 			    <div class="col-sm-10">
 			      <input type="text" class="form-control" id="sname" name="sname"  placeholder="不能为空" >
+			    </div>
+		  </div>
+  		   <div class="form-group">
+			     <div class=" col-sm-offset-3 col-sm-10">
+			     	<span class='red'>*部门名称不能有特殊字符如+、-、空格等，最好是中文*</span>
 			    </div>
 		  </div>
 		  <div class="form-group">
