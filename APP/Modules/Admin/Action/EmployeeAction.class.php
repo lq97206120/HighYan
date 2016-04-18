@@ -309,6 +309,7 @@ class EmployeeAction extends CommonAction{
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
 				'clothgetdate'=>$_POST['clothgetdate'],
+				'clothbackdate'=>$_POST['clothbackdate'],
 		
 				'otgid'=>$otgid,
 				'otgnum'=>$tcloth['gnum'],
@@ -605,7 +606,9 @@ class EmployeeAction extends CommonAction{
 				'bcenter'=>$_POST['bcenter'],
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
-		
+				'clothgetdate'=>$_POST['clothgetdate'],
+				'clothbackdate'=>$_POST['clothbackdate'],
+			
 				'otgid'=>$otgid,
 				'otgnum'=>$tcloth['gnum'],
 				'otgname'=>$tcloth['gname'],
@@ -632,7 +635,7 @@ class EmployeeAction extends CommonAction{
 				'tsleevesur'=>$_POST['tsleevesur'],
 				'tcode'=>$_POST['tcode'],
 				'tclothfabric'=>$_POST['tclothfabric'],
-				
+				'tclothgetdate'=>$_POST['tclothgetdate'],
 		
 			);
 			if($_POST['inspectorverify']=='0'){

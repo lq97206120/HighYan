@@ -193,6 +193,7 @@ class DesignerAction extends CommonAction{
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
 				'clothgetdate'=>$_POST['clothgetdate'],
+				'clothbackdate'=>$_POST['clothbackdate'],
 		
 				'otgid'=>$otgid,
 				'otgnum'=>$tcloth['gnum'],

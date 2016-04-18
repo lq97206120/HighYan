@@ -295,9 +295,10 @@
 						    <div class="col-sm-1 inputpadding">
 						      <input type="text" class="form-control" id="dlegsur1" name="dlegsur1" value='{$order["dlegsur1"]}' >
 						    </div>
-						    <div class="col-sm-1 inputpadding">
-						      <input type="text" class="form-control" id="dlegsur2" name="dlegsur2"  value='{$order["dlegsur2"]}'>
-						    </div>
+						   <label for="username" class="col-sm-offset-1 col-sm-2 control-label">西服试版日期</label>
+					    <div class="col-sm-2 inputpadding">
+					      <input type="text" class="form-control" id="clothbackdate" name="clothbackdate" onClick="WdatePicker()"  value='{$order["clothbackdate"]}'>
+					    </div>
 					     
 				  </div>
 				  <div class="form-group">
@@ -841,6 +842,9 @@
 			var z=document.getElementById('clothgetdate');
 			z.setAttribute('disabled','disabled');
 
+			var z=document.getElementById('clothbackdate');
+			z.setAttribute('disabled','disabled');
+			
 			var z=document.getElementById('tclothgetdate');
 			z.setAttribute('disabled','disabled');
 			}
