@@ -244,6 +244,7 @@ class InspectorAction extends CommonAction{
 				'bcenter'=>$_POST['bcenter'],
 				'bcode'=>$_POST['bcode'],
 				'bbackfabric'=>$_POST['bbackfabric'],
+				'clothgetdate'=>$_POST['clothgetdate'],
 		
 				'otgid'=>$otgid,
 				'otgnum'=>$tcloth['gnum'],
@@ -271,6 +272,8 @@ class InspectorAction extends CommonAction{
 				'tsleevesur'=>$_POST['tsleevesur'],
 				'tcode'=>$_POST['tcode'],
 				'tclothfabric'=>$_POST['tclothfabric'],
+				'tclothgetdate'=>$_POST['tclothgetdate'],
+		
 				'ispull'=>$_POST['ispull'],
 				'inspectorverify'=>$_POST['inspectorverify'],
 				'opsname'=>$opsname,

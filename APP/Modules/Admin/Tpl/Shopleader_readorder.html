@@ -632,10 +632,10 @@
 				      <input type="text" class="form-control" id="dpantssur" name="dpantssur"  value='{$order["dpantssur"]}'>
 				    </div>
 				   
-			     <label for="username" class="col-sm-offset-1 col-sm-1 control-label"></label>
-				    <div class="col-sm-2 inputpadding">
-				     
-				    </div>
+			     <label for="username" class="col-sm-2 control-label">西服试取日期</label>
+					    <div class="col-sm-2 inputpadding">
+					      <input type="text" class="form-control" id="clothgetdate" name="clothgetdate" onClick="WdatePicker()"  value='{$order["clothgetdate"]}' disabled='disabled'>
+					    </div>
 		  </div>
 		 <div class="form-group">
 			     <label for="usernum" class="col-sm-1 control-label">领型</label>
@@ -880,7 +880,10 @@
 					    <div class="col-sm-4 inputpadding">
 					      <input type="text" class="form-control " id="tneckstyle" name="tneckstyle" value='{$order["tneckstyle"]}' >
 					    </div>
-								   
+					<label for="usernum" class="col-sm-2 control-label">衬衫试取日期</label>
+				    <div class="col-sm-3 inputpadding">
+				      <input type="text" class="form-control " id="tclothgetdate" name="tclothgetdate" onClick="WdatePicker()" value='{$order["tclothgetdate"]}' disabled='disabled'>
+				    </div> 			   
 			  </div>
 			 <div class="form-group">
 				     <label for="usernum" class="col-sm-2 control-label">前襟</label>
